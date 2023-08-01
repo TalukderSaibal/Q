@@ -1,12 +1,15 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-?><!DOCTYPE html>
+?>
+
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="utf-8">
 	<title>Welcome to Q-Study</title>
 	<link rel="SHORTCUT ICON" href="<?php echo base_url();?>favicon.ico">
-	
+
 	<style type="text/css">
 
 	::selection { background-color: #E13300; color: white; }

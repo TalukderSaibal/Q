@@ -16,61 +16,61 @@ class RegisterController extends CI_Controller
         $this->load->model('SettingModel');
         $this->load->model('FaqModel'); // rakesh
     }
-    
-    
+
+
     // public function test(){
     //     $this->load->view('test');
     // }
-    
-    public function showSignUp()
-    {
 
+    public function showSignUp(){
+        // echo 12;die;
         $this->session->sess_destroy();
-        $data['registration_slug_type']=$this->uri->segment(1);
-        
-        $data['user']=$this->RegisterModel->getUserType();
+        $data['registration_slug_type'] = $this->uri->segment(1);
+
+        $data['user']     = $this->RegisterModel->getUserType();
         $data['back_url'] = 'welcome';
 
         //rakesh
-        if (strpos(current_url(), 'trial') == false) { 
-            $data['video_help'] = $this->FaqModel->videoSerialize(1, 'video_helps');
+        if (strpos(current_url(), 'trial') == false) {
+            $data['video_help']        = $this->FaqModel->videoSerialize(1, 'video_helps');
             $data['video_help_serial'] = 1;
-        } 
-        else { 
-            $data['video_help'] = $this->FaqModel->videoSerialize(5, 'video_helps');
+        }
+        else {
+            $data['video_help']        = $this->FaqModel->videoSerialize(5, 'video_helps');
             $data['video_help_serial'] = 5;
-        } 
-        
-        $data['header']=$this->load->view('common/header', '', true);
-        $data['header_sign_up']=$this->load->view('common/header_sign_up', $data, true);
-        $data['footer']=$this->load->view('common/footer', '', true);
+        }
+
+        $data['header']         = $this->load->view('common/header', '', true);
+        $data['header_sign_up'] = $this->load->view('common/header_sign_up', $data, true);
+        $data['footer']         = $this->load->view('common/footer', '', true);
+
         $this->load->view('registration/signup', $data);
 
     }
-    
-    
+
+
     public function showSignUpPlan()
     {
 
         $registrationType=$this->uri->segment(1);
         $userTypeSlug=$this->uri->segment(2);
-        
+
         $userTypeId=$this->RegisterModel->getSpecificUserType($userTypeSlug);
         $this->session->set_userdata('registrationType', $registrationType);
         $this->session->set_userdata('userType', $userTypeId[0]['id']);
-        
+
         $data['back_url'] = base_url() . 'signup';
         if ($registrationType == 'trial') {
             $data['back_url'] = base_url() . 'trial';
         }
-        
+
         $data['header']=$this->load->view('common/header', '', true);
         $data['header_sign_up']=$this->load->view('common/header_sign_up', $data, true);
         $data['footer']=$this->load->view('common/footer', '', true);
-        
+
         $this->load->view('registration/sign_up_plan', $data);
     }
-    
+
     public function selectCountry($registrationType  , $userType)
     {
         $_SESSION['userType'] = $userType;
@@ -100,25 +100,26 @@ class RegisterController extends CI_Controller
             }else{
                 $data['back_url'] = base_url('/signup');
             }
-            
+
             $data['header']=$this->load->view('common/header', '', true);
             $data['header_sign_up']=$this->load->view('common/header_sign_up', $data, true);
             $data['footer']=$this->load->view('common/footer', '', true);
-            
+
             $this->load->view('registration/select_country', $data);
         }
     }
-    
-    public function selectCourse()
-    {
-        if ($this->input->post('submit')  == "submit")
-        {
+
+    public function selectCourse(){
+        // echo 12;die;
+        if ($this->input->post('submit')  == "submit"){
+
             // echo "<pre>";print_r($this->input->post());die();
-            $course_data['courses'] =$this->input->post('course');
-            $course_data['totalCost'] =$this->input->post('totalCost');
-            $course_data['token'] =$this->input->post('token');
-            $course_data['paymentType'] = $this->input->post('paymentType'); 
-            $course_data['children'] = $this->input->post('children');
+
+            $course_data['courses']     = $this->input->post('course');
+            $course_data['totalCost']   = $this->input->post('totalCost');
+            $course_data['token']       = $this->input->post('token');
+            $course_data['paymentType'] = $this->input->post('paymentType');
+            $course_data['children']    = $this->input->post('children');
 
             if (!empty($this->input->post('direct_debit'))) {
                 $course_data['payment_process'] = $this->input->post('direct_debit');
@@ -129,7 +130,7 @@ class RegisterController extends CI_Controller
             if (!empty($this->input->post('direct_deposit'))) {
                 $course_data['payment_process'] = $this->input->post('direct_deposit');
             }
-            
+
             $this->session->set_userdata($course_data);
 
             if ($this->session->userdata('registrationType') == 'trial') {
@@ -164,7 +165,7 @@ class RegisterController extends CI_Controller
                 }
             }else{
                 if ($course_data['payment_process'] == 3) {
-                    redirect('/direct_deposit');                    
+                    redirect('/direct_deposit');
                 }else{
                     redirect('/paypal_new');
                 }
@@ -206,7 +207,7 @@ class RegisterController extends CI_Controller
             if (isset($_POST['country'])) {
                 $countryIdd = $_POST['country'];
             }
-            
+
             $this->session->set_userdata('countryId', $countryIdd);
             $user_id = $this->session->userdata('user_id');
             // $subscription_type = ($this->session->userdata('registrationType') == 'trial' ? 2 : 1);
@@ -223,14 +224,14 @@ class RegisterController extends CI_Controller
             //if($this->session->userdata('userType') != 4 && $this->session->userdata('userType') != 5)
             //if ($this->session->userdata('userType') != 4 && $this->session->userdata('userType') != 5) {
             // $data['course_details'] = $this->RegisterModel->getCourse($this->session->userdata('userType'), $countryIdd, $subscription_type);
-            
-            
-            //added AS 
+
+
+            //added AS
             if ($this->session->userdata('userType') == 6) {
                 $this->session->set_userdata('userType', 1);
             }
-            
-            
+
+
             $data['course_details'] = $this->RegisterModel->getCourse($this->session->userdata('userType'), $countryIdd);
 
             if($_SESSION['registrationType']=='signup'){
@@ -242,15 +243,15 @@ class RegisterController extends CI_Controller
             }
 
             $data['courses'] = $this->RegisterModel->getTrialCourse($this->session->userdata('userType'), $countryIdd,$course_status);
-            
+
             // echo "<pre>";print_r($data['courses']);die();
-            
+
             $register_courses = $this->db->select('course_id')->where('user_id',$user_id)->where('cost <>',0)->where('endTime >',time())->get('tbl_registered_course')->result_array();
             $registerCourse = [];
             foreach($register_courses as $key => $course){
                 $registerCourse[$key] = $course['course_id'];
             }
-            
+
             // echo '<pre>';
             // print_r($registerCourse);die();
             $data['register_course'] = $registerCourse;
@@ -283,12 +284,12 @@ class RegisterController extends CI_Controller
                 $this->load->view('registration/select_course_for_school', $data);
             } elseif ($this->session->userdata('userType')==5) {
                 $this->load->view('registration/select_course_for_corporate', $data);
-            } 
+            }
         } else {
             redirect('/signup');
         }
     }
-    
+
     private function validate_student_course_signup()
     {
 
@@ -317,7 +318,7 @@ class RegisterController extends CI_Controller
             return true;
         }
     }
-    
+
     private function validate_student_course_trial()
     {
         $flag=0;
@@ -339,7 +340,7 @@ class RegisterController extends CI_Controller
             return true;
         }
     }
-    
+
     public function student_form()
     {
         // echo "bfgjghjh<pre>";print_r($this->session->userdata('courses'));die();
@@ -366,7 +367,7 @@ class RegisterController extends CI_Controller
             if (isset($_POST['children']) || $this->session->userdata('childrens') || $this->session->userdata('children')) {
                 $children =$this->session->userdata('childrens');
                 if (empty($children)) {
-                   $children =$this->session->userdata('children'); 
+                   $children =$this->session->userdata('children');
                 }
                 if (isset($_POST['children']) && $_POST['children'] && $_POST['course']) {
                     $children = $_POST['children'];
@@ -422,7 +423,7 @@ class RegisterController extends CI_Controller
             if (isset($_POST['children']) || $this->session->userdata('childrens') || $this->session->userdata('children')) {
                 $children =$this->session->userdata('childrens');
                 if (empty($children)) {
-                   $children =$this->session->userdata('children'); 
+                   $children =$this->session->userdata('children');
                 }
                 if (isset($_POST['children']) && $_POST['children'] && $_POST['course']) {
                     $children = $_POST['children'];
@@ -451,12 +452,12 @@ class RegisterController extends CI_Controller
             redirect('/signup');
         }
     }
-    
+
     public function redirect_url()
     {
         redirect('/select_course');
     }
-    
+
     public function checkPasswordConfirmPassword($pass, $confirm)
     {
         $i=0;
@@ -676,13 +677,13 @@ class RegisterController extends CI_Controller
         $this->session->set_userdata('students', $rs_data);
         echo json_encode('success');
     }
-    
+
     public function sure_data_save()
     {
         //print_r($this->session->userdata('random_number')); die();
         if ($_POST['random'] == $this->session->userdata('random_number')) {
             if ($this->session->userdata('registrationType') !='trial') {
-                
+
                 if ($this->session->userdata('paymentType')==1 ) {
                 $data['end_subscription'] = date('Y-m-d', strtotime(date("Y-m-d", strtotime(date('Y-m-d'))) . " +30 day"));
                 }
@@ -713,7 +714,7 @@ class RegisterController extends CI_Controller
             //echo "<pre>"; print_r($data);die();
             $parent_id  = $this->RegisterModel->saveUser($data);
             $student_list = array();
-            
+
             foreach ($rs_student as $singleStudent) {
 
                 $raw_st_data=array();
@@ -737,12 +738,12 @@ class RegisterController extends CI_Controller
                 $this->load->helper('string');
                 $st['SCT_link'] = random_string('alnum', 10);
                 $student_id = $this->RegisterModel->basicInsert('tbl_useraccount', $st);
-                
+
                 foreach ($rs_course as $singleCourse) {
                     $course['course_id']=$singleCourse;
                     $rs_course_cost     =$this->RegisterModel->getCourseCost($course['course_id']);
                     $course['cost']    = $rs_course_cost[0]['courseCost'];
-                    
+
                     if($st['subscription_type']=='trial'){
                         $course['endTime'] = time()+24*3600;
                     }else if($st['subscription_type']=='signup'){
@@ -750,11 +751,11 @@ class RegisterController extends CI_Controller
                     }
                     $course['user_id'] = $student_id;
                     $course['created'] = time();
-                    
+
                     $this->RegisterModel->basicInsert('tbl_registered_course', $course);
-                    
+
                 }
-                
+
                 $st['SCT_link'] = $singleStudent['SCT'];
                 if ($st['SCT_link']) {
                     $sct_link=$this->RegisterModel->getInfo('tbl_useraccount', 'SCT_link', $st['SCT_link']);
@@ -766,7 +767,7 @@ class RegisterController extends CI_Controller
                             $referral['refferalUser'] = $sct_link[0]['id'];
                             $referral['refferalLink'] = $st['SCT_link'];
                             $this->RegisterModel->refferalLinkInsert('tbl_referral_users', $referral);
-                            
+
                         }else{
 
                             $enrl['sct_id'] = $sct_link[0]['id'];
@@ -780,7 +781,7 @@ class RegisterController extends CI_Controller
                 $student_list[]=$raw_st_data;
                 $this->session->set_userdata('student_list', $student_list );
             }
-            
+
             $courseName='';
             foreach ($rs_course as $singleCourse) {
                 $course['course_id']=$singleCourse;
@@ -791,21 +792,21 @@ class RegisterController extends CI_Controller
                 $course['created']=time();
                 //$this->RegisterModel->basicInsert('tbl_registered_course', $course);
             }
-            
-            
+
+
             $this->session->set_userdata('user_id', $parent_id);
             $this->session->set_userdata('courseName', $courseName);
 
-            
+
 
             //username and password send
             $settins_sms_status   = $this->admin_model->getSmsType("Template Activate Status");
 
             if ($settins_sms_status[0]['setting_value'] ) {
-                
+
                 $settins_Api_key = $this->admin_model->getSmsApiKeySettings();
                 $settins_sms_messsage = $this->admin_model->getSmsType("Parent Registration");
-                
+
 
                 $register_code_string = $settins_sms_messsage[0]['setting_value'];
                 $message = str_replace( "{{ username }}" , $this->session->userdata('email') , $register_code_string);
@@ -832,35 +833,35 @@ class RegisterController extends CI_Controller
                 // print_r($result);die;
                 $send_msg_status = json_decode($result);
             }
-            
+
             if ($this->session->userdata('registrationType') != 'trial') {
 
                 if ($this->session->userdata('registrationType') == 'signup') {
-                    
+
                     echo $this->session->userdata('payment_process');
                 }else{
                     echo 1;
                 }
-                
+
             } else {
                 echo 2;
             }
 
             $this->mailTemplate($this->session->userdata('parent_name'), $this->session->userdata('email'), $this->session->userdata('password'), $student_list);
-            
+
         } else {
             echo 0;
         }
     }
-    
-    
+
+
     public function mailTemplate($parent_name, $parent_email, $parent_password, $student_list)
     {
 
         $userName = $parent_name;
         $userEmail = $parent_email;
         $userPassword = $parent_password;
-        
+
         $template = $this->RegisterModel->getInfo('table_email_template', 'email_template_type', $this->session->userdata('userType'));
         $student_number = sizeof($student_list);
         if ($template) {
@@ -896,7 +897,7 @@ class RegisterController extends CI_Controller
         }
         return true;
     }
-    
+
     /**
      * Haven't read it all
      *
@@ -932,10 +933,10 @@ class RegisterController extends CI_Controller
         $this->after_send_mail_user_show_view($type);
     }
     public function show_paypal_form()
-    {        
+    {
         $data['video_help'] = $this->FaqModel->videoSerialize(4, 'video_helps');
         $data['video_help_serial'] = 4;
-        
+
         // echo 'ppppppp';echo $this->session->userdata('user_id');die();
         if ($this->session->userdata('user_id') != '') {
             $data['publish_key']=$this->SettingModel->getStripeKey('publish');
@@ -1112,7 +1113,7 @@ class RegisterController extends CI_Controller
     public function go_paypal_qusStore(){
 
         if ($this->session->userdata('user_id') != '') {
-            
+
             $data['url']=$this->SettingModel->getPaypalKey('url');
             $data['business_key']=$this->SettingModel->getPaypalKey('business_account');
             $data['paymentType'] = $this->session->userdata('paymentType');//p3 te bosbe
@@ -1133,7 +1134,7 @@ class RegisterController extends CI_Controller
             redirect('/signup');
         }
     }
-    
+
 
     private function validate_upper_student_course_signup()
     {
@@ -1145,7 +1146,7 @@ class RegisterController extends CI_Controller
             $error.= validation_errors();
             $flag++;
         }
-        
+
         $course = $this->input->post('course');
         if (! $course) {
             $error.= '<p>At least Select One course</p>';
@@ -1158,7 +1159,7 @@ class RegisterController extends CI_Controller
             return true;
         }
     }
-    
+
     private function validate_upper_student_course_trial()
     {
         $flag=0;
@@ -1175,7 +1176,7 @@ class RegisterController extends CI_Controller
             return true;
         }
     }
-    
+
     public function upper_level_student_form()
     {
         if (!empty($_SESSION['trail_suspend']) && $_SESSION['trail_suspend'] == 1 ) {
@@ -1207,7 +1208,7 @@ class RegisterController extends CI_Controller
                     $this->session->set_userdata('courses', $_POST['course']);
                 }
                 $data['country_db']=$this->RegisterModel->getSpecificCountry($this->session->userdata('countryId'));
-                
+
                 $data['header']=$this->load->view('common/header', '', true);
                 $data['header_sign_up']=$this->load->view('common/header_sign_up', $data, true);
                 $data['footer']=$this->load->view('common/footer', '', true);
@@ -1251,7 +1252,7 @@ class RegisterController extends CI_Controller
                     $this->session->set_userdata('courses', $_POST['course']);
                 }
                 $data['country_db']=$this->RegisterModel->getSpecificCountry($this->session->userdata('countryId'));
-                
+
                 $data['header']=$this->load->view('common/header', '', true);
                 $data['header_sign_up']=$this->load->view('common/header_sign_up', $data, true);
                 $data['footer']=$this->load->view('common/footer', '', true);
@@ -1263,7 +1264,7 @@ class RegisterController extends CI_Controller
             redirect('/signup');
         }
     }
-    
+
     public function save_upper_student()
     {
         $this->form_validation->set_rules('upper_student_name', 'upper_student_name', 'required');
@@ -1279,7 +1280,7 @@ class RegisterController extends CI_Controller
            echo json_encode("mobile_number_error");
            exit();
         }
-        
+
         $flag=0;
         $error='';
         if ($this->form_validation->run()==false) {
@@ -1315,7 +1316,7 @@ class RegisterController extends CI_Controller
         //execute post
         $result = curl_exec($ch);
         curl_close($ch);
-        
+
         $send_msg_status = json_decode($result);
         // echo "<pre>";print_r(count($send_msg_status->messages));die();
         if (count($send_msg_status->messages) > 0 && $send_msg_status->messages[0]->accepted == 1) {
@@ -1325,7 +1326,7 @@ class RegisterController extends CI_Controller
         // echo $this->session->userdata('random_number');die();
         $this->session->set_userdata('random_number', $data['number']);
 
-     
+
         $this->RegisterModel->save_random_digit($data);
 
         $this->session->set_userdata('upper_student_name', $_POST['upper_student_name']);
@@ -1335,7 +1336,7 @@ class RegisterController extends CI_Controller
         $this->session->set_userdata('mobile', $_POST['full_number']);
         echo json_encode('success');
     }
-    
+
     public function student_mailTemplate($upper_student_name, $email, $password)
     {
 
@@ -1346,7 +1347,7 @@ class RegisterController extends CI_Controller
         if ($template) {
             $subject = $template[0]['email_template_subject'];
             $template_message = $template[0]['email_template'];
-            
+
             $find = array("{{upper_student_name}}","{{upper_student_email}}","{{upper_student_password}}");
             $replace = array($Name,$email,$Password);
             $message = str_replace($find, $replace, $template_message);
@@ -1358,21 +1359,21 @@ class RegisterController extends CI_Controller
         }
         return true;
     }
-    
+
     public function upper_student_trial_mail()
     {
         $type=0;
         $this->after_send_mail_user_show_view($type);
     }
-    
+
     public function upper_student_signup_mail()
     {
         $type=1;
         $this->after_send_mail_user_show_view($type);
     }
-    
+
     public function sure_upper_student_data_save()
-    { 
+    {
         //echo $this->session->userdata('random_number');die();
         if ($_POST['random']==$this->session->userdata('random_number')) {
             $rs_course=$this->session->userdata('courses');
@@ -1400,8 +1401,8 @@ class RegisterController extends CI_Controller
                 $course['created']=time();
                 $this->RegisterModel->basicInsert('tbl_registered_course', $course);
             }
-            
-            
+
+
             $this->session->set_userdata('user_id', $upper_student_id);
             $this->session->set_userdata('courseName', $courseName);
 
@@ -1431,14 +1432,14 @@ class RegisterController extends CI_Controller
                 //execute post
                 $result = curl_exec($ch);
 
-                
+
                 curl_close($ch);
 
             }
 
             if ($this->session->userdata('registrationType') != 'trial') {
                 if ($this->session->userdata('registrationType') == 'signup') {
-                    
+
                     echo $this->session->userdata('payment_process');
                 }else{
                     echo 1;
@@ -1451,7 +1452,7 @@ class RegisterController extends CI_Controller
             echo 0;
         }
     }
-    
+
     public function tutor_form()
     {
 
@@ -1474,7 +1475,7 @@ class RegisterController extends CI_Controller
                 $this->session->set_userdata('paymentType', $_POST['paymentType']);
                 $this->session->set_userdata('totalCost', $_POST['totalCost']);
             }
-            if (isset($_POST['course'])) 
+            if (isset($_POST['course']))
             {
                 $this->session->set_userdata('tutor_course', $_POST['course']);
             }
@@ -1489,7 +1490,7 @@ class RegisterController extends CI_Controller
             redirect('/signup');
         }
     }
-    
+
     public function save_tutor()
     {
         $this->form_validation->set_rules('tutor_name', 'tutor_name', 'required');
@@ -1497,7 +1498,7 @@ class RegisterController extends CI_Controller
         $this->form_validation->set_rules('cnfpassword', 'cnfpassword', 'required|matches[password]');
         $this->form_validation->set_rules('email', 'email', 'required|valid_email|is_unique[tbl_useraccount.user_email]');
         $this->form_validation->set_rules('mobile', 'mobile',  'required|is_unique[tbl_useraccount.user_mobile]');
-        
+
         $student = $this->input->post('student');
         $mobile = $this->input->post('mobile');
 
@@ -1510,7 +1511,7 @@ class RegisterController extends CI_Controller
            exit();
         }
 
-        
+
         $flag = 0;
         $error = '';
         if ($this->form_validation->run() == false) {
@@ -1571,7 +1572,7 @@ class RegisterController extends CI_Controller
     public function sure_save_tutor()
     {
         // print_r($this->session->userdata('random_number')); die();
-        if ($_POST['random']==$this->session->userdata('random_number')) { 
+        if ($_POST['random']==$this->session->userdata('random_number')) {
 
             $data['subscription_type'] = $this->session->userdata('registrationType');
             $data['user_type'] = $this->session->userdata('userType');
@@ -1582,7 +1583,7 @@ class RegisterController extends CI_Controller
             $data['user_mobile'] = $this->session->userdata('user_mobile');
             $data['SCT_link'] = $this->randomString();
             $data['created'] = time();
-            
+
             $tutor_id = $this->RegisterModel->saveUser($data);
             // $tutor_course = $this->session->userdata('tutor_course');
             $tutor_course = $this->session->userdata('courses');
@@ -1645,7 +1646,7 @@ class RegisterController extends CI_Controller
 
             if ($this->session->userdata('registrationType') != 'trial') {
                 echo 1;
-                
+
             } else {
                 $this->tutor_mailTemplate($this->session->userdata('tutor_name'), $this->session->userdata('email'), $this->session->userdata('password'), $data['SCT_link']);
                 echo 2;
@@ -1678,7 +1679,7 @@ class RegisterController extends CI_Controller
                 $this->session->set_userdata('paymentType', $_POST['paymentType']);
                 $this->session->set_userdata('totalCost', $_POST['totalCost']);
             }
-            if (isset($_POST['course'])) 
+            if (isset($_POST['course']))
             {
                 $this->session->set_userdata('tutor_course', $_POST['course']);
             }
@@ -1690,7 +1691,7 @@ class RegisterController extends CI_Controller
             // }
         } else {
             redirect('/signup');
-        } 
+        }
     }
     public function signup_save_tutor()
     {
@@ -1699,7 +1700,7 @@ class RegisterController extends CI_Controller
         $this->form_validation->set_rules('cnfpassword', 'cnfpassword', 'required|matches[password]');
         $this->form_validation->set_rules('email', 'email', 'required|valid_email|is_unique[tbl_useraccount.user_email]');
         $this->form_validation->set_rules('mobile', 'mobile',  'required|is_unique[tbl_useraccount.user_mobile]');
-        
+
         $student = $this->input->post('student');
         $mobile = $this->input->post('mobile');
 
@@ -1712,7 +1713,7 @@ class RegisterController extends CI_Controller
            exit();
         }
 
-        
+
         $flag = 0;
         $error = '';
         if ($this->form_validation->run() == false) {
@@ -1773,7 +1774,7 @@ class RegisterController extends CI_Controller
     public function signup_sure_save_tutor()
     {
         // print_r($this->session->userdata('random_number')); die();
-        if ($_POST['random']==$this->session->userdata('random_number')) { 
+        if ($_POST['random']==$this->session->userdata('random_number')) {
 
             $data['subscription_type'] = $this->session->userdata('registrationType');
             $data['user_type'] = $this->session->userdata('userType');
@@ -1784,7 +1785,7 @@ class RegisterController extends CI_Controller
             $data['user_mobile'] = $this->session->userdata('user_mobile');
             $data['SCT_link'] = $this->randomString();
             $data['created'] = time();
-            
+
             $tutor_id = $this->RegisterModel->saveUser($data);
             // $tutor_course = $this->session->userdata('tutor_course');
             $tutor_course = $this->session->userdata('courses');
@@ -1812,11 +1813,11 @@ class RegisterController extends CI_Controller
             $this->session->set_userdata('SCT_link', $data['SCT_link'] );
             $this->session->set_userdata('courseName', 'You paid as a tutor');
 
-            
+
             //username and password send
 
             $settins_sms_status   = $this->admin_model->getSmsType("Template Activate Status");
-            
+
             if ($settins_sms_status[0]['setting_value'] ) {
 
                 $settins_Api_key = $this->admin_model->getSmsApiKeySettings();
@@ -1845,15 +1846,15 @@ class RegisterController extends CI_Controller
                 curl_close($ch);
 
             }
-           
+
             if ($this->session->userdata('registrationType') != 'trial') {
                 if ($this->session->userdata('registrationType') == 'signup') {
-                    
+
                     echo $this->session->userdata('payment_process');
                 }else{
                     echo 1;
                 }
-                
+
             } else {
                 echo "tutor_trial_mail";
             }
@@ -1865,8 +1866,8 @@ class RegisterController extends CI_Controller
         }
 
     }
-    
-    
+
+
     public function tutor_trial_mail()
     {
         $type=0;
@@ -1877,15 +1878,15 @@ class RegisterController extends CI_Controller
         $type=1;
         $this->after_send_mail_user_show_view($type);
     }
-    
+
     function tutor_mailTemplate($tutorName, $tutorEmail, $tutorPassword, $SCT_link)
     {
         $template = $this->RegisterModel->getInfo('table_email_template', 'email_template_type', $this->session->userdata('userType'));
-        
+
         if ($template) {
             $subject = $template[0]['email_template_subject']; //->email_template_subject;
             $template_message = $template[0]['email_template']; //->email_template;
-            
+
             $find = array("{{tutorName}}","{{tutor_email}}","{{tutor_password}}","{{tutor_sct_link}}");
             $replace = array($tutorName,$tutorEmail,$tutorPassword,$SCT_link);
             $message = str_replace($find, $replace, $template_message);
@@ -1893,12 +1894,12 @@ class RegisterController extends CI_Controller
             $mail_data['subject'] = $template[0]['email_template_subject'];
             ;
             $mail_data['message'] = $message;
-            
+
             $this->sendEmail($mail_data);
         }
         return true;
     }
-    
+
     private function randomString($length = 10)
     {
         $str = "";
@@ -1910,7 +1911,7 @@ class RegisterController extends CI_Controller
         }
         return $str;
     }
-    
+
     public function school_form()
     {
         // echo $this->session->userdata('teacher_number');die();
@@ -1958,14 +1959,14 @@ class RegisterController extends CI_Controller
             redirect('/signup');
         }
     }
-    
+
     public function teacher_number_check($val)
     {
         if ($val < 1) {
             return false;
         }
     }
-    
+
     public function save_school()
     {
         $this->form_validation->set_rules('school_name', 'school_name', 'required');
@@ -1977,8 +1978,8 @@ class RegisterController extends CI_Controller
 
         $password_teacher = $this->input->post('password_teacher');
         $confirm_password_teacher = $this->input->post('confirm_password_teacher');
-        
-        
+
+
         $mobileExists = $this->admin_model->getInfo('tbl_useraccount', 'user_mobile', $_POST['full_number']);
 
         if (count($mobileExists)) {
@@ -2056,7 +2057,7 @@ class RegisterController extends CI_Controller
         //execute post
         $result = curl_exec($ch);
 
-        
+
         curl_close($ch);
         // print_r($result);die;
         $send_msg_status = json_decode($result);
@@ -2081,7 +2082,7 @@ class RegisterController extends CI_Controller
         if ($template) {
               $subject = $template[0]['email_template_subject']; //->email_template_subject;
               $template_message = $template[0]['email_template']; //->email_template;
-              
+
               $te_data = '';
             foreach ($teacherList as $single_teacher) {
                 $te_data .=
@@ -2096,7 +2097,7 @@ class RegisterController extends CI_Controller
                 </div>
                 </div>";
             }
-            
+
             $find = array("{{teacher_number}}","{{teacher_block}}","{{schoolName}}","{{school_email}}","{{school_password}}");
             $replace = array($teacher_number,$te_data,$school_name,$schoolEmail,$schoolPassword);
             $message = str_replace($find, $replace, $template_message);
@@ -2108,8 +2109,8 @@ class RegisterController extends CI_Controller
         }
         return true;
     }
-    
-    
+
+
     // public function sure_school_data_save()
     // {
     ////if($_POST['random']==$this->session->userdata('random_number')){
@@ -2153,7 +2154,7 @@ class RegisterController extends CI_Controller
     //// echo 0;
     ////}
     // }
-    
+
     public function sure_school_data_save()
     {
 		//print_r($this->session->userdata('random_number'));die();
@@ -2198,7 +2199,7 @@ class RegisterController extends CI_Controller
 
              $settins_sms_status   = $this->admin_model->getSmsType("Template Activate Status");
 
-            if ($settins_sms_status[0]['setting_value'] ) { 
+            if ($settins_sms_status[0]['setting_value'] ) {
 
                 //username and password send
 
@@ -2227,7 +2228,7 @@ class RegisterController extends CI_Controller
                 //execute post
                 $result = curl_exec($ch);
 
-                
+
                 curl_close($ch);
 
             }
@@ -2259,7 +2260,7 @@ class RegisterController extends CI_Controller
             {
                 $this->session->set_userdata('corporate_course', $_POST['course']);
             }
-            
+
             if (isset($_POST['teacher']) || $this->session->userdata('teacher_number')) {
                 if (isset($_POST['paymentType'])) {
                     $this->session->set_userdata('paymentType', $_POST['paymentType']);
@@ -2317,7 +2318,7 @@ class RegisterController extends CI_Controller
            exit();
         }
 
-        
+
         $flag = 0;
         $error = '';
         if ($this->form_validation->run() == false) {
@@ -2380,7 +2381,7 @@ class RegisterController extends CI_Controller
         //execute post
         $result = curl_exec($ch);
 
-        
+
         curl_close($ch);
         // print_r($result);die;
         $send_msg_status = json_decode($result);
@@ -2433,12 +2434,12 @@ class RegisterController extends CI_Controller
         }
         return true;
     }
-    
-    
+
+
     public function sure_corporate_data_save()
     {
 		//print_r($this->session->userdata('random_number'));die();
-        if($_POST['random']==$this->session->userdata('random_number')){ 
+        if($_POST['random']==$this->session->userdata('random_number')){
             $rs_teachers = $this->session->userdata('teachers');
 
             $data['children_number'] = $this->session->userdata('teacher_number');
@@ -2452,12 +2453,12 @@ class RegisterController extends CI_Controller
             $data['user_mobile'] = ($this->session->userdata('full_number'));
             $data['user_mobile'] = ($this->session->userdata('user_phone'));
             $data['website'] = ($this->session->userdata('website'));
-            
+
             //$data['user_mobile']=$this->session->userdata('mobile');
             $data['SCT_link'] = $this->randomString();
             $data['created'] = time();
             $corporate_id = $this->RegisterModel->saveUser($data);
-            
+
             $teacher_list = array();
             foreach ($rs_teachers as $singleTeacher) {
                 $teacher_raw_data = array();
@@ -2473,7 +2474,7 @@ class RegisterController extends CI_Controller
                 $st['user_type'] = 3;
                 $st['SCT_link'] = $data['SCT_link'];
                 $st['created'] = time();
-                
+
                 //rakesh corporate
 
                 $tutor_id = $this->RegisterModel->saveUser($st);
@@ -2503,7 +2504,7 @@ class RegisterController extends CI_Controller
 
             $settins_sms_status   = $this->admin_model->getSmsType("Template Activate Status");
 
-            if ($settins_sms_status[0]['setting_value'] ) { 
+            if ($settins_sms_status[0]['setting_value'] ) {
 
                 $settins_Api_key = $this->admin_model->getSmsApiKeySettings();
                 $settins_sms_messsage = $this->admin_model->getSmsType("Corparate Registration");
@@ -2529,9 +2530,9 @@ class RegisterController extends CI_Controller
                 curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
                 //execute post
                 $result = curl_exec($ch);
-                
+
                 curl_close($ch);
-                
+
             }
 
             $this->session->set_userdata('user_id', $corporate_id);
@@ -2539,7 +2540,7 @@ class RegisterController extends CI_Controller
 
 
             if ($this->session->userdata('registrationType') != 'trial') {
-            
+
              echo 1;
 
             } else {
@@ -2548,9 +2549,9 @@ class RegisterController extends CI_Controller
             }
         }else{
             echo 0;
-        } 
+        }
     }
-    
+
     public function sendEmail($mail_data)
     {
 
@@ -2560,7 +2561,7 @@ class RegisterController extends CI_Controller
 
         $this->load->library('email');
         $this->email->set_mailtype('html');
-      
+
         /*$config['protocol'] ='sendmail';
         $config['mailpath'] ='/usr/sbin/sendmail';
         $config['charset'] = 'iso-8859-1';
@@ -2576,31 +2577,31 @@ class RegisterController extends CI_Controller
         $config['mailtype']    = 'html';
         $config['newline']    = "\r\n";
         $this->email->initialize($config);
-        
+
         $this->email->from('contact@q-study.com');
         $this->email->to($mailTo);
         $this->email->subject($mailSubject);
         $this->email->message($message);
-        
+
         $this->email->send();
         // echo $this->email->print_debugger(); die();
-        
+
         return true;
     }
-    
+
     public function home_page()
     {
         redirect('dashboard');
     }
 
 
-    // added AS 
+    // added AS
     public function upper_student_free_reg(){
         $user_data['payment_status'] = "Completed";
         $user_data['subscription_type'] = 'signup';
         $sub_end_date = date('Y-m-d', strtotime('+1 month'));
         $user_data['end_subscription'] = $sub_end_date;
-       
+
         $userID = $this->session->userdata('user_id');
         $this->db->where('id', $userID);
         $this->db->update('tbl_useraccount',$user_data);
@@ -2608,10 +2609,10 @@ class RegisterController extends CI_Controller
     }
 
     public function show_signup_paypal_form()
-    {        
+    {
         $data['video_help'] = $this->FaqModel->videoSerialize(4, 'video_helps');
         $data['video_help_serial'] = 4;
-        
+
         // echo 'ppppppp';echo $this->session->userdata('user_id');die();
         if ($this->session->userdata('user_id') != '') {
             $data['publish_key']=$this->SettingModel->getStripeKey('publish');
@@ -2624,10 +2625,10 @@ class RegisterController extends CI_Controller
         }
     }
     public function signup_upper_paypal_form()
-    {        
+    {
         $data['video_help'] = $this->FaqModel->videoSerialize(4, 'video_helps');
         $data['video_help_serial'] = 4;
-        
+
         // echo 'ppppppp';echo $this->session->userdata('user_id');die();
         if ($this->session->userdata('user_id') != '') {
             $data['publish_key']=$this->SettingModel->getStripeKey('publish');
@@ -2640,10 +2641,10 @@ class RegisterController extends CI_Controller
         }
     }
     public function signup_others_paypal_form()
-    {        
+    {
         $data['video_help'] = $this->FaqModel->videoSerialize(4, 'video_helps');
         $data['video_help_serial'] = 4;
-        
+
         // echo 'ppppppp';echo $this->session->userdata('user_id');die();
         if ($this->session->userdata('user_id') != '') {
             $data['publish_key']=$this->SettingModel->getStripeKey('publish');
@@ -2674,7 +2675,7 @@ class RegisterController extends CI_Controller
                     $this->session->set_userdata('paymentType', $_POST['paymentType']);
                     $this->session->set_userdata('totalCost', $_POST['totalCost']);
                 }
-                if (isset($_POST['course'])) 
+                if (isset($_POST['course']))
                 {
                     $this->session->set_userdata('courses', $_POST['course']);
                 }
@@ -2699,8 +2700,8 @@ class RegisterController extends CI_Controller
 
         $password_teacher = $this->input->post('password_teacher');
         $confirm_password_teacher = $this->input->post('confirm_password_teacher');
-        
-        
+
+
         $mobileExists = $this->admin_model->getInfo('tbl_useraccount', 'user_mobile', $_POST['full_number']);
 
         if (count($mobileExists)) {
@@ -2780,7 +2781,7 @@ class RegisterController extends CI_Controller
         //execute post
         $result = curl_exec($ch);
 
-        
+
         curl_close($ch);
         // print_r($result);die;
         $send_msg_status = json_decode($result);
@@ -2838,7 +2839,7 @@ class RegisterController extends CI_Controller
 
              $settins_sms_status   = $this->admin_model->getSmsType("Template Activate Status");
 
-            if ($settins_sms_status[0]['setting_value'] ) { 
+            if ($settins_sms_status[0]['setting_value'] ) {
 
                 //username and password send
 
@@ -2867,7 +2868,7 @@ class RegisterController extends CI_Controller
                 //execute post
                 $result = curl_exec($ch);
 
-                
+
                 curl_close($ch);
 
             }
@@ -2880,11 +2881,11 @@ class RegisterController extends CI_Controller
                     }else{
                         echo 4;
                     }
-                    
+
                 }else{
                     echo 1;
                 }
-                
+
             } else {
                 echo 2;
             }
@@ -2914,7 +2915,7 @@ class RegisterController extends CI_Controller
                    $this->session->set_userdata('paymentType', $_POST['paymentType']);
                    $this->session->set_userdata('totalCost', $_POST['totalCost']);
                }
-               if (isset($_POST['course'])) 
+               if (isset($_POST['course']))
                {
                    $this->session->set_userdata('courses', $_POST['course']);
                }
@@ -2923,7 +2924,7 @@ class RegisterController extends CI_Controller
                $data['header_sign_up']=$this->load->view('common/header_sign_up', $data, true);
                $data['footer']=$this->load->view('common/footer', '', true);
                $this->load->view('registration/signup_corporate_form', $data);
-    
+
         } else {
             redirect('/signup');
         }
@@ -2945,7 +2946,7 @@ class RegisterController extends CI_Controller
            exit();
         }
 
-        
+
         $flag = 0;
         $error = '';
         if ($this->form_validation->run() == false) {
@@ -3009,7 +3010,7 @@ class RegisterController extends CI_Controller
         //execute post
         $result = curl_exec($ch);
 
-        
+
         curl_close($ch);
         // print_r($result);die;
         $send_msg_status = json_decode($result);
@@ -3022,12 +3023,12 @@ class RegisterController extends CI_Controller
 
         echo json_encode('success');
     }
-    
+
 
     public function signup_sure_corporate_data_save()
     {
 		//print_r($this->session->userdata('random_number'));die();
-        if($_POST['random']==$this->session->userdata('random_number')){ 
+        if($_POST['random']==$this->session->userdata('random_number')){
             $rs_teachers = $this->session->userdata('teachers');
 
             $data['children_number'] = $this->session->userdata('teacher_number');
@@ -3041,12 +3042,12 @@ class RegisterController extends CI_Controller
             $data['user_mobile'] = ($this->session->userdata('full_number'));
             $data['user_mobile'] = ($this->session->userdata('user_phone'));
             $data['website'] = ($this->session->userdata('website'));
-            
+
             //$data['user_mobile']=$this->session->userdata('mobile');
             $data['SCT_link'] = $this->randomString();
             $data['created'] = time();
             $corporate_id = $this->RegisterModel->saveUser($data);
-            
+
             $teacher_list = array();
             foreach ($rs_teachers as $singleTeacher) {
                 $teacher_raw_data = array();
@@ -3062,7 +3063,7 @@ class RegisterController extends CI_Controller
                 $st['user_type'] = 3;
                 $st['SCT_link'] = $data['SCT_link'];
                 $st['created'] = time();
-                
+
                 //rakesh corporate
 
                 $tutor_id = $this->RegisterModel->saveUser($st);
@@ -3092,7 +3093,7 @@ class RegisterController extends CI_Controller
 
             $settins_sms_status   = $this->admin_model->getSmsType("Template Activate Status");
 
-            if ($settins_sms_status[0]['setting_value'] ) { 
+            if ($settins_sms_status[0]['setting_value'] ) {
 
                 $settins_Api_key = $this->admin_model->getSmsApiKeySettings();
                 $settins_sms_messsage = $this->admin_model->getSmsType("Corparate Registration");
@@ -3118,9 +3119,9 @@ class RegisterController extends CI_Controller
                 curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
                 //execute post
                 $result = curl_exec($ch);
-                
+
                 curl_close($ch);
-                
+
             }
 
             if ($this->session->userdata('registrationType') != 'trial') {
@@ -3134,7 +3135,7 @@ class RegisterController extends CI_Controller
                 }else{
                     echo 1;
                 }
-                
+
             } else {
                 echo 2;
             }
@@ -3144,7 +3145,7 @@ class RegisterController extends CI_Controller
         }else{
             echo 0;
         }
-            
+
     }
 
     public function emailView(){
@@ -3156,14 +3157,14 @@ class RegisterController extends CI_Controller
 
     public function sendDemoEmail(){
         $email = $this->input->post('email');
-    
+
         $mailTo        =   $email;
         $mailSubject   =   'Contact from Q-Study';
         $message       =   'The mail is okk.';
 
         $this->load->library('email');
         $this->email->set_mailtype('html');
-      
+
         /*$config['protocol'] ='sendmail';
         $config['mailpath'] ='/usr/sbin/sendmail';
         $config['charset'] = 'iso-8859-1';
@@ -3179,13 +3180,13 @@ class RegisterController extends CI_Controller
         $config['mailtype']    = 'html';
         $config['newline']    = "\r\n";
         $this->email->initialize($config);
-        
+
         $this->email->from('contact@q-study.com');
         $this->email->to($mailTo);
         $this->email->subject($mailSubject);
         $this->email->message($message);
-        
-        
+
+
         $this->email->send();
         echo $this->email->print_debugger(); die();
     }

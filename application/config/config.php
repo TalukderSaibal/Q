@@ -23,9 +23,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
+
 //$config['base_url'] = 'http://qstudy.test';
-//$config['base_url'] = 'http://localhost/q_study/';
-$config['base_url'] = 'http://qstudy.test';
+$config['base_url'] = 'http://localhost/Q/';
+// $config['base_url'] = 'http://qstudy.test';
+
 // if(array_key_exists("HTTP_X_FORWARDED_PROTO", $_SERVER) && $_SERVER["HTTP_X_FORWARDED_PROTO"] == "http") {
 //     $pageURL = "Location: https://";
 

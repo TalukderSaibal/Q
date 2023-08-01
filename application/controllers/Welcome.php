@@ -24,10 +24,11 @@ class Welcome extends CI_Controller
         $_SESSION['prevUrl'] = $_SESSION['prevUrl'] = base_url('/');
 
 
-        $data['header'] = $this->load->view('common/header', '', true);
-        $data['menu'] = $this->load->view('menu', '', true);
+        $data['header']      = $this->load->view('common/header', '', true);
+        $data['menu']        = $this->load->view('menu', '', true);
         $data['footer_link'] = $this->load->view('common/footer_link', '', true);
-        $data['footer'] = $this->load->view('common/footer', '', true);
+        $data['footer']      = $this->load->view('common/footer', '', true);
+
         $this->load->view('index', $data);
     }
 
@@ -41,7 +42,7 @@ class Welcome extends CI_Controller
         $data['headerlink'] = $this->load->view('dashboard_template/headerlink', $data, true);
         $data['header'] = $this->load->view('dashboard_template/header', $data, true);
         $data['footerlink'] = $this->load->view('dashboard_template/footerlink', $data, true);
-        
+
         $data['maincontent'] = $this->load->view('howWorkVd', $data, true);
         $this->load->view('master_dashboard', $data);
     }

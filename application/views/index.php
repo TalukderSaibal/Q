@@ -1,11 +1,13 @@
 <?php echo $header; ?>
 <?php echo $menu; ?>
+
+
 <div class="container ">
   <div class="row">
     <?php if ($this->session->flashdata('success_msg')) : ?>
       <div class="col-md-2"></div>
       <div class="col-md-10">
-        <div class="alert alert-success alert-dismissible" role="alert" style="margin-top:10px;"> 
+        <div class="alert alert-success alert-dismissible" role="alert" style="margin-top:10px;">
           <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
           <strong><?php echo $this->session->flashdata('success_msg') ?> <span style="color: red;">  Note: If you don't see a confirmation e-mail than please check your bluk/spam folder.We sent a sms to your mobile for account details.  </span> </strong>
         </div>
@@ -13,7 +15,7 @@
     <?php elseif ($this->session->flashdata('error_msg')) : ?>
       <div class="col-md-2"></div>
       <div class="col-md-10">
-        <div class="alert alert-danger alert-dismissible" role="alert" style="margin-top:10px;"> 
+        <div class="alert alert-danger alert-dismissible" role="alert" style="margin-top:10px;">
           <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
           <strong><?php echo $this->session->flashdata('error_msg') ?></strong>
         </div>
@@ -27,7 +29,7 @@
   <div class="container-fluid container-fluid_padding">
      <div class="ss_container_rs">
     <div class="row">
-      
+
       <div class="col-sm-4">
          <div class="ss_home_left_new">
             <div class="left_menu1 bottom10" style="text-align: center;">
@@ -40,7 +42,7 @@
         </div>
 
       </div>
-      
+
       <div class="col-sm-5">
         <div id="myCarousel" class="carousel slide" data-ride="carousel">
           <!-- Indicators -->
@@ -76,12 +78,12 @@
           </a>
         </div>
       </div>
-      
-      
+
+
       <div class="col-sm-3 e_p_right">
         <div class="tutor bottom10">
           <div class="text-left">
-           <a href="<?php echo base_url('tutor/search'); ?>" class="btn ss_yellow_round">Find A Tutor</a> 
+           <a href="<?php echo base_url('tutor/search'); ?>" class="btn ss_yellow_round">Find A Tutor</a>
          </div>
          <div class="text-right">
           <img class="text-right" src="<?php echo base_url();?>assets/images/pp.jpg">
@@ -94,7 +96,7 @@
       </div>
 
     </div>
-    
+
   <!--   <div class="row ss_home_bottom">
       <div class="col-md-3 bottom10">
         <img class="img-responsive "  src="<?php //echo base_url();?>assets/images/left2.png">
@@ -114,11 +116,11 @@
           <!--<small style="font-size: 14px; margin-left:5%">Imagination is the highest kite that can fly- Lauren Bacall</small>
       </div>
 
-    </div>-->      
-    
-    
+    </div>-->
+
+
     </div>
-    
+
     <!--===================== End of Hosting Software ========================-->
   </div>
 </section>
