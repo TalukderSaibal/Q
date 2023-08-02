@@ -538,7 +538,7 @@
 						<li>
 							<a>Response</a>
 						</li>
-						
+
                         <li class="<?php if (isset($page) && $page == 'Contact Mail') {echo 'active';} ?>">
                             <a href="contact-info">Contact</a>
                         </li>
@@ -618,12 +618,12 @@
 				</div>
 			</div>
 		</div>
-		
+
 		<div class="panel panel-warning">
             <div class="panel-heading" role="tab" id="headingEight">
                 <h4 class="panel-title">
                     <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseEight" aria-expanded="false" aria-controls="collapseEight">
-                        SMS Configuration & Template  
+                        SMS Configuration & Template
                     </a>
                 </h4>
             </div>
@@ -645,9 +645,9 @@
                     </ul>
                 </div>
             </div>
-            
+
         </div>
-		
+
 		<div class="panel panel-warning">
             <div class="panel-heading" role="tab" id="headingFive">
                 <h4 class="panel-title">
@@ -678,8 +678,8 @@
                 </div>
             </div>
         </div>
-		
-		<!-- added AS  --> 
+
+		<!-- added AS  -->
 
         <div class="panel panel-warning">
             <div class="panel-heading" role="tab" id="headingFive">
@@ -729,7 +729,7 @@
     //         }
     //     })
     // })
-    
+
     $(document).ready(function(){
         $.ajax({
             url:'Admin/dicItemCreatorToPay',

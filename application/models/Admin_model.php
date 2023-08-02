@@ -239,8 +239,7 @@ class Admin_model extends CI_Model
         return $query->row_array();
     }
 
-    public function total_registered()
-    {
+    public function total_registered(){
         $this->db->select('tbl_useraccount.*,tbl_usertype.userType,tbl_country.countryName');
         $this->db->from('tbl_useraccount');
 
@@ -315,8 +314,7 @@ class Admin_model extends CI_Model
         return $query->row_array();
     }
 
-    public function tutor_with_10_student()
-    {
+    public function tutor_with_10_student(){
         $query = $this->db->query('SELECT *
             FROM tbl_useraccount t
             LEFT JOIN tbl_country ON t.country_id = tbl_country.id
@@ -446,8 +444,8 @@ class Admin_model extends CI_Model
         $this->db->insert_batch($table, $data);
         return $this->db->insert_id();
     }
-    public function updateSmsApiSettings($a_settings_grop, $a_settings_key, $a_settings_value)
-    {
+
+    public function updateSmsApiSettings($a_settings_grop, $a_settings_key, $a_settings_value){
         $this->db->set('setting_value', $a_settings_value);
         $this->db->where('setting_type', $a_settings_grop);
         $this->db->where('setting_key', $a_settings_key);

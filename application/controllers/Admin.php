@@ -72,8 +72,7 @@ class Admin extends CI_Controller
         echo json_encode($json);
     }
 
-    public function all_area()
-    {
+    public function all_area(){
         //        $data['all_theme'] = $this->Admin_model->getAllInfo('tbl_course_theme');
         $data['user_info'] = $this->Admin_model->getInfo('tbl_useraccount', 'id', $this->session->userdata('user_id'));
         $data['page_title'] = '.:: Q-Study :: Tutor yourself...';
@@ -81,13 +80,15 @@ class Admin extends CI_Controller
         $data['page_section'] = '';
 
         $data['headerlink'] = $this->load->view('dashboard_template/headerlink', $data, true);
-        $data['leftnav'] = $this->load->view('dashboard_template/leftnav', $data, true);
-        $data['header'] = $this->load->view('dashboard_template/header', $data, true);
+        $data['leftnav']    = $this->load->view('dashboard_template/leftnav', $data, true);
+        $data['header']     = $this->load->view('dashboard_template/header', $data, true);
         $data['footerlink'] = $this->load->view('dashboard_template/footerlink', $data, true);
 
         $data['maincontent'] = $this->load->view('admin/all_area/all_area', $data, true);
         $this->load->view('master_dashboard', $data);
     }
+
+
     public function contact_mail()
     {
         $contacts_all = $this->Admin_model->getAllInfo('user_message');
@@ -166,6 +167,7 @@ class Admin extends CI_Controller
     {
         // echo 11; die();
         //$this->db->where('subscription_type','guest')->where('end_subscription',null)->update('tbl_useraccount',(['unlimited'=>1]));
+
         if ($_GET['name'] != null || $_GET['user_type'] != null || $_GET['country_id'] != null) {
 
             $data['total_registered'] = $this->Admin_model->total_registered_search($_GET['name'], $_GET['user_type'], $_GET['country_id']);
@@ -174,13 +176,18 @@ class Admin extends CI_Controller
             $data['total_registered'] = $this->Admin_model->total_registered();
             $data['today_registered'] = $this->Admin_model->today_registered();
         }
-        $data['tutor_with_10_student'] = $this->Admin_model->tutor_with_10_student();
 
+        // echo '<pre>';
+        // print_r($data['total_registered']);
+        // die();
+
+        $data['tutor_with_10_student'] = $this->Admin_model->tutor_with_10_student();
 
         $total_income =  $this->Admin_model->getTotalIncome();
         $daily_income =  $this->Admin_model->getDailyIncome();
-        $total  = $total_income[0];
-        $dailyIncome  = $daily_income[0];
+
+        $total       = $total_income[0];
+        $dailyIncome = $daily_income[0];
 
         $data['total_income'] = (isset($total->total_cost) && $total->total_cost > 0) ? $total->total_cost : 0;
         $data['daily_income'] = (isset($dailyIncome->daily_income) && $dailyIncome->daily_income > 0) ? $dailyIncome->daily_income : 0;
@@ -276,6 +283,10 @@ class Admin extends CI_Controller
         $data['leftnav'] = $this->load->view('dashboard_template/leftnav', $data, true);
         $data['header'] = $this->load->view('dashboard_template/header', $data, true);
         $data['footerlink'] = $this->load->view('dashboard_template/footerlink', $data, true);
+
+        // echo '<pre>';
+        // print_r($data);
+        // die();
 
         $data['maincontent'] = $this->load->view('admin/user/user_list', $data, true);
 
@@ -617,7 +628,7 @@ class Admin extends CI_Controller
 
             $data['courses'] = $this->coursesByCountry($data['user_info'][0]['country_id'], $data['user_info'][0]['id'], $type = "edit", $data['user_info'][0]['subscription_type'],$data['user_info'][0]['user_type']);  //whiteboard rakesh
 
-            $data['whiteboard'] = $this->Admin_model->whiteboardPurches('tbl_registered_course', $user_id);  //whiteboard rakesh 
+            $data['whiteboard'] = $this->Admin_model->whiteboardPurches('tbl_registered_course', $user_id);  //whiteboard rakesh
 
             //echo "<pre>";print_r($data['whiteboard']);die();
             $created_at = $data['user_info'][0]['created'];
@@ -738,7 +749,7 @@ class Admin extends CI_Controller
             if (isset($student_prize_list)) {
                 $this->db->where('user_id', $user_id)->update('prize_won_users', ['status' => 'paid']);
             }
-            // added AS 
+            // added AS
             if ($clean['subscription_type'] == "guest" || $clean['subscription_type'] == "signup") {
                 $guest_days = (isset($clean['guest_days'])) ? $clean['guest_days'] : null;
                 //echo $guest_days;die();
@@ -970,7 +981,7 @@ class Admin extends CI_Controller
     }
 
 
-    // add for direct deposit course referral 
+    // add for direct deposit course referral
     public function set_referral_point_deposit_user($userID)
     {
 
@@ -1358,12 +1369,12 @@ class Admin extends CI_Controller
 			$this->load->library('upload',$config);
 			$this->upload->initialize($config);
 
-			if($this->upload->do_upload('file')){ 
+			if($this->upload->do_upload('file')){
 				$uploadData = $this->upload->data();
 				$main_image = $uploadData['file_name'];
                 $data['image_name'] = $main_image;
                 $json['image_name'] = $main_image;
-                
+
 			}else{
 				// $json['image_error']	= array('error' => $this->upload->display_errors());
 				$json['image_name'] ='';
@@ -1384,8 +1395,8 @@ class Admin extends CI_Controller
         if(isset($data['course_details'][0]['image_name'])){
             $json['image_name'] = $data['course_details'][0]['image_name'];
         }
-        
-        
+
+
         $json['course_id'] = $course_id;
         $json['course_content_div'] = $this->load->view('admin/schedule/course_content_div', $data, true);
         echo json_encode($json);
@@ -1417,12 +1428,12 @@ class Admin extends CI_Controller
 			$this->load->library('upload',$config);
 			$this->upload->initialize($config);
 
-			if($this->upload->do_upload('file')){ 
+			if($this->upload->do_upload('file')){
 				$uploadData = $this->upload->data();
 				$main_image = $uploadData['file_name'];
                 $data['image_name'] = $main_image;
                 $json['image_name'] = $main_image;
-                
+
 			}else{
 				// $json['image_error']	= array('error' => $this->upload->display_errors());
 				$json['image_name'] ='';
@@ -1444,10 +1455,10 @@ class Admin extends CI_Controller
         if(isset($data['course_details'][0]['image_name'])){
             $json['image_name'] = $data['course_details'][0]['image_name'];
         }
-        
-        
 
-        
+
+
+
         $json['course_id'] = $course_id;
         $json['course_content_div'] = $this->load->view('admin/schedule/course_content_div', $data, true);
         echo json_encode($json);
@@ -2021,9 +2032,9 @@ class Admin extends CI_Controller
             $status = 2;
         }
         //$courses = $this->Admin_model->search('tbl_course', ['country_id' => $countryId]);
-        
+
         $courses = $this->Admin_model->getCourseByUserType($user_type,$countryId,$status);
-        
+
         //echo "<pre>";print_r($courses);die();
         $html = '';
 
@@ -2458,15 +2469,15 @@ class Admin extends CI_Controller
 
 
         // check whiteboard
-        $groupboardResources = $this->Admin_model->whiteboardPurchesLists($limit, $offset);  //whiteboard AS 
+        $groupboardResources = $this->Admin_model->whiteboardPurchesLists($limit, $offset);  //whiteboard AS
         $data['groupboardResources'] = count($groupboardResources);
 
 
-        $groupboardSignup = $this->Admin_model->whiteboardPurchesSignupLists('signup', $limit, $offset);  //whiteboard AS 
+        $groupboardSignup = $this->Admin_model->whiteboardPurchesSignupLists('signup', $limit, $offset);  //whiteboard AS
         $data['groupboardSignup'] = count($groupboardSignup);
 
 
-        $groupboardTrialList = $this->Admin_model->whiteboardPurchesSignupLists('trial', $limit, $offset);  //whiteboard AS 
+        $groupboardTrialList = $this->Admin_model->whiteboardPurchesSignupLists('trial', $limit, $offset);  //whiteboard AS
         $data['groupboardTrialList'] = count($groupboardTrialList);
 
         $CommissiontutorList = $this->Admin_model->tutorCommisionForAssignStudent($limit, $offset);
@@ -2501,7 +2512,7 @@ class Admin extends CI_Controller
         // echo "<pre>"; print_r($data['ninteyPercentageMark']);die;
 
         $creative_registers = $this->Admin_model->getallcreative();
-        $data['total_creative_reg'] = count($creative_registers); 
+        $data['total_creative_reg'] = count($creative_registers);
         // echo "<pre>";print_r($data['total_creative_reg']);die();
 
         $idea_created_students = $this->Admin_model->idea_created_students_list();
@@ -2512,7 +2523,7 @@ class Admin extends CI_Controller
         $data['ides_notification'] = $this->Admin_model->get_idea_notification();
         $data['total_tutors'] = count($idea_created_tutors);
         //echo "<pre>";print_r($data['ides_notification']);die();
- 
+
         $data['date'] = date('d/m/Y');
         $data['page_title'] = '.:: Q-Study :: Tutor yourself...';
         $data['page'] = 'User List';
@@ -2524,7 +2535,7 @@ class Admin extends CI_Controller
         $data['footerlink'] = $this->load->view('dashboard_template/footerlink', $data, true);
 
         $data['maincontent'] = $this->load->view('admin/user/notification', $data, true);
-        $this->load->view('master_dashboard', $data); 
+        $this->load->view('master_dashboard', $data);
     }
 
 
@@ -3433,11 +3444,11 @@ class Admin extends CI_Controller
 
 
     public function creativeUserList()
-    {  
+    {
 
         $creative_registers = $this->Admin_model->getallcreativeDetails();
         $data['creative_registers'] = $creative_registers;
- 
+
         // echo"<pre>"; print_r($creative_registers);die();
 
         $data['total_creative'] = count($creative_registers);
@@ -3511,7 +3522,7 @@ class Admin extends CI_Controller
         $data['creative_students'] = $this->Admin_model->idea_created_student_list();
         $data['created_idea_students'] = $this->Admin_model->idea_created_students();
         // echo "<pre>";print_r($data['created_idea_students']);die();
-    
+
 
         $data['page_title'] = '.:: Q-Study :: New Idea created student...';
         $data['page'] = 'New Idea created student';
@@ -3751,7 +3762,7 @@ class Admin extends CI_Controller
         }else{
             $first_question_id = $data['tutor_questions'][0]['question_id'];
         }
-        
+
 
         $data['first_question_ideas'] =  $this->Admin_model->get_first_question_ideas($first_question_id);
         // echo $this->db->last_query();die();
@@ -3778,7 +3789,7 @@ class Admin extends CI_Controller
         $data['question_item'] = 17;
         $data['question_id'] = $question_id;
         $data['question_tutorial'] = $this->tutor_model->getInfo('tbl_question_tutorial', 'question_id', $question_id);
-        $data['q_creator_name'] = $this->tutor_model->getIQuestionCreator($question_id); 
+        $data['q_creator_name'] = $this->tutor_model->getIQuestionCreator($question_id);
 
         $data['all_grade'] = $this->tutor_model->getAllInfo('tbl_studentgrade');
         $data['all_subject'] = $this->tutor_model->getInfo('tbl_subject', 'created_by', $tutor_id);
@@ -3830,7 +3841,7 @@ class Admin extends CI_Controller
 
         $data['page_title'] = '.:: Q-Study :: New Idea created student...';
         $data['page'] = 'New Idea created student';
-        $data['page_section'] = 'User'; 
+        $data['page_section'] = 'User';
 
         $data['headerlink'] = $this->load->view('dashboard_template/headerlink', $data, true);
         $data['leftnav'] = $this->load->view('dashboard_template/leftnav', $data, true);
@@ -3838,7 +3849,7 @@ class Admin extends CI_Controller
         $data['footerlink'] = $this->load->view('dashboard_template/footerlink', $data, true);
 
         $data['maincontent'] = $this->load->view('admin/user/idea_create_tutor_setting', $data, true);
-        $this->load->view('master_dashboard', $data); 
+        $this->load->view('master_dashboard', $data);
     }
     public function set_allow_idea()
     {
@@ -4112,7 +4123,7 @@ class Admin extends CI_Controller
         $data['idea_description'] = $this->Preview_model->getIdeaDescription('idea_description', $question_id);
 
         // echo "<pre>"; print_r($data); die();
-        
+
         $data['page_title'] = '.:: Q-Study :: Tutor yourself...';
         $data['headerlink'] = $this->load->view('dashboard_template/headerlink', $data, true);
         $data['header'] = '';
@@ -4211,8 +4222,8 @@ class Admin extends CI_Controller
 
         $data['grade'] = 1;
         $data['question_id'] = $question_id;
-        
-        // echo "<pre>";print_r($data['student_idea']);die(); 
+
+        // echo "<pre>";print_r($data['student_idea']);die();
 
         $data['page_title'] = '.:: Q-Study :: Tutor yourself...';
         $data['headerlink'] = $this->load->view('dashboard_template/headerlink', $data, true);
@@ -4251,7 +4262,7 @@ class Admin extends CI_Controller
         $this->db->from('tutor_remake_idea_info');
         $this->db->where('student_id', $student_id);
         $this->db->where('idea_id', $student_id);
-        
+
         $query = $this->db->get();
         $check = $query->result_array();
         if(empty($check)){
@@ -4278,13 +4289,13 @@ class Admin extends CI_Controller
 			$this->load->library('upload',$config);
 			$this->upload->initialize($config);
 
-			if($this->upload->do_upload('file')){ 
+			if($this->upload->do_upload('file')){
 				$uploadData = $this->upload->data();
 				$main_image = $uploadData['file_name'];
 				echo $main_image;
                 // die();
 				// $this->_create_thumbs($uploadData['file_name']);
-                
+
 			}else{
                 //print_r($this->upload->display_errors());die();
 				$return['main_image_error']	= array('error' => $this->upload->display_errors());
@@ -4292,7 +4303,7 @@ class Admin extends CI_Controller
 			}
 		}
     }
-    
+
     public function teacher_idea_correction_save()
     {
         // echo "<pre>"; print_r($_POST); die();
@@ -4395,7 +4406,7 @@ class Admin extends CI_Controller
 
 
         // echo "<pre>";print_r($data);die();
-        
+
 
         // $data['other_total_spelling_mark']=$this->input->post('other_total_spelling_mark');
         // $data['other_spelling_error_value']=$this->input->post('other_spelling_error_value');
@@ -4410,7 +4421,7 @@ class Admin extends CI_Controller
         // $data['ss_conclution']= json_encode($ss_conclution);
 
         $data['admin_seen']=1;
-        
+
         $this->db->select('*');
         $this->db->from('tutor_correction_idea_info');
         $this->db->where('module_id',$this->input->post('module_id'));
@@ -4419,7 +4430,7 @@ class Admin extends CI_Controller
         $query = $this->db->get();
         $check_insert = $query->result_array();
 
-       
+
         if(empty($check_insert)){
             $this->db->insert('tutor_correction_idea_info',$data);
             $datas['success']='successfully insert';
@@ -4440,10 +4451,10 @@ class Admin extends CI_Controller
             $datas['success']='Standard Marking has been done.';
             $datas['status']=2;
         }
-        
+
 
         // $this->db->where('student_id',$this->input->post('student_id'))->where('question_id',$this->input->post('question_id'))->update('idea_student_ans',$datas);
-        
+
 
         echo json_encode($datas);
     }
@@ -4488,7 +4499,7 @@ class Admin extends CI_Controller
         $ss_body_paragraph_option_three_hint=$this->input->post('ss_body_paragraph_three_hint');
         $ss_body_paragraph_option_four=$this->input->post('ss_body_paragraph_four');
         $ss_body_paragraph_option_four_hint=$this->input->post('ss_body_paragraph_four_hint');
-        
+
         $ss_conclution_option_one=$this->input->post('ss_conclution_one');
         $ss_conclution_option_one_hint=$this->input->post('ss_conclution_one_hint');
         $ss_conclution_option_two=$this->input->post('ss_conclution_two');
@@ -4528,7 +4539,7 @@ class Admin extends CI_Controller
         if(isset($ss_intro_option_four) && $ss_intro_option_four !='') $ss_intro['ss_intro_option_four']=$ss_intro_option_four;
         if(isset($ss_intro_option_four_hint) && $ss_intro_option_four_hint !='') $ss_intro['ss_intro_option_four_hint']=$ss_intro_option_four_hint;
 
-        
+
 
         if(isset($ss_body_paragraph_option_one) && $ss_body_paragraph_option_one !='') $ss_body['ss_body_paragraph_option_one']=$ss_body_paragraph_option_one;
         if(isset($ss_body_paragraph_option_one_hint) && $ss_body_paragraph_option_one_hint !='') $ss_body['ss_body_paragraph_option_one_hint']=$ss_body_paragraph_option_one_hint;
@@ -4561,7 +4572,7 @@ class Admin extends CI_Controller
         //$data['total_spelling_mark']= $this->input->post('total_spelling_mark');
         //$data['creative_sentence_mark']=$this->input->post('creative_sentence_mark');
         //$data['creative_sentence_index']=$this->input->post('creative_sentence_index');
-        
+
         //$data['creative_sentence_color']=$this->input->post('creative_sentence_color');
         //$data['st_title_text']=$this->input->post('st_title_text');
         //$data['st_spelling_text']=$this->input->post('st_spelling_text');
@@ -4570,7 +4581,7 @@ class Admin extends CI_Controller
         //$data['introduction_point']=$this->input->post('introduction_point');
         //$data['introduction_index']=$this->input->post('every_introduction_index');
         //$data['introduction_text']=$this->input->post('st_introduction_text');
-        
+
         //$data['body_paragraph_point']= $this->input->post('body_paragraph_point');
         //$data['body_paragraph_index']= $this->input->post('every_body_index');
         //$data['body_paragraph_text']= $this->input->post('st_body_paragraph_text');
@@ -4579,7 +4590,7 @@ class Admin extends CI_Controller
         // $data['conclusion_index']= $this->input->post('every_conclusion_index');
         // $data['conclusion_text']= $this->input->post('st_conclusion_text');
 
-        
+
         $other_total_spelling_mark=$this->input->post('other_total_spelling_mark');
         $other_spelling_error_value=$this->input->post('other_spelling_error_value');
         $other_creative_sentence_index=$this->input->post('other_creative_sentence_index');
@@ -4609,7 +4620,7 @@ class Admin extends CI_Controller
         $this->db->where('idea_id',$this->input->post('idea_id'));
         $query = $this->db->get();
         $check_insert = $query->result_array();
-        
+
         $this->db->where('student_id',$this->input->post('student_id'));
         $this->db->where('question_id',$this->input->post('question_id'));
         $this->db->where('idea_id',$this->input->post('idea_id'));
@@ -4628,4 +4639,4 @@ class Admin extends CI_Controller
     public function testing(){
         $this->load->view('testspell');
     }
-} 
+}

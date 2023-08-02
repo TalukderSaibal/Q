@@ -1,62 +1,63 @@
 <style>
-.parent {
-    border: 1px solid #ddd;
-    margin: 10px;
-    min-height: 30px;
-    line-height: 28px;
-    border-radius: 4px;
-}
+    .parent {
+        border: 1px solid #ddd;
+        margin: 10px;
+        min-height: 30px;
+        line-height: 28px;
+        border-radius: 4px;
+    }
 
-.child1 {
-    float: left;width: 60%;
-    text-align: center;
-    background: #7FBED8;
-    color: #fff;
-    font-size: 12px;
-    font-weight: bold;
-}
+    .child1 {
+        float: left;width: 60%;
+        text-align: center;
+        background: #7FBED8;
+        color: #fff;
+        font-size: 12px;
+        font-weight: bold;
+    }
 
-.child2 {
-    width: 40%;float: left;
-    text-align: center;
-    background: #2F91BA;
-    color: #fff;
-}
+    .child2 {
+        width: 40%;float: left;
+        text-align: center;
+        background: #2F91BA;
+        color: #fff;
+    }
 
-.form-group{
-    display: inline-block;
-}
+    .form-group{
+        display: inline-block;
+    }
 
-.select2-container .select2-selection--single {
-    height: 34px;
-    font-size: 13px;
-}
+    .select2-container .select2-selection--single {
+        height: 34px;
+        font-size: 13px;
+    }
 
-label {
-    font-size: 13px;
-}
+    label {
+        font-size: 13px;
+    }
 
-.user_list {
-    border-color: #2F91BA;
-}
+    .user_list {
+        border-color: #2F91BA;
+    }
 
-.panel-heading{
-    background-color: #2F91BA !important;
-} 
-.panel-title a {
-    text-decoration: none;
-    color: #fff !important;
-}
+    .panel-heading{
+        background-color: #2F91BA !important;
+    }
+    .panel-title a {
+        text-decoration: none;
+        color: #fff !important;
+    }
 
 
 
 </style>
+
 <!-- flash message -->
 <div class="row">
-  <div class="col-md-4"></div>
-  <div class="col-md-8">
-    <?php $this->load->view('flash_message_section'); ?>
-  </div>
+    <div class="col-md-4"></div>
+    <div class="col-md-8">
+        <?php $this->load->view('flash_message_section'); ?>
+    </div>
 </div>
 
 
@@ -71,12 +72,12 @@ label {
                 <div class="panel panel-default">
                     <div class="panel-heading" role="tab" id="headingOne">
                         <h4 class="panel-title text-center">
-                            <a role="button" data-toggle="collapse" data-parent="#task_accordion" href="#collapseOnetask" aria-expanded="true" aria-controls="collapseOne"> 
+                            <a role="button" data-toggle="collapse" data-parent="#task_accordion" href="#collapseOnetask" aria-expanded="true" aria-controls="collapseOne">
                                 <strong><span style="font-size : 18px; color:white;">  User List </span></strong>
                             </a>
                         </h4>
                     </div>
-                    
+
                     <div class="row panel-body">
                         <div class="col-sm-12 text-right">
                             <a type="button" href="<?php echo base_url('Admin/notification') ?>" class="btn btn_next" id=""><i class="fa fa-bell" style="padding-right: 5px;"></i>Notification</a>
@@ -167,7 +168,7 @@ label {
 
                                         <div class="col-md-6">
                                             <div class="parent">
-                                                Groupboard 
+                                                Groupboard
                                                 <div class="child1" style="font-size: 10px;" >Groupboard's Tutor/School/Corporate </div>
                                                 <div class="child2"><?php echo $groupboard_require ;?></div>
                                             </div>
@@ -209,7 +210,7 @@ label {
 
                             <div id="userList">
                                 <?php $this->load->view('admin/user/user_div');?>
-                            </div>    
+                            </div>
 
                         </div>
                     </div>
