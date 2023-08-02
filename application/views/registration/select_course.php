@@ -17,7 +17,7 @@ if( $this->session->userdata('userType') == 1 && $this->session->userdata('regis
 
 ?>
 <?php echo $header; ?>
-<?php echo $header_sign_up; ?>  
+<?php echo $header_sign_up; ?>
 <style>
     .direct_debit_1{
         background: #337ab7;
@@ -36,54 +36,54 @@ if( $this->session->userdata('userType') == 1 && $this->session->userdata('regis
 
     .direct_debit_2{
         background: #337ab7;
-        color: #fff; 
+        color: #fff;
         height: 76px;
-        margin-left: 2px;       
+        margin-left: 2px;
     }
 
     .direct_debit_2 p{
-        color: #fff;       
+        color: #fff;
     }
     .direct_debit_3{
         background: #337ab7;
-        color: #fff; 
+        color: #fff;
         height: 76px;
-        margin-left: 2px;  
-        padding-top: 25px;     
+        margin-left: 2px;
+        padding-top: 25px;
     }
     .direct_deposit_3{
         background: #b3a2c7;
-        color: #fff; 
+        color: #fff;
         height: 76px;
-        margin-left: 2px;  
-        padding-top: 25px;     
+        margin-left: 2px;
+        padding-top: 25px;
     }
 
     .no_direct_debit .direct_debit_1{
         background: #d99694;
-        color: #fff; 
+        color: #fff;
         height: 76px;
         padding-top: 25px;
     }
     .no_direct_debit .direct_debit_2{
         background: #d99694;
-        color: #fff; 
+        color: #fff;
         height: 76px;
-        margin-left: 2px; 
+        margin-left: 2px;
     }
     .no_direct_debit .direct_debit_3{
         background: #d99694;
-        color: #fff; 
+        color: #fff;
         height: 76px;
-        margin-left: 2px; 
+        margin-left: 2px;
         padding-top: 25px;
     }
     .direct_deposits .direct_debit_2{
         background: #b3a2c7;
-        color: #fff; 
+        color: #fff;
         height: 76px;
-        margin-left: 2px;   
-        padding-top: 25px;    
+        margin-left: 2px;
+        padding-top: 25px;
     }
 
     .hover_set .tooltiptext {
@@ -167,7 +167,7 @@ if( $this->session->userdata('userType') == 1 && $this->session->userdata('regis
         text-align:left;
         min-height:325px;
         padding-bottom:14px;
-        
+
     }
     .without_image_course_name{
         font-family: century-gothic, sans-serif;
@@ -210,7 +210,7 @@ if( $this->session->userdata('userType') == 1 && $this->session->userdata('regis
 
 
 </style>
-<?php //echo "<pre>";print_r($user_info);die(); 
+<?php //echo "<pre>";print_r($user_info);die();
 
     $end_subs = $user_info[0]['end_subscription'];
     $payment_status = $user_info[0]['payment_status'];
@@ -226,7 +226,7 @@ if( $this->session->userdata('userType') == 1 && $this->session->userdata('regis
 
 <div class="container">
     <div class="row">
-        <p class="alert alert-success" id="help_denied" style="margin: 0 28%;"  > 
+        <p class="alert alert-success" id="help_denied" style="margin: 0 28%;"  >
             <b> Before you select the subject please watch the video help. </b>
         </p>
         <div class="col-sm-12">
@@ -236,20 +236,20 @@ if( $this->session->userdata('userType') == 1 && $this->session->userdata('regis
                 <div class="ss_top_s_course">
                     <?php if($country_id==1  && $this->session->userdata('registrationType') != 'trial'){?>
                         <div class="row">
-                        <?php 
-                              
+                        <?php
+
                             $i=1;
                             $j=1;
                             $k=2;
                             $l=3;
                             foreach($courses as $course_info){ ?>
-                            
-                            <?php if($i==1){?> 
+
+                            <?php if($i==1){?>
                                 <div class="col-md-4" style="margin-top: 15px;">
                                 <div style="position:relative;">
                                 <input type="checkbox" name="course[]" id="course_<?php echo $i; ?>" class="course_checkbox" data-id="<?=$i;?>" value="<?php echo $course_info['id'] ?>" data="<?php echo $course_info['courseCost'] ?>" <?php if(in_array($course_info['id'],$register_course)){echo "checked";} ?>>
                                 <label for="course_<?php echo $i; ?>" style="display: block;">
-                                    <div for="course_<?php echo $i; ?>" class="course_one_serial selected_course selected_course<?=$i;?>" data-id="<?=$i;?>"> 
+                                    <div for="course_<?php echo $i; ?>" class="course_one_serial selected_course selected_course<?=$i;?>" data-id="<?=$i;?>">
 
                                     <?//php if(in_array($course_info['id'],$register_course)){ ?>
                                     <!-- <i class="fa fa-check" style="color:green;font-size:18px;bottom:5px;"></i> -->
@@ -286,7 +286,7 @@ if( $this->session->userdata('userType') == 1 && $this->session->userdata('regis
                                     </div>
                                 </label>
                                 </div>
-                                
+
                                 </div>
                             <?php }elseif($i==4){?>
                                 <div class="col-md-4" style="margin-top: 15px;">
@@ -294,7 +294,7 @@ if( $this->session->userdata('userType') == 1 && $this->session->userdata('regis
                                         <input type="checkbox" name="course[]" id="course_<?php echo $i; ?>" class="course_checkbox"  data-id="<?=$i;?>" value="<?php echo $course_info['id'] ?>" data="<?php echo $course_info['courseCost'] ?>" <?php if(in_array($course_info['id'],$register_course)){echo "checked";} ?>>
                                         <label for="course_<?php echo $i; ?>" style="display: block;">
                                             <div class="course_one_serial selected_course selected_course<?=$i;?>" data-id="<?=$i;?>">
-                                                
+
                                                 <div class="row">
                                                 <div class="col-md-12" style="padding-right:0px;padding-left:8px;">
                                                 <?php $course_name = preg_split('#<p([^>])*>#',$course_info['courseName']);
@@ -316,7 +316,7 @@ if( $this->session->userdata('userType') == 1 && $this->session->userdata('regis
                                                     <br>
                                                     <br>
                                                     <p class="gradeName<?=$i;?> grade_row" style="font-family: century-gothic, sans-serif;font-weight:bold;font-size:14px;text-align: left;color:#d63832;"><?php echo $grade?></p>
-                                                    
+
                                                 </div>
                                                 </div>
                                                 <div class="row">
@@ -339,7 +339,7 @@ if( $this->session->userdata('userType') == 1 && $this->session->userdata('regis
                                         <input type="checkbox" name="course[]" id="course_<?php echo $i; ?>" class="course_checkbox"  data-id="<?=$i;?>" value="<?php echo $course_info['id'] ?>" data="<?php echo $course_info['courseCost'] ?>" <?php if(in_array($course_info['id'],$register_course)){echo "checked";} ?>>
                                         <label for="course_<?php echo $i; ?>" style="display: block;">
                                             <div class="course_one_serial selected_course selected_course<?=$i;?>" data-id="<?=$i;?>">
-                                                
+
                                                 <?php $course_name = preg_split('#<p([^>])*>#',$course_info['courseName']);
                                                 //echo "<pre>";print_r(array_filter($course_name));die();
                                                 $course_name = array_filter($course_name);
@@ -360,14 +360,14 @@ if( $this->session->userdata('userType') == 1 && $this->session->userdata('regis
                                                         <p class="gradeName<?=$i;?> grade_row" style="font-family: century-gothic, sans-serif;font-weight:bold;font-size:14px;text-align: center;color:#d63832;"><?php echo $grade?></p>
                                                     </div>
                                                     <div class="col-md-8" style="padding-right:0px;padding-left:8px;">
-                                                        
+
                                                         <div style="text-align: center;">
                                                             <img src="assets/course_image/<?=$course_info['image_name']?>" class="course_image_show_<?=$i?>" style="">
                                                             <a href="price_dashboard" class="course_infos"> <i class="fa fa-question-circle" style="color:#00a2e8;font-size:30px;"></i></a>
                                                             <span class="tooltiptext">This is a set of creative writing assignments that the student is to complete with the assistance of a trained professional interactive tutor; who will help by way of checking, correcting and editing your child’s submitted work, thus way facilitating his/her learning experience! We believe that this program would substantially boost and improve your student’s creative writing skills once completed, due to the healthy challenges and encouragement of development it provides!</span>
 
-                                                        </div>    
-                                                        
+                                                        </div>
+
                                                     </div>
                                                 </div>
                                                 <br> <br>
@@ -377,23 +377,23 @@ if( $this->session->userdata('userType') == 1 && $this->session->userdata('regis
                                                     </div>
                                                     <div class="col-md-9" style="min-height:50px;">
                                                         <div style="position: absolute; bottom:0px;">
-                                                            
+
                                                             <p class="courseName<?=$i;?>" style="font-family: century-gothic, sans-serif;font-weight:bold;font-size:16px;text-align: center;"><?php echo "Tutor Assisted Program";?></p>
-                                                            
+
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </label>
                                     </div>
-                                    
+
                                 </div>
                             <?php }?>
-                            
-                            
+
+
                         <?php $i++;}?>
 
-                        <?php 
+                        <?php
                         $i=1;
                         foreach($courses as $course_info){ ?>
                             <?php if($i==2){ ?>
@@ -405,8 +405,8 @@ if( $this->session->userdata('userType') == 1 && $this->session->userdata('regis
                                         <div for="course_<?php echo $i; ?>" class="course_two_serial selected_course selected_course<?=$i;?>" data-id="<?=$i;?>">
                                             <div class="course_without_image_box course_without_image_box<?=$i?>" style="min-height: 245px;background-color: #c3eaf1;   display: flex;align-items: center;flex-wrap: wrap;padding: 10px;    justify-content: center;">
 
-                                            
-                                            
+
+
                                             <div style="font-family: century-gothic, sans-serif;font-weight:bold;font-size:16px;">
                                                 <?php $course_name = preg_split('#<p([^>])*>#',$course_info['courseName']);
                                                 // echo "<pre>";print_r($course_name);die();
@@ -432,7 +432,7 @@ if( $this->session->userdata('userType') == 1 && $this->session->userdata('regis
                                         </div>
                                     </label>
                                 </div>
-                                
+
                                 </div>
 
                             <?php }else if($i==3){?>
@@ -442,7 +442,7 @@ if( $this->session->userdata('userType') == 1 && $this->session->userdata('regis
 
                                         <label for="course_<?php echo $i; ?>" style="display: block;">
                                             <div for="course_<?php echo $i; ?>" class="course_two_serial selected_course selected_course<?=$i;?>" data-id="<?=$i;?>">
-                                                
+
                                                 <div class="course_without_image_box course_without_image_box<?=$i?>" style="min-height: 245px;background-color: #fbe5d6;   display: flex;align-items: center;flex-wrap: wrap;padding: 10px;    justify-content: center;">
 
                                                     <div style="font-family: century-gothic, sans-serif;font-weight:bold;font-size:16px;display: table-cell;vertical-align: middle;">
@@ -479,7 +479,7 @@ if( $this->session->userdata('userType') == 1 && $this->session->userdata('regis
                                         <label for="course_<?php echo $i; ?>" style="display: block;">
                                             <div class="course_two_serial selected_course selected_course<?=$i;?>">
                                                 <div class="course_without_image_box course_without_image_box<?=$i?>" style="min-height: 245px;background-color: #e2f0d9;   display: flex;align-items: center;flex-wrap: wrap;padding: 10px;justify-content: center;">
-                                                
+
 
                                                     <div style="font-family: century-gothic, sans-serif;font-weight:bold;font-size:16px;display: table-cell;vertical-align: middle;">
                                                     <?php $course_name = preg_split('#<p([^>])*>#',$course_info['courseName']);
@@ -506,7 +506,7 @@ if( $this->session->userdata('userType') == 1 && $this->session->userdata('regis
                                             </div>
                                         </label>
                                     </div>
-                                
+
                                 </div>
                             <?php }else if($i>6){?>
                                 <div class="col-md-4" style="margin-top: 15px;">
@@ -515,7 +515,7 @@ if( $this->session->userdata('userType') == 1 && $this->session->userdata('regis
                                         <label for="course_<?php echo $i; ?>" style="display: block;">
                                             <div class="course_two_serial selected_course selected_course<?=$i;?>">
                                                 <div class="course_without_image_box course_without_image_box<?=$i?>" style="min-height:219px;background-color:#e2f0d9;border-top-right-radius: 10px;border-top-left-radius: 10px;width:100%;text-align: center;display:table;">
-                                                
+
 
                                                     <div style="font-family: century-gothic, sans-serif;font-weight:bold;font-size:16px;display: table-cell;vertical-align: middle;">
                                                     <?php $course_name = preg_split('#<p([^>])*>#',$course_info['courseName']);
@@ -542,7 +542,7 @@ if( $this->session->userdata('userType') == 1 && $this->session->userdata('regis
                                             </div>
                                         </label>
                                     </div>
-                                
+
                                 </div>
                             <?php }?>
 
@@ -551,20 +551,20 @@ if( $this->session->userdata('userType') == 1 && $this->session->userdata('regis
                         </div>
                     <?php }else{?>
                         <div class="row">
-                            <?php 
-                                
+                            <?php
+
                                 $i=1;
                                 $j=1;
                                 $k=2;
                                 $l=3;
                                 foreach($courses as $course_info){ ?>
-                                
-                                <?php if($i==1){?> 
+
+                                <?php if($i==1){?>
                                     <div class="col-md-4" style="margin-top: 15px;">
                                     <div style="position:relative;">
                                     <input type="checkbox" name="course[]" id="course_<?php echo $i; ?>" class="course_checkbox" data-id="<?=$i;?>" value="<?php echo $course_info['id'] ?>" data="<?php echo $course_info['courseCost'] ?>" <?php if(in_array($course_info['id'],$register_course)){echo "checked";} ?>>
                                     <label for="course_<?php echo $i; ?>" style="display: block;">
-                                        <div for="course_<?php echo $i; ?>" class="course_one_serial selected_course selected_course<?=$i;?>" data-id="<?=$i;?>"> 
+                                        <div for="course_<?php echo $i; ?>" class="course_one_serial selected_course selected_course<?=$i;?>" data-id="<?=$i;?>">
 
                                         <?//php if(in_array($course_info['id'],$register_course)){ ?>
                                         <!-- <i class="fa fa-check" style="color:green;font-size:18px;bottom:5px;"></i> -->
@@ -601,7 +601,7 @@ if( $this->session->userdata('userType') == 1 && $this->session->userdata('regis
                                         </div>
                                     </label>
                                     </div>
-                                    
+
                                     </div>
                                 <?php }elseif($i==2){?>
                                     <div class="col-md-4" style="margin-top: 15px;">
@@ -609,7 +609,7 @@ if( $this->session->userdata('userType') == 1 && $this->session->userdata('regis
                                             <input type="checkbox" name="course[]" id="course_<?php echo $i; ?>" class="course_checkbox"  data-id="<?=$i;?>" value="<?php echo $course_info['id'] ?>" data="<?php echo $course_info['courseCost'] ?>" <?php if(in_array($course_info['id'],$register_course)){echo "checked";} ?>>
                                             <label for="course_<?php echo $i; ?>" style="display: block;">
                                                 <div class="course_one_serial selected_course selected_course<?=$i;?>" data-id="<?=$i;?>">
-                                                    
+
                                                     <div class="row">
                                                     <div class="col-md-12" style="padding-right:0px;padding-left:8px;">
                                                     <?php $course_name = preg_split('#<p([^>])*>#',$course_info['courseName']);
@@ -631,7 +631,7 @@ if( $this->session->userdata('userType') == 1 && $this->session->userdata('regis
                                                         <br>
                                                         <br>
                                                         <p class="gradeName<?=$i;?> grade_row" style="font-family: century-gothic, sans-serif;font-weight:bold;font-size:14px;text-align: left;color:#d63832;"><?php echo $grade?></p>
-                                                        
+
                                                     </div>
                                                     </div>
                                                     <div class="row">
@@ -654,7 +654,7 @@ if( $this->session->userdata('userType') == 1 && $this->session->userdata('regis
                                             <input type="checkbox" name="course[]" id="course_<?php echo $i; ?>" class="course_checkbox"  data-id="<?=$i;?>" value="<?php echo $course_info['id'] ?>" data="<?php echo $course_info['courseCost'] ?>" <?php if(in_array($course_info['id'],$register_course)){echo "checked";} ?>>
                                             <label for="course_<?php echo $i; ?>" style="display: block;">
                                                 <div class="course_one_serial selected_course selected_course<?=$i;?>" data-id="<?=$i;?>">
-                                                    
+
                                                     <?php $course_name = preg_split('#<p([^>])*>#',$course_info['courseName']);
                                                     //echo "<pre>";print_r(array_filter($course_name));die();
                                                     $course_name = array_filter($course_name);
@@ -675,14 +675,14 @@ if( $this->session->userdata('userType') == 1 && $this->session->userdata('regis
                                                             <p class="gradeName<?=$i;?> grade_row" style="font-family: century-gothic, sans-serif;font-weight:bold;font-size:14px;text-align: center;color:#d63832;"><?php echo $grade?></p>
                                                         </div>
                                                         <div class="col-md-8" style="padding-right:0px;padding-left:8px;">
-                                                            
+
                                                             <div style="text-align: center;">
                                                                 <img src="assets/course_image/<?=$course_info['image_name']?>" class="course_image_show_<?=$i?>" style="">
                                                                 <a href="price_dashboard" class="course_infos"> <i class="fa fa-question-circle" style="color:#00a2e8;font-size:30px;"></i></a>
                                                                 <span class="tooltiptext">This is a set of creative writing assignments that the student is to complete with the assistance of a trained professional interactive tutor; who will help by way of checking, correcting and editing your child’s submitted work, thus way facilitating his/her learning experience! We believe that this program would substantially boost and improve your student’s creative writing skills once completed, due to the healthy challenges and encouragement of development it provides!</span>
 
-                                                            </div>    
-                                                            
+                                                            </div>
+
                                                         </div>
                                                     </div>
                                                     <br> <br>
@@ -692,16 +692,16 @@ if( $this->session->userdata('userType') == 1 && $this->session->userdata('regis
                                                         </div>
                                                         <div class="col-md-9" style="min-height:50px;">
                                                             <div style="position: absolute; bottom:0px;">
-                                                                
+
                                                                 <p class="courseName<?=$i;?>" style="font-family: century-gothic, sans-serif;font-weight:bold;font-size:16px;text-align: center;"><?php echo "Tutor Assisted Program";?></p>
-                                                                
+
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </label>
                                         </div>
-                                        
+
                                     </div>
                                 <?php }elseif($i==4){?>
                                     <div class="col-md-4" style="margin-top: 15px;">
@@ -712,8 +712,8 @@ if( $this->session->userdata('userType') == 1 && $this->session->userdata('regis
                                             <div for="course_<?php echo $i; ?>" class="course_two_serial selected_course selected_course<?=$i;?>" data-id="<?=$i;?>">
                                                 <div class="course_without_image_box course_without_image_box<?=$i?>" style="min-height: 245px;background-color: #c3eaf1;   display: flex;align-items: center;flex-wrap: wrap;padding: 10px;    justify-content: center;">
 
-                                                
-                                                
+
+
                                                 <div style="font-family: century-gothic, sans-serif;font-weight:bold;font-size:16px;">
                                                     <?php $course_name = preg_split('#<p([^>])*>#',$course_info['courseName']);
                                                     // echo "<pre>";print_r($course_name);die();
@@ -739,7 +739,7 @@ if( $this->session->userdata('userType') == 1 && $this->session->userdata('regis
                                             </div>
                                         </label>
                                     </div>
-                                    
+
                                     </div>
                                 <?php }elseif($i==5){?>
                                     <div class="col-md-4" style="margin-top: 15px;">
@@ -748,7 +748,7 @@ if( $this->session->userdata('userType') == 1 && $this->session->userdata('regis
 
                                             <label for="course_<?php echo $i; ?>" style="display: block;">
                                                 <div for="course_<?php echo $i; ?>" class="course_two_serial selected_course selected_course<?=$i;?>" data-id="<?=$i;?>">
-                                                    
+
                                                     <div class="course_without_image_box course_without_image_box<?=$i?>" style="min-height: 245px;background-color: #fbe5d6;   display: flex;align-items: center;flex-wrap: wrap;padding: 10px;    justify-content: center;">
 
                                                         <div style="font-family: century-gothic, sans-serif;font-weight:bold;font-size:16px;display: table-cell;vertical-align: middle;">
@@ -785,7 +785,7 @@ if( $this->session->userdata('userType') == 1 && $this->session->userdata('regis
                                             <label for="course_<?php echo $i; ?>" style="display: block;">
                                                 <div class="course_two_serial selected_course selected_course<?=$i;?>">
                                                     <div class="course_without_image_box course_without_image_box<?=$i?>" style="min-height: 245px;background-color: #e2f0d9;   display: flex;align-items: center;flex-wrap: wrap;padding: 10px;justify-content: center;">
-                                                    
+
 
                                                         <div style="font-family: century-gothic, sans-serif;font-weight:bold;font-size:16px;display: table-cell;vertical-align: middle;">
                                                         <?php $course_name = preg_split('#<p([^>])*>#',$course_info['courseName']);
@@ -812,7 +812,7 @@ if( $this->session->userdata('userType') == 1 && $this->session->userdata('regis
                                                 </div>
                                             </label>
                                         </div>
-                                    
+
                                     </div>
                                 <?php }else if($i>6){?>
                                     <div class="col-md-4" style="margin-top: 15px;">
@@ -821,7 +821,7 @@ if( $this->session->userdata('userType') == 1 && $this->session->userdata('regis
                                             <label for="course_<?php echo $i; ?>" style="display: block;">
                                                 <div class="course_two_serial selected_course selected_course<?=$i;?>">
                                                     <div class="course_without_image_box course_without_image_box<?=$i?>" style="min-height:219px;background-color:#e2f0d9;border-top-right-radius: 10px;border-top-left-radius: 10px;width:100%;text-align: center;display:table;">
-                                                    
+
 
                                                         <div style="font-family: century-gothic, sans-serif;font-weight:bold;font-size:16px;display: table-cell;vertical-align: middle;">
                                                         <?php $course_name = preg_split('#<p([^>])*>#',$course_info['courseName']);
@@ -848,7 +848,7 @@ if( $this->session->userdata('userType') == 1 && $this->session->userdata('regis
                                                 </div>
                                             </label>
                                         </div>
-                                    
+
                                     </div>
                                 <?php }?>
 
@@ -863,7 +863,7 @@ if( $this->session->userdata('userType') == 1 && $this->session->userdata('regis
 
                 <div class="ss_bottom_s_course">
                     <div class="form-group">
-                        <label class="label-inline">Number of children</label>  
+                        <label class="label-inline">Number of children</label>
 
                         <input type="Number" id="children" class="form-control ss_number" name="children" value='1' onclick="getChildreen();" onkeyup="getChildreen();" readonly>
                     </div>
@@ -873,7 +873,7 @@ if( $this->session->userdata('userType') == 1 && $this->session->userdata('regis
                             <!--<div class="select active r2" data="2" checked onclick="myR2Func();">6 Months</div>-->
                             <div class="select r2" data="2" onclick="myR2Func();">6 Months</div>
                             <div class="select r3" data="3" onclick="myR3Func();">1Year</div>
-                            
+
                         <?php }else{ ?>
                             <div class="select active r1" data="1" checked onclick="myR1Func();">Per month</div>
                             <div class="select  r4" data="4"  onclick="myR4Func();">3 Months</div>
@@ -886,9 +886,9 @@ if( $this->session->userdata('userType') == 1 && $this->session->userdata('regis
                         <input type="hidden" name="totalCost" value="" id="totalCost" />
                     <?php } ?>
                 </div>
-                   <br> 
+                   <br>
                 <?php if ($this->session->userdata('registrationType') != 'trial') { ?>
-                <div class="text-center" style="padding: 15px 185px;"> 
+                <div class="text-center" style="padding: 15px 185px;">
                     <button class="btn btn-primary" style="margin-right: 50px;">Choose Option</button>
                     <br>
                     <br>
@@ -897,7 +897,7 @@ if( $this->session->userdata('userType') == 1 && $this->session->userdata('regis
                         <div class="col-md-7 direct_debit_2">
                             <p style="font-weight: bold;">Direct Debit</p>
                             <p>Your membership will be renewed automatically. You may cancel anytime</p>
-                        
+
                         </div>
                         <div class="col-md-2 direct_debit_3">
                             <input type="checkbox" class="ck_direct_debit payment_process" id="ck_direct_debit" name="direct_debit" value="1">
@@ -933,9 +933,9 @@ if( $this->session->userdata('userType') == 1 && $this->session->userdata('regis
                     echo '<br>';
                 } ?>
 
-                <input type="hidden" value="1" name="token">    
-                <div class="text-center" > 
-                    <button type="submit" class="btn btn_next" id="must_select" name="submit" value="submit"> 
+                <input type="hidden" value="1" name="token">
+                <div class="text-center" >
+                    <button type="submit" class="btn btn_next" id="must_select" name="submit" value="submit">
                         <img src="<?php echo base_url(); ?>assets/images/icon_save.png"/>Save & Proceed
                     </button>
                 </div>
@@ -949,7 +949,7 @@ if( $this->session->userdata('userType') == 1 && $this->session->userdata('regis
 
 <script>
 $(document).ready(function(){
-   courseClick(); 
+   courseClick();
     $('.course_infos').mouseenter(function(){
         $('.tooltiptext').css('visibility','visible');
     });
@@ -970,7 +970,7 @@ $(document).ready(function(){
         }else{
             var result = "NO";
         }
-  
+
         if (result == "NO") {
             $('.payment_option_error').html('Please select the payment option first !!');
             // alert('Please select the payment option first !!')
@@ -980,7 +980,7 @@ $(document).ready(function(){
             return true;
         }
     })
-    
+
 <?php } ?>
 
 
@@ -1006,7 +1006,7 @@ $(document).ready(function(){
             var totalCostWithPeriod = $("#totalCost").val();
             document.getElementById("paymentType").value = davalue2;
             countTotal(Period,totalCostWithPeriod,6);
-            
+
         }
         function myR3Func() {
             var davalue3 = $('.r3').attr('data');
@@ -1016,7 +1016,7 @@ $(document).ready(function(){
             countTotal(Period,totalCostWithPeriod,12);
         }
         function myR4Func() {
-            
+
             var davalue4 = $('.r4').attr('data');
             var Period = $("#paymentType").val();
             var totalCostWithPeriod = $("#totalCost").val();
@@ -1024,13 +1024,13 @@ $(document).ready(function(){
             countTotal(Period,totalCostWithPeriod,3);
         }
         function countTotal(Period,totalCostWithPeriod,select) {
-         
+
             <?php if(!empty($r_days)){ ?>
                 var has_total_days = <?=$r_days?>;
             <?php    }else{ ?>
                 var has_total_days = 0;
             <?php }?>
-            
+
             var amountTotal = 0 ;
             var newDays = 0 ;
             if (Period == 1)
@@ -1055,32 +1055,32 @@ $(document).ready(function(){
                 amountTotal = amountTotal*select;
                 newDays = select*30;
             }
-            
+
             $('#dolar').html('$' + amountTotal);
-          
+
             document.getElementById("totalCost").value = amountTotal;
-            
-        
+
+
             if(amountTotal !=0){
                 if(has_total_days>newDays){
                    alert('If you buy this course then all subcription goes down with this course days ! ');
                 }
             }
-            
+
         }
 
         $('.ck_direct_debit').change(function(){
             if ($('#ck_direct_debit').prop('checked')) {
                 $('#ck_no_direct_debit').prop('checked',false);
                 $('#ck_direct_deposit').prop('checked',false);
-                
+
             }
         })
         $('.ck_no_direct_debit').change(function(){
             if ($('#ck_no_direct_debit').prop('checked')) {
                 $('#ck_direct_debit').prop('checked',false);
                 $('#ck_direct_deposit').prop('checked',false);
-                
+
             }
         })
         $('.ck_direct_deposit').change(function(){
@@ -1099,7 +1099,7 @@ $(document).ready(function(){
             amit++;
         }
     }
-    
+
     // if (amit == 0) {
     //     $("#must_select").attr('disabled', true);
     // } else {
@@ -1123,8 +1123,8 @@ $(document).ready(function(){
                 checkCourseNum++;
             }
         }
-        
-        
+
+
         var j = 0;
         var total_cost = 0;
         var is_st_colaburation = 0;
@@ -1132,27 +1132,27 @@ $(document).ready(function(){
         // var three_course_disable = 0;
         for (i = 1; i <= courseNumber.length; i++) {
             if ($("#course_" + i).is(":checked")) {
-              
+
                 var course_cost = $("#course_" + i).attr('data');
                 var course_val = $("#course_" + i).attr('value');
-                
+
                 var total_cost = parseInt(total_cost) + parseInt(course_cost);
                 j++;
             }
         }
-        
+
         var children = $('#children').val();
         var total_amount = total_cost * children;
 
       <?php if ($this->session->userdata('registrationType') != 'trial') { ?>
-        
+
         var Period = $("#paymentType").val();
         <?php if(!empty($r_days)){ ?>
             var has_total_days = <?=$r_days?>;
         <?php    }else{ ?>
             var has_total_days = 0;
         <?php }?>
-       
+
         if (Period == 1)
         {
             total_amount = total_amount*1;
@@ -1170,7 +1170,7 @@ $(document).ready(function(){
             total_amount = total_amount*3;
             newDays = 3*30;
         }
-        
+
             $('#dolar').html('$' + total_amount);
             document.getElementById("totalCost").value = total_amount;
             // if(amountTotal !=0){
@@ -1179,8 +1179,8 @@ $(document).ready(function(){
                 }
             // }
       <?php } ?>
-      
-        
+
+
        for (s = 1; s <= courseNumber.length; s++) {
             if ($("#course_" + s).is(":checked")) {
                 var course_value = $("#course_" + s).attr('value');
@@ -1205,12 +1205,12 @@ $(document).ready(function(){
         $('#help_denied').fadeOut(15000);
 
         $('.course_checkbox').click(function(){
-       
+
           var get_id =$(this).attr('data-id');
           if($('#course_'+get_id).is(':checked')){
              var course_val= $('#course_'+get_id).val();
              var course_val = $('#course_'+get_id).attr('data');
-             
+
              if(course_val == 44){
                 var courseNumber = document.getElementsByName('course[]');
                 for (i = 1; i <= courseNumber.length; i++) {
@@ -1255,11 +1255,11 @@ $(document).ready(function(){
             // $(this).attr('style','background-color:#ed1c24');
             // $('.courseName'+get_id).attr('style','color:white;');
             // $('.gradeName'+get_id).attr('style','color:white;');
-           
+
           }
           courseClick();
-         
+
         });
-        
+
     });
 </script>

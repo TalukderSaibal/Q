@@ -1,5 +1,6 @@
 <?php echo $header; ?>
-<?php echo $header_sign_up; ?>   
+<?php echo $header_sign_up; ?>
+
 <div class="container ss_reg_form">
         <div class="row">
             <div class="col-sm-6 col-sm-offset-3">
@@ -19,7 +20,7 @@
                 <div class="form-group">
                     <label for="email">Email Adress </label>
                     <input class="form-control" type="email" id="email" name="email"/>
-                    
+
                 <p id="error_email" style="color:red"></p>
                 </div>
                 <div class="form-group">
@@ -36,7 +37,7 @@
                     <label for="">Mobile No</label>
                     <input class="form-control" type="tel" id="mobile" name="mobile">
                     <input type="hidden" id="full_number" name="full_number">
-                    
+
                     <p id="error_mobile" style="color:red;font-weight: bold;"></p>
                     <span class="ss_info" style="color:#8f8e8d;">Mobile number is essential for keeping track of student’s progress.</span>
                 </div>
@@ -49,13 +50,13 @@
                 </div>
                 <div class="col-sm-6">
                 <h3 class="g_heading">Student Limit: <?php echo $chil_number; ?></h3>
-                    <?php for ($x = 1; $x <= $chil_number; $x++) { ?> 
+                    <?php for ($x = 1; $x <= $chil_number; $x++) { ?>
                     <div class="form-group">
                         <label >Student ‘s Name</label>
                         <input class="form-control" type="text" id="student_<?php echo $x;?>" name="student[]" />
                         <p id="error_<?php echo $x;?>" style="color:red"></p>
                     </div>
-                    
+
                     <div class="form-group">
                         <label>Year/Grade</label>
                         <select class="form-control" name="grade[]">
@@ -70,17 +71,17 @@
                         <span class="ss_info" style="color:#8f8e8d;">If you have received any link from your student/parent/school/tutor/corporate/agent, please provide, otherwise, leave it blank.</span>
                     </div>
                     <?php } ?>
-                
-                
+
+
                 </div>
                 <div class="text-left col-md-12">
-                    <br/> 
+                    <br/>
                     <button class="btn btn_next" id="btnSave">
                         <img src="<?php echo base_url();?>assets/images/icon_save.png"/>Submit
                     </button>
                 </div>
             </form>
-            
+
         <br/><br/>
         </div>
         </div>
@@ -92,9 +93,9 @@
     <div class="modal-dialog" role="document">
     <div class="modal-content">
         <form  method="post" id="parent_otp_modal">
-      
+
             <div class="modal-body">
-                
+
                 <p>
                     <img src="<?php echo base_url();?>assets/images/icon_logo_small.png">
                 </p>
@@ -109,7 +110,7 @@
                 </div>
             </div>
              <div class="modal-footer">
-                <button type="button" class="btn btn_blue" data-dismiss="modal">Cancel</button>             
+                <button type="button" class="btn btn_blue" data-dismiss="modal">Cancel</button>
               <button class="btn btn_blue" type="button" id="parent_otp_check">
                 Submit
             </button>
@@ -122,7 +123,7 @@
  <script>
     var iti='';
     $(window).ready(function() {
-     
+
         <?php if ($country_db[0]['countryCode'] != 'any') { ?>
             var input = document.querySelector("#mobile");
 
@@ -160,10 +161,10 @@
     });
 
  $('#btnSave').click(function(e){
-     
+
     //console.log(iti.getNumber());
     $("#full_number").val(iti.getNumber());
-    
+
     var students = document.getElementsByName('student[]');
     var j=0;
     for (i=1; i<=students.length; i++){
@@ -186,11 +187,11 @@
         k=0;
         $('#error_parent').html('');
     }
-    
+
     var email=$('#email').val();
     var l=0;
     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    
+
     if (re.test(email)) {
         l=0;
         $('#error_email').html('');
@@ -199,11 +200,11 @@
         $('#error_email').html('Please enter a valid email');
         e.preventDefault();
     }
-    
+
     var m=0;
     var password=$('#password').val();
     var cnfpassword=$('#cnfpassword').val();
-    
+
     if(password.length < 6) {
         m=1;
         $('#error_pass').html('Password requires minimum 6 character');
@@ -212,22 +213,22 @@
         m=0;
         $('#error_pass').html('');
     }
-    
+
     var n=0;
-    
+
     if(password != cnfpassword) {
         n=1;
         $('#error_cnfpass').html('Password and confirm password must be same');
         e.preventDefault();
-    } else {      
+    } else {
         n=0;
         $('#error_cnfpass').html('');
     }
-    
+
     var mobile_no = $('#mobile').val();
     //console.log(mobile_no);
     var o = 0;
-    
+
     if(mobile_no == ''){
         o = 1;
         $('#error_mobile').html('Mobile number is required');
@@ -236,7 +237,7 @@
         o=0;
         $('#error_mobile').html('');
     }
-    if(j==0 && k==0 && l==0 && m==0 && n==0 && o==0){   
+    if(j==0 && k==0 && l==0 && m==0 && n==0 && o==0){
         var data=$('#student_form').serialize();
         $.ajax({
             type: 'ajax',
@@ -252,20 +253,20 @@
                     }else{
                         $('#error_mobile').html('');
                     }
-                if(msg=='success'){ 
+                if(msg=='success'){
                     $('#token_error').html('');
                     $('#ss_confirm_mobile').modal('show');
                     e.preventDefault();
                 }else{
                     $('#form_error').html(msg);
-                    e.preventDefault();                                 
-                }   
+                    e.preventDefault();
+                }
             }
-        });     
+        });
         e.preventDefault();
     }
  });
- 
+
     $('#parent_otp_check').click(function(){
         var data_up_modal=$('#parent_otp_modal').serialize();
         var pathname = '<?php echo base_url(); ?>';

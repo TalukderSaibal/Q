@@ -2,7 +2,6 @@
 
 class Admin_model extends CI_Model
 {
- 
     public function insertInfo($table, $data)
     {
         $this->db->insert($table, $data);
@@ -50,8 +49,8 @@ class Admin_model extends CI_Model
         $this->db->where($colName, $colValue);
         $this->db->update($table, $data);
     }
-	
-	
+
+
     public function updateInfoStripe($table, $colName, $colValue, $data)
     {
         $this->db->where($colName, $colValue);
@@ -74,7 +73,7 @@ class Admin_model extends CI_Model
     }
 
 
-    
+
     /**
      * Copy columns
      *
@@ -89,18 +88,18 @@ class Admin_model extends CI_Model
     public function copy($source_table, $conditions, $changeCol = 0, $changeVal = 0)
     {
         $condition = '';
-        
+
         $flag = 0;
         $totCond = count($conditions);
         foreach ($conditions as $key => $value) {
             $condition .= "`". $key ."`=".$value."";
-            
+
             if (++$flag < $totCond) {
                 $condition .= ' AND ';
             }
         }
         $this->db->query("CREATE TEMPORARY TABLE temp_table AS SELECT * FROM $source_table where $condition");
-        
+
         if ($changeCol) {
             $this->db->query("UPDATE temp_table SET $changeCol=$changeVal,id=0");
         } else {
@@ -109,7 +108,7 @@ class Admin_model extends CI_Model
 
         $this->db->query("INSERT INTO $source_table SELECT * FROM temp_table");
         $insertId = $this->db->insert_id();
-        
+
         $this->db->query("DROP TEMPORARY TABLE temp_table");
 
         return $insertId;
@@ -145,7 +144,7 @@ class Admin_model extends CI_Model
         $query = $this->db->get();
         return $query->result_array();
     }
-    
+
     public function getInfoTrialActiveUser($table, $colName, $colValue,$endTrial,$limit,$offset)
     {
         $this->db->select('*');
@@ -156,7 +155,7 @@ class Admin_model extends CI_Model
         $query = $this->db->get();
         return $query->result_array();
     }
-    
+
     public function getInfoTrialActiveUserAdmin($table, $colName, $colValue,$user_id,$endTrial)
     {
         $this->db->select('*');
@@ -216,7 +215,7 @@ class Admin_model extends CI_Model
         return $query->result_array();
     }
 
-    
+
     public function getUsersTypeWaise($table, $colName, $colValue,$limit,$offset)
     {
         $this->db->select('*');
@@ -226,9 +225,9 @@ class Admin_model extends CI_Model
         $query = $this->db->get();
         return $query->result_array();
     }
-    
-    
-    
+
+
+
 
     public function getRow($table, $colName, $colValue)
     {
@@ -239,15 +238,15 @@ class Admin_model extends CI_Model
         $query = $this->db->get();
         return $query->row_array();
     }
-    
+
     public function total_registered()
     {
         $this->db->select('tbl_useraccount.*,tbl_usertype.userType,tbl_country.countryName');
         $this->db->from('tbl_useraccount');
-        
+
         $this->db->join('tbl_usertype', 'tbl_useraccount.user_type = tbl_usertype.id', 'LEFT');
         $this->db->join('tbl_country', 'tbl_useraccount.country_id = tbl_country.id', 'LEFT');
-        
+
         $this->db->where('user_type != ', 0);
         $this->db->where('user_type != ', 7);
 
@@ -255,12 +254,12 @@ class Admin_model extends CI_Model
 //        echo $this->db->last_query();
         return $query->result_array();
     }
-    
+
     public function today_registered()
     {
         $this->db->select('count(*) AS total_registered');
         $this->db->from('tbl_useraccount');
-        
+
         $this->db->where('user_type != ', 0);
         $this->db->where('user_type != ', 7);
 //        $this->db->where('user_type != ', 7);
@@ -268,16 +267,16 @@ class Admin_model extends CI_Model
         $query = $this->db->get();
         return $query->row_array();
     }
-    
-    
+
+
     public function total_registered_search($name,$userType,$contryID)
     {
         $this->db->select('tbl_useraccount.*,tbl_usertype.userType,tbl_country.countryName');
         $this->db->from('tbl_useraccount');
-        
+
         $this->db->join('tbl_usertype', 'tbl_useraccount.user_type = tbl_usertype.id', 'LEFT');
         $this->db->join('tbl_country', 'tbl_useraccount.country_id = tbl_country.id', 'LEFT');
-        
+
         $this->db->where('user_type != ', 0);
         $this->db->where('user_type != ', 7);
         if ($name != null) {
@@ -294,12 +293,12 @@ class Admin_model extends CI_Model
         return $query->result_array();
     }
 
-    
+
     public function today_registered_search($name,$userType,$contryID)
     {
         $this->db->select('count(*) AS total_registered');
         $this->db->from('tbl_useraccount');
-        
+
         $this->db->where('user_type != ', 0);
         $this->db->where('user_type != ', 7);
         if ($name != null) {
@@ -315,43 +314,43 @@ class Admin_model extends CI_Model
         $query = $this->db->get();
         return $query->row_array();
     }
-    
+
     public function tutor_with_10_student()
     {
         $query = $this->db->query('SELECT *
-            FROM tbl_useraccount t 
-            LEFT JOIN tbl_country ON t.country_id = tbl_country.id 
-            LEFT JOIN tbl_usertype ON t.user_type = tbl_usertype.id 
-            WHERE ((SELECT count(*) FROM tbl_enrollment c WHERE c.sct_id = t.id)) >= 10 AND 
+            FROM tbl_useraccount t
+            LEFT JOIN tbl_country ON t.country_id = tbl_country.id
+            LEFT JOIN tbl_usertype ON t.user_type = tbl_usertype.id
+            WHERE ((SELECT count(*) FROM tbl_enrollment c WHERE c.sct_id = t.id)) >= 10 AND
             user_type = 3');
         return $query->result_array();
     }
-    
+
     public function tutor_with_50_vocabulary()
     {
         $query = $this->db->query('SELECT * '
             . 'FROM tbl_useraccount t '
-            . 'LEFT JOIN tbl_country ON t.country_id = tbl_country.id 
+            . 'LEFT JOIN tbl_country ON t.country_id = tbl_country.id
             LEFT JOIN tbl_usertype ON t.user_type = tbl_usertype.id '
             . 'WHERE ((SELECT COUNT(*) FROM tbl_question q WHERE q.user_id = t.id AND q.questionType = 3 HAVING COUNT(*))) >= 50 AND '
             . 'user_type = 3 ');
         return $query->result_array();
     }
-    
+
     public function get_todays_data($date)
     {
         $query = $this->db->query('SELECT COUNT(*) AS today_registered FROM `tbl_useraccount` WHERE DATE(FROM_UNIXTIME(created)) LIKE "%'.$date.'%" ');
         return $query->result_array();
     }
-    
-    
+
+
     //Course Schedule
     // public function get_course($subscription_type, $user_type, $country_id)
     public function get_course($user_type, $country_id)
     {
         $this->db->select('*');
         $this->db->from('tbl_course');
-        
+
         // $this->db->where('subscription_type', $subscription_type);
         $this->db->where('user_type', $user_type);
         $this->db->where('country_id', $country_id);
@@ -364,7 +363,7 @@ class Admin_model extends CI_Model
     {
         $this->db->select('*');
         $this->db->from('tbl_course');
-        
+
         // $this->db->where('subscription_type', $subscription_type);
         $this->db->where('user_type', $user_type);
         $this->db->where('country_id', $country_id);
@@ -455,17 +454,17 @@ class Admin_model extends CI_Model
         $rs = $this->db->update('tbl_setting');
         return 1;
     }
-    
-    public function getSmsApiKeySettings()
-    {
+
+    public function getSmsApiKeySettings(){
         $this->db->select('*');
         $this->db->from('tbl_setting');
         $this->db->where('setting_type', 'sms_api_settings');
 
         $query_result = $this->db->get();
-        return $num_rows = $query_result->result_array();
+        $num_rows = $query_result->result_array();
+        return $num_rows;
     }
-    
+
     public function getSmsMessageSettings()
     {
         $this->db->select('*');
@@ -475,7 +474,7 @@ class Admin_model extends CI_Model
         $query_result = $this->db->get();
         return $num_rows = $query_result->result_array();
     }
-    
+
     public function get_settings_info($setting_type, $setting_key)
     {
         $this->db->select('*');
@@ -515,7 +514,7 @@ class Admin_model extends CI_Model
         // $this->db->where($params);
         // $query = $this->db->get();
         // return $query->result_array();
-        
+
         $this->db->select('tbl_module.*,tbl_course.courseName,tbl_subject.subject_name,tbl_chapter.chapterName,tbl_country.countryName,BIN(tbl_module.moduleName) as module_name');
         $this->db->from($tableName);
         $this->db->join('tbl_course', 'tbl_course.id = tbl_module.course_id', 'LEFT');
@@ -687,29 +686,29 @@ class Admin_model extends CI_Model
         $query = $this->db->get();
         return count($query->result_array());
     }
-    
-    
+
+
     public function getTutorCommission($table, $colName, $colValue,$colName2,$colValue2)
     {
-        
+
         $this->db->select_sum('amount', 'Amount');
         $this->db->where($colName2, $colValue2);
         $this->db->where($colName, $colValue);
         $this->db->group_by("tutorId");
         $result = $this->db->get($table)->result_array();
-        
+
         return $result[0]['Amount'];
     }
-    
+
     public function checkStudentPercentage($table, $colName, $colValue)
     {
-        
+
          $this->db->select('user_id, COUNT(user_id) as total_row, sum(percentage) as total_percentage, sum(percentage)/COUNT(user_id) as percentage');
          $this->db->where($colName, $colValue);
          $this->db->where('status', 0);
-         $this->db->group_by('user_id');  
+         $this->db->group_by('user_id');
          $result = $this->db->get($table)->result_array();
-        
+
         return $result;
     }
 
@@ -758,18 +757,18 @@ class Admin_model extends CI_Model
         $query_result = $this->db->get();
         return $query_result->result_array();
     }
-    
-    
+
+
 
     public function whiteboardPurchesSignupLists($type,$limit,$offset)
     {
-        
+
         $tbl_setting = $this->db->where('setting_key','days')->get('tbl_setting')->row();
         $duration    = $tbl_setting->setting_value;
         $date        = date('Y-m-d');
         $d1          = date('Y-m-d', strtotime('-'.$duration.' days', strtotime($date)));
         $trialEndDate= strtotime($d1);
-        
+
         $this->db->select('tbl_useraccount.name,tbl_registered_course.user_id');
         $this->db->from('tbl_registered_course');
         $this->db->join('tbl_useraccount', 'tbl_registered_course.user_id = tbl_useraccount.id');
@@ -788,8 +787,8 @@ class Admin_model extends CI_Model
         $query_result = $this->db->get();
         return $query_result->result_array();
     }
-    
-    
+
+
     public function tutorCommisionForAssignStudent($limit,$offset){
         $this->db->select('tbl_useraccount.name,tbl_tutor_commisions.tutorId as user_id');
         $this->db->from('tbl_tutor_commisions');
@@ -800,8 +799,8 @@ class Admin_model extends CI_Model
         $query_result = $this->db->get();
         return $query_result->result_array();
     }
-    
-    
+
+
     public function vocabularyCommisionCheck($limit,$offset){
         $this->db->select('tbl_useraccount.name,dictionary_payment.word_creator as user_id');
         $this->db->from('dictionary_payment');
@@ -811,23 +810,23 @@ class Admin_model extends CI_Model
         $query_result = $this->db->get();
         return $query_result->result_array();
     }
-    
-    
-    
+
+
+
     public function checkStudentPercentageNotification($table,$limit,$offset)
     {
-        
+
          $this->db->select('user_id,tbl_useraccount.name, COUNT(user_id) as total_row, sum(percentage) as total_percentage, sum(percentage)/COUNT(user_id) as percentage');
          $this->db->from('daily_modules');
          $this->db->where('status', 0);
          $this->db->join('tbl_useraccount','daily_modules.user_id = tbl_useraccount.id');
          $this->db->group_by('daily_modules.user_id');
-         $this->db->limit($limit,$offset);  
+         $this->db->limit($limit,$offset);
          $result = $this->db->get()->result_array();
-        
+
         return $result;
     }
-    
+
     public function getDirectDepositCourse($user_id){
         $this->db->where('user_id',$user_id);
         $this->db->where('paymentType',3);
@@ -835,7 +834,7 @@ class Admin_model extends CI_Model
         $query_result = $this->db->get('tbl_payment');
         return $query_result->num_rows();
     }
-    
+
     public function getDirectDepositPendingCourse($user_id){
         $this->db->where('user_id',$user_id);
         $this->db->where('payment_status','pending');
@@ -844,7 +843,7 @@ class Admin_model extends CI_Model
         $query_result = $this->db->get('tbl_payment');
         return $query_result->num_rows();
     }
-    
+
     public function getActiveCourse($user_id){
         $this->db->where('user_id',$user_id);
         $this->db->where_in('payment_status',['succeeded','Completed','active']);
@@ -853,9 +852,9 @@ class Admin_model extends CI_Model
         $query_result = $this->db->get('tbl_payment');
         return $query_result->num_rows();
     }
-    
+
     public function getInfoDirectDepositUserList(){
-        
+
         $this->db->select('tbl_useraccount.name,tbl_useraccount.id');
         $this->db->from('tbl_payment');
         $this->db->where('paymentType',3);
@@ -866,8 +865,8 @@ class Admin_model extends CI_Model
         $query_result = $this->db->get();
         return $query_result->num_rows();
     }
-    
-    
+
+
     public function getInfoDirectDepositUserAllByList($limit,$offset)
     {
         // $this->db->select('*');
@@ -876,7 +875,7 @@ class Admin_model extends CI_Model
         // $this->db->limit($limit,$offset);
         // $query = $this->db->get();
         // return $query->result_array();
-        
+
         $this->db->select('tbl_useraccount.name,tbl_useraccount.id');
         $this->db->from('tbl_payment');
         $this->db->where('paymentType',3);
@@ -888,51 +887,51 @@ class Admin_model extends CI_Model
         $query_result = $this->db->get();
         return $query_result->result_array();
     }
-    
-    
+
+
     public function checkRegisterCourse($course_id,$user_id){
         $this->db->where('user_id',$user_id);
         $this->db->where('course_id',$course_id);
         $this->db->where('status',1);
         $query_result = $this->db->get('tbl_registered_course');
         return $query_result->num_rows();
-        
+
     }
-    
+
     public function getCheckReisterCourses($user_id){
         $this->db->where('user_id',$user_id);
         $this->db->where('paymentType !=',3);
         $this->db->where('PaymentEndDate >',time());
         $query_result = $this->db->get('tbl_payment');
         return $query_result->num_rows();
-        
+
     }
-    
+
     public function checkDepositDetails($table,$countryId){
         $this->db->where('country_id',$countryId);
         $query_result = $this->db->get($table);
         return $query_result->num_rows();
-        
+
     }
-    
+
     public function getDepositDetails($table,$countryId){
         $this->db->where('country_id',$countryId);
         $query_result = $this->db->get($table)->row();
         return $query_result;
-        
+
     }
-    
+
     public function checkDepositDetailsUpdate($table,$countryId,$data){
         $this->db->where('country_id',$countryId);
         $query_result = $this->db->update($table,$data);
         return $query_result;
-        
+
     }
-    
+
     public function checkDepositDetailsInsert($table,$countryId,$data){
         $query_result = $this->db->insert($table,$data);
         return $query_result;
-        
+
     }
 
     public function getallcreative(){
@@ -945,7 +944,7 @@ class Admin_model extends CI_Model
         $query = $this->db->get();
         //echo "<pre>";print_r($query->result_array());die();
         return $query->result_array();
-        
+
     }
     public function getallcreativeDetails(){
 
@@ -958,9 +957,9 @@ class Admin_model extends CI_Model
         $value = array(61, 0);
         $this->db->where_in('tbl_registered_course.course_id', $value);
         $query = $this->db->get();
-        
+
         return $query->result_array();
-        
+
     }
     public function getalltutor(){
         $this->db->select('*');
@@ -971,33 +970,33 @@ class Admin_model extends CI_Model
 
         $query = $this->db->get();
         return $query->result_array();
-        
+
     }
     public function assignExamine($assigned_student,$examine){
-        
+
         foreach($assigned_student as $student_id){
-           
+
             $this->db->select('*');
             $this->db->from('tbl_registered_course');
             $this->db->where('user_id', $student_id);
             $this->db->order_by("id", "desc");
             $query = $this->db->get();
             $result = $query->row();
-            
+
             $data = [
                 'student_id' =>$student_id,
                 'course_id' =>$result->course_id,
                 'examine_id' =>$examine['0'],
                 'status' =>1,
             ];
-            
+
             $this->db->select('*');
             $this->db->from('assigned_student');
             $this->db->where('student_id', $student_id);
             $this->db->where('course_id', $result->course_id);
             $query = $this->db->get();
             $check = $query->result_array();
-            
+
             if(empty($check)){
 
             $this->db->insert('assigned_student', $data);
@@ -1009,11 +1008,11 @@ class Admin_model extends CI_Model
             $this->db->update("tbl_registered_course", $data2);
 
             }else{
-                
+
                 $this->db->where('student_id', $student_id);
                 $this->db->where('course_id', $result->course_id);
                 $this->db->update('assigned_student', $data);
-                
+
                 $data2 = [
                     'assign_examine' =>2,
                 ];
@@ -1023,7 +1022,7 @@ class Admin_model extends CI_Model
             }
 
         }
-            
+
             $this->db->select('*');
             $this->db->from('assigned_student');
             $this->db->join('tbl_useraccount', 'assigned_student.student_id = tbl_useraccount.id', 'LEFT');
@@ -1031,7 +1030,7 @@ class Admin_model extends CI_Model
             $query = $this->db->get();
             return $query->result_array();
 
-        
+
     }
     public function getExamineDetails($examine){
         $this->db->select('*');
@@ -1040,7 +1039,7 @@ class Admin_model extends CI_Model
 
         $query = $this->db->get();
         return $query->result_array();
-        
+
     }
 
     public function idea_created_students_list(){
@@ -1057,7 +1056,7 @@ class Admin_model extends CI_Model
 
         $query = $this->db->get();
         return $query->result_array();
-        
+
     }
     public function get_idea_created_student(){
         $this->db->select('*');
@@ -1066,7 +1065,7 @@ class Admin_model extends CI_Model
 
         $query = $this->db->get();
         return $query->result_array();
-        
+
     }
     public function idea_created_student_list(){
         // $this->db->select('*');
@@ -1084,7 +1083,7 @@ class Admin_model extends CI_Model
         $query = $this->db->get();
         // echo "<pre>";print_r($query->result_array());die();
         return $query->result_array();
-        
+
     }
 
     public function idea_created_students(){
@@ -1095,14 +1094,14 @@ class Admin_model extends CI_Model
 
         $query = $this->db->get();
         return $query->result_array();
-        
+
     }
     public function get_all_ideas($student_id){
         $this->db->select('*, question_ideas.id as idea_id, question_ideas.question_id as i_question_id');
         $this->db->from('question_ideas');
         $this->db->join('idea_info', 'idea_info.id = question_ideas.user_id', 'LEFT');
         $this->db->where('question_ideas.user_id', $student_id);
-        
+
         $query = $this->db->get();
         $main_results = $query->result_array();
         // echo "<pre>";print_r($relults);die();
@@ -1113,7 +1112,7 @@ class Admin_model extends CI_Model
                 $this->db->select('*');
                 $this->db->from('tutor_remake_idea_info');
                 $this->db->where('idea_id', $idea_id);
-                
+
                 $query = $this->db->get();
                 $res = $query->result_array();
                 if(!empty($res)){
@@ -1127,7 +1126,7 @@ class Admin_model extends CI_Model
         }else{
             return $main_results;
         }
-        
+
 
     }
 
@@ -1135,7 +1134,7 @@ class Admin_model extends CI_Model
         $this->db->select('*');
         $this->db->from('tbl_useraccount');
         $this->db->where('id', $student_id);
-        
+
         $query = $this->db->get();
         return $query->result_array();
 
@@ -1146,13 +1145,13 @@ class Admin_model extends CI_Model
         $this->db->join('idea_info', 'idea_student_ans.idea_id = idea_info.id', 'LEFT');
         $this->db->where('student_id', $student_id);
         $this->db->where('idea_id', $idea_id);
-        
+
         $query = $this->db->get();
         return $query->result_array();
 
     }
     public function getAdminIdeaCheckId($table,$data){
-        
+
         $this->db->select('*');
         $this->db->from('idea_check_workout');
         $this->db->where('student_id',  $data['student_id']);
@@ -1161,7 +1160,7 @@ class Admin_model extends CI_Model
         $this->db->where('checker_id', $data['checker_id']);
         $this->db->where('question_id', $data['question_id']);
         $this->db->where('module_id', $data['module_id']);
-        
+
         $query = $this->db->get();
         $check = $query->row();
         if(empty($check)){
@@ -1173,24 +1172,24 @@ class Admin_model extends CI_Model
             $this->db->update($table, $data);
             return $check->id;
         }
-        
+
 
     }
     public function get_this_idea($checkout_id){
         $this->db->select('*');
         $this->db->from('idea_check_workout');
         $this->db->where('id', $checkout_id);
-        
+
         $query = $this->db->get();
         $result = $query->row();
-        
+
        // echo $result->idea_id;
        $this->db->select('*');
        $this->db->from('idea_student_ans');
        $this->db->join('idea_info', 'idea_student_ans.idea_id = idea_info.id', 'LEFT');
        $this->db->where('idea_student_ans.idea_id', $result->idea_id);
        $this->db->where('idea_student_ans.student_id', $result->student_id);
-       
+
        $query2 = $this->db->get();
        return $query2->result_array();
 
@@ -1199,16 +1198,16 @@ class Admin_model extends CI_Model
         $this->db->select('*');
         $this->db->from('idea_check_workout');
         $this->db->where('id', $checkout_id);
-        
+
         $query = $this->db->get();
         $result = $query->row();
-        
+
        // echo $result->idea_id;
        $this->db->select('*');
        $this->db->from('idea_student_ans');
        $this->db->join('idea_info', 'idea_student_ans.idea_id = idea_info.id', 'LEFT');
        $this->db->where('idea_student_ans.idea_id', $result->idea_id);
-       
+
        $query2 = $this->db->get();
        return $query2->result_array();
 
@@ -1217,7 +1216,7 @@ class Admin_model extends CI_Model
         $this->db->select('*');
         $this->db->from('idea_check_workout');
         $this->db->where('id', $checkout_id);
-        
+
         $query = $this->db->get();
         return $query->result_array();
 
@@ -1228,14 +1227,14 @@ class Admin_model extends CI_Model
         $this->db->join('idea_info', 'idea_student_ans.idea_id = idea_info.id', 'LEFT');
         $this->db->where('idea_student_ans.idea_id', $idea_id);
         $this->db->where('idea_student_ans.student_id', $student_id);
- 
+
         $query = $this->db->get();
         return $result = $query->row();
- 
+
     }
 
     public function correction_report_save($table,$data){
-        
+
         $this->db->select('*');
         $this->db->from($table);
         $this->db->where('student_id',  $data['student_id']);
@@ -1244,13 +1243,13 @@ class Admin_model extends CI_Model
         $this->db->where('checker_id', $data['checker_id']);
         $this->db->where('question_id', $data['question_id']);
         $this->db->where('module_id', $data['module_id']);
-        
+
         $query = $this->db->get();
         $check = $query->row();
         if(empty($check)){
             $this->db->insert($table, $data);
             $insert_id = $this->db->insert_id();
-            
+
             $data2['teacher_correction']=$insert_id;
             $data2['by_admin_or_tutor']=1;
             $data2['finish_date']=date("Y/m/d");
@@ -1277,36 +1276,36 @@ class Admin_model extends CI_Model
             $this->db->update("idea_student_ans", $data2);
             return $check->id;
         }
-        
+
 
     }
     public function get_question_details($question_id){
         $this->db->select('*');
         $this->db->from('tbl_question');
         $this->db->where('id', $question_id);
- 
+
         $query = $this->db->get();
         return $result = $query->result_array();
- 
+
     }
 
     public function get_idea_details($idea_id){
         $this->db->select('*');
         $this->db->from('idea_info');
         $this->db->where('id', $idea_id);
- 
+
         $query = $this->db->get();
         return $result = $query->result_array();
- 
+
     }
     public function get_idea_description($idea_id){
         $this->db->select('*');
         $this->db->from('idea_description');
         $this->db->where('idea_id', $idea_id);
- 
+
         $query = $this->db->get();
         return $result = $query->result_array();
- 
+
     }
     public function get_student_ans_details($student_id){
         $this->db->select('*');
@@ -1337,7 +1336,7 @@ class Admin_model extends CI_Model
         return $result = $query->result_array();
     }
     public function idea_get_correction($student_id,$idea_id){
-       
+
         $this->db->select('*');
         $this->db->from('idea_correction_report');
         $this->db->where('idea_id', $idea_id);
@@ -1345,7 +1344,7 @@ class Admin_model extends CI_Model
 
         $query = $this->db->get();
         return $result = $query->result_array();
-        
+
     }
     public function idea_created_tutor_list(){
         $this->db->distinct();
@@ -1367,10 +1366,10 @@ class Admin_model extends CI_Model
 
         // $query = $this->db->get();
         // return $query->result_array();
-        
+
     }
     public function get_all_tutor(){
-        
+
         $this->db->select('*');
         $this->db->from('tbl_useraccount');
         $this->db->where('user_type', 3);
@@ -1449,14 +1448,14 @@ class Admin_model extends CI_Model
         return $result[0];
     }
     public function get_idea_notification(){
-        $this->db->select('*'); 
+        $this->db->select('*');
         $this->db->from('tbl_question');
         $this->db->where('tbl_question.questionType', 17);
         $this->db->where('question_ideas.approval', 0);
         $this->db->join('question_ideas', 'question_ideas.tutor_question_id = tbl_question.id');
 
         $query = $this->db->get();
-        
+
         return $result = count($query->result_array());
         // echo "<pre>";print_r($query->result_array());
         // echo $this->db->last_query();
@@ -1487,7 +1486,7 @@ class Admin_model extends CI_Model
         //echo "<pre>";print_r($result);die();
         if(empty($result)){
 
-            $this->db->select('*'); 
+            $this->db->select('*');
             $this->db->from('tbl_question');
             $this->db->where('tbl_question.questionType', 17);
             $this->db->where('question_ideas.approval', 0);
@@ -1527,7 +1526,7 @@ class Admin_model extends CI_Model
         $this->db->where('question_ideas.user_id', $student_id);
         // $this->db->where('idea_student_ans.question_id', $question_id);
         // $this->db->where('idea_student_ans.module_id', $module_id);
- 
+
         $query = $this->db->get();
         return $result = $query->result_array();
     }
@@ -1582,7 +1581,7 @@ class Admin_model extends CI_Model
         }else{
             return 2;
         }
-      
+
     }
-    
-}  
+
+}

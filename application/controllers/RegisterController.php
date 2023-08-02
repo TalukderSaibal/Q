@@ -398,11 +398,13 @@ class RegisterController extends CI_Controller
     }
     public function signup_student_form()
     {
-
+        // echo 12;die;
         // echo "bfgjghjh<pre>";print_r($this->session->userdata('courses'));die();
+
         if (!empty($_SESSION['trail_suspend']) && $_SESSION['trail_suspend'] == 1 ) {
             redirect('/paypal_new');
         }
+
         if ($_SESSION['registrationType'] == "trial") {
             $data['video_help'] = $this->FaqModel->videoSerialize(7, 'video_helps');
             $data['video_help_serial'] = 7;
@@ -418,13 +420,15 @@ class RegisterController extends CI_Controller
                 $this->validate_student_course_trial();
             }
         }
+
         if ($this->session->userdata('userType')==1 || $this->session->userdata('userType')==6) {
             $data['back_url'] = base_url().'redirect_url';
             if (isset($_POST['children']) || $this->session->userdata('childrens') || $this->session->userdata('children')) {
                 $children =$this->session->userdata('childrens');
                 if (empty($children)) {
-                   $children =$this->session->userdata('children');
+                    $children =$this->session->userdata('children');
                 }
+
                 if (isset($_POST['children']) && $_POST['children'] && $_POST['course']) {
                     $children = $_POST['children'];
                     if ($children < 1) {
@@ -579,8 +583,8 @@ class RegisterController extends CI_Controller
         $this->session->set_userdata('students', $rs_data);
         echo json_encode('success');
     }
-    public function signup_save_student()
-    {
+
+    public function signup_save_student(){
         // echo "<pre>";print_r($this->input->post());die();
         $this->form_validation->set_rules('parent_name', 'parent_name', 'required');
         $this->form_validation->set_rules('password', 'Password', 'required');
@@ -590,6 +594,7 @@ class RegisterController extends CI_Controller
 
         $flag=0;
         $error='';
+
         if ($this->form_validation->run()==false) {
             //$error.= validation_errors();
             $flag++;
@@ -598,9 +603,10 @@ class RegisterController extends CI_Controller
         $mobile = $this->input->post('mobile');
         // echo $_POST['full_number']; die;
         $mobileExists = $this->admin_model->getInfo('tbl_useraccount', 'user_mobile', $_POST['full_number']);
+
         if (count($mobileExists)) {
-           echo json_encode("mobile_number_error");
-           exit();
+            echo json_encode("mobile_number_error");
+            exit();
         }
 
         $this->form_validation->set_rules('email', 'email', 'required|valid_email|is_unique[tbl_useraccount.user_email]');
@@ -613,6 +619,7 @@ class RegisterController extends CI_Controller
             $error.= '<p>student name can not be blank</p>';
             $flag++;
         }
+
         if ($flag > 0) {
             echo json_encode($error);
             exit;
@@ -627,9 +634,9 @@ class RegisterController extends CI_Controller
         $settins_sms_messsage = $this->admin_model->getSmsMessageSettings();
 
         $register_code_string = $settins_sms_messsage[0]['setting_value'];
-        $find = array("{{register_code}}");
-        $replace = array($data['number']);
-        $message = str_replace($find, $replace, $register_code_string);
+        $find                 = array("{{register_code}}");
+        $replace              = array($data['number']);
+        $message              = str_replace($find, $replace, $register_code_string);
 
         $api_key = $settins_Api_key[0]['setting_value'];
         $content = urlencode($message);
@@ -663,24 +670,24 @@ class RegisterController extends CI_Controller
 
         $rs_data=array();
         for ($i = 0; $i < count($_POST['student']); $i++) {
-            $data_std['name'] = $_POST['student'][$i];
+            $data_std['name']  = $_POST['student'][$i];
             $data_std['grade'] = $_POST['grade'][$i];
-            $data_std['SCT'] = $_POST['SCT'][$i];
-            $rs_data[]=$data_std;
+            $data_std['SCT']   = $_POST['SCT'][$i];
+            $rs_data[]         = $data_std;
         }
 
-        $mail_data['to'] = $_POST['email'];
+        $mail_data['to']      = $_POST['email'];
         $mail_data['subject'] = 'Q-Study Registration Code';
         $mail_data['message'] = $message;
+
         $this->sendEmail($mail_data);
 
         $this->session->set_userdata('students', $rs_data);
         echo json_encode('success');
     }
 
-    public function sure_data_save()
-    {
-        //print_r($this->session->userdata('random_number')); die();
+    public function sure_data_save(){
+        // print_r($this->session->userdata('random_number')); die();
         if ($_POST['random'] == $this->session->userdata('random_number')) {
             if ($this->session->userdata('registrationType') !='trial') {
 
@@ -717,21 +724,21 @@ class RegisterController extends CI_Controller
 
             foreach ($rs_student as $singleStudent) {
 
-                $raw_st_data=array();
-                $st['name']    = $singleStudent['name'];
-                $pieces        = explode(" ", $st['name']);
-                $random_number = rand(100, 999);
-                $st['user_email']=$pieces[0];
-                $raw_st_data['st_name']    =$pieces[0];
-                $raw_st_data['st_password']=$pieces[0].$random_number;
-                $st['user_pawd']=md5($pieces[0].$random_number);
+                $raw_st_data                = array();
+                $st['name']                 = $singleStudent['name'];
+                $pieces                     = explode(" ", $st['name']);
+                $random_number              = rand(100, 999);
+                $st['user_email']           = $pieces[0];
+                $raw_st_data['st_name']     = $pieces[0];
+                $raw_st_data['st_password'] = $pieces[0].$random_number;
+                $st['user_pawd']            = md5($pieces[0].$random_number);
 
-                $user_pswd[]    = ($pieces[0].$random_number);
+                $user_pswd[] = ($pieces[0].$random_number);
                 $this->session->set_userdata('st_password', $user_pswd);
-                $st['parent_id']=$parent_id;
-                $st['user_type']=6;
-                $st['country_id']       = $this->session->userdata('countryId');
-                $st['subscription_type']= $this->session->userdata('registrationType');
+                $st['parent_id']         = $parent_id;
+                $st['user_type']         = 6;
+                $st['country_id']        = $this->session->userdata('countryId');
+                $st['subscription_type'] = $this->session->userdata('registrationType');
 
                 $st['student_grade']    = $singleStudent['grade'];
                 $st['created']          = time();
