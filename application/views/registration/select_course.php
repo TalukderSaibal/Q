@@ -224,6 +224,14 @@ if( $this->session->userdata('userType') == 1 && $this->session->userdata('regis
 
 ?>
 
+<?php
+
+// echo '<pre>';
+// print_r($courses);
+// die();
+
+?>
+
 <div class="container">
     <div class="row">
         <p class="alert alert-success" id="help_denied" style="margin: 0 28%;"  >
@@ -258,17 +266,20 @@ if( $this->session->userdata('userType') == 1 && $this->session->userdata('regis
                                     <div class="col-md-6" style="padding-right:0px;padding-left:8px;">
                                     <?php $course_name = preg_split('#<p([^>])*>#',$course_info['courseName']);
                                         //echo "<pre>";print_r(array_filter($course_name));die();
-                                        $course_name = array_filter($course_name);
-                                        $course = '';
-                                        $grade = '';
-                                        if(isset($course_name[0])){
-                                            $course = $course_name[0];
-                                        }else if(isset($course_name[1])){
-                                            $course = $course_name[1];
-                                        }
-                                        if(isset($course_name[2])){
-                                            $grade =  $course_name[2];
-                                        }
+
+                                            $course_name = array_filter($course_name);
+                                            $course = '';
+                                            $grade = '';
+
+                                            if(isset($course_name[0])){
+                                                $course = $course_name[0];
+                                            }else if(isset($course_name[1])){
+                                                $course = $course_name[1];
+                                            }
+
+                                            if(isset($course_name[2])){
+                                                $grade =  $course_name[2];
+                                            }
                                         ?>
                                         <br>
                                         <p class="courseName<?=$i;?>" style="font-family: century-gothic, sans-serif;font-weight:bold;font-size:16px;text-align: left;"><?php echo $course?></p>

@@ -1,15 +1,18 @@
 <?php echo $header; ?>
 <?php echo $header_sign_up; ?>
 
+
 <div class="container ss_reg_form">
         <div class="row">
             <div class="col-sm-6 col-sm-offset-3">
+
             <?php if ($this->session->userdata('token_error')) {
                 echo $this->session->userdata('token_error');
                 $this->session->unset_userdata('token_error');
             }?>
+
             <form class="row" id="student_form">
-            <p id='form_error'></p>
+                <p id='form_error'></p>
                 <div class="col-sm-6">
                 <h3 class="g_heading">All fields are mandatory</h3>
                 <div class="form-group">
@@ -60,7 +63,7 @@
                     <div class="form-group">
                         <label>Year/Grade</label>
                         <select class="form-control" name="grade[]">
-        <?php for ($i = 3; $i <= 12; $i++) {?>
+                    <?php for ($i = 3; $i <= 12; $i++) {?>
                             <option value="<?php echo $i;?>"><?php echo $i;?></option>
                             <?php }?>
                         </select>
@@ -239,6 +242,7 @@
     }
     if(j==0 && k==0 && l==0 && m==0 && n==0 && o==0){
         var data=$('#student_form').serialize();
+
         $.ajax({
             type: 'ajax',
             method: 'post',

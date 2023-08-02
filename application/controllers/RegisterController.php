@@ -71,8 +71,8 @@ class RegisterController extends CI_Controller
         $this->load->view('registration/sign_up_plan', $data);
     }
 
-    public function selectCountry($registrationType  , $userType)
-    {
+    public function selectCountry($registrationType  , $userType){
+        // echo 12;die;
         $_SESSION['userType'] = $userType;
         $_SESSION['registrationType'] = $registrationType;
 
@@ -101,9 +101,13 @@ class RegisterController extends CI_Controller
                 $data['back_url'] = base_url('/signup');
             }
 
-            $data['header']=$this->load->view('common/header', '', true);
-            $data['header_sign_up']=$this->load->view('common/header_sign_up', $data, true);
-            $data['footer']=$this->load->view('common/footer', '', true);
+            $data['header']         = $this->load->view('common/header', '', true);
+            $data['header_sign_up'] = $this->load->view('common/header_sign_up', $data, true);
+            $data['footer']         = $this->load->view('common/footer', '', true);
+
+            // echo '<pre>';
+            // print_r($data);
+            // die;
 
             $this->load->view('registration/select_country', $data);
         }
@@ -124,9 +128,11 @@ class RegisterController extends CI_Controller
             if (!empty($this->input->post('direct_debit'))) {
                 $course_data['payment_process'] = $this->input->post('direct_debit');
             }
+
             if (!empty($this->input->post('no_direct_debit'))) {
                 $course_data['payment_process'] = $this->input->post('no_direct_debit');
             }
+
             if (!empty($this->input->post('direct_deposit'))) {
                 $course_data['payment_process'] = $this->input->post('direct_deposit');
             }
@@ -271,7 +277,7 @@ class RegisterController extends CI_Controller
             $data['header_sign_up']=$this->load->view('common/header_sign_up', $data, true);
             $data['footer']=$this->load->view('common/footer', '', true);
 
-            //echo $this->session->userdata('userType');die();
+            // echo $this->session->userdata('userType');die();
             if ($this->session->userdata('userType')==1) {
                 $this->load->view('registration/select_course', $data);
             }elseif ($this->session->userdata('userType')==6) {
@@ -651,7 +657,9 @@ class RegisterController extends CI_Controller
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
         //execute post
-        $result = curl_exec($ch);
+
+        // $result = curl_exec($ch);
+
         curl_close($ch);
         //print_r($result);die;
         $send_msg_status = json_decode($result);

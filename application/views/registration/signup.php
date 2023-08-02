@@ -1,7 +1,6 @@
 <?php echo $header; ?>
 <?php echo $header_sign_up; ?>
 
-
 <div class="container">
 	<div class="row">
 		<div class="sign_up_menu">
