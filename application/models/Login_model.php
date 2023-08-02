@@ -11,6 +11,9 @@ class Login_model extends CI_Model{
 
 		$query_result = $this->db->get();
 		$result = $query_result->row();
+		// echo md5($password);
+		// print_r($result);
+		// die();
 		return $result;
 	}
 
@@ -47,7 +50,7 @@ class Login_model extends CI_Model{
 
         $query = $this->db->get();
         return $query->result_array();
-    
+
 	}
 
 	public function login_check_info_trail($user_name,$password) {

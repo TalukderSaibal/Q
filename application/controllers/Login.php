@@ -24,8 +24,10 @@ class Login extends CI_Controller
         $user_name = $this->input->post('user_name');
         $password = ($this->input->post('password'));
         $result = $this->login_model->login_check_info($user_name, $password);
+        // echo 12;
+        // die();
         $m_data = array();
-        
+
         if ($result) {
             if ($result->subscription_type == 'trial') {
                 $trail_period = trailPeriod();
@@ -39,7 +41,7 @@ class Login extends CI_Controller
                     $name_data['user_id'] = $result->id;
                     $name_data['subscription_type'] = $result->subscription_type;
                     $name_data['payment_status'] = $result->payment_status;
-                    $name_data['userType'] = $result->user_type;                    
+                    $name_data['userType'] = $result->user_type;
                     $this->session->set_userdata($name_data);
                     echo 1;
                     //echo 2;
@@ -50,7 +52,7 @@ class Login extends CI_Controller
                     $name_data['subscription_type'] = $result->subscription_type;
                     $name_data['payment_status'] = $result->payment_status;
                     $name_data['userType'] = $result->user_type;
-                    
+
                     $this->session->set_userdata($name_data);
                     echo 1;
                 }
@@ -62,7 +64,7 @@ class Login extends CI_Controller
                 $name_data['subscription_type'] = $result->subscription_type;
                 $name_data['payment_status'] = $result->payment_status;
                 $name_data['userType'] = $result->user_type;
-                
+
                 $this->session->set_userdata($name_data);
                 echo 1;
             }
@@ -117,7 +119,7 @@ class Login extends CI_Controller
         if($userName[0]['user_type'] == 1 || $userName[0]['user_type'] == 4 || $userName[0]['user_type'] == 5) {
         $all_child_info = $this->admin_model->getInfo('tbl_useraccount', 'parent_id', $userName[0]['id']);
         }
-        
+
         $child_list = array();
         if(isset($all_child_info) && !empty($all_child_info)){
         foreach ($all_child_info as $single_child) {
@@ -126,21 +128,21 @@ class Login extends CI_Controller
                     $raw_st_data['st_password'] = $single_child['user_email'].$random_number;
             $child['user_pawd'] = md5($raw_st_data['st_password']);
             $this->admin_model->updateInfo('tbl_useraccount', 'id', $single_child['id'], $child);
-            
+
             $child_list[]=$raw_st_data;
         }
         }
-    
+
         // $userName = isset($userName[0]['name'])?$userName[0]['name']:'';
 
         // unique authentication code for reset pass
         // $authCode = md5(uniqid(mt_rand(), true));
         // $resetLink =  base_url()."set_password/?authCode={$authCode}&email={$email}";
-    
+
         // $templateData['user'] = $userName;
         // $templateData['resetLink'] = $resetLink;
         // $template = $this->load->view('email_templates/forgot_password', $templateData, true);
-        
+
         // $data['to'] = $email;
         // $data['subject'] = 'Forgot password';
         // $data['message'] = $template;
@@ -156,7 +158,7 @@ class Login extends CI_Controller
         $this->session->set_flashdata('success_msg', 'An email has been sent...');
 
 
-        
+
 
         //username and password send
 
@@ -168,7 +170,7 @@ class Login extends CI_Controller
         $message = str_replace( "{{ password }}" , $user_password , $message);
 
         $child_number = sizeof($child_list);
-      
+
         if($child_number > 0){
             foreach ($child_list as $single_child) {
             $st_message .='Child: '.$child_number.' Username : '.$single_child['st_name'].' Password: '.$single_child['st_password'];
@@ -176,7 +178,7 @@ class Login extends CI_Controller
         }else{
             $st_message='';
         }
-        
+
         $new_message = $message.$st_message;
 
         $api_key = $settins_Api_key[0]['setting_value'];
@@ -195,7 +197,7 @@ class Login extends CI_Controller
         //execute post
         $result = curl_exec($ch);
 
-        
+
         curl_close($ch);
         // print_r($result);die;
         $send_msg_status = json_decode($result);
@@ -203,22 +205,22 @@ class Login extends CI_Controller
 
         redirect('/');
     }
-  
+
   public function mailTemplate($parent_name, $parent_email, $user_type, $parent_password, $student_list)
     {
-        
+
         $userName = $parent_name;
         $userEmail = $parent_email;
         $userPassword = $parent_password;
-        
+
         $template = $this->admin_model->getInfo('table_email_template', 'email_template_type', 'forget_password');
         $child_number = sizeof($student_list);
         if ($template) {
             $subject = $template[0]['email_template_subject'];
             $template_message = $template[0]['email_template'];
-          
+
             $st_data = '';
-      
+
         if($child_number > 0){
             foreach ($student_list as $single_child) {
             $st_data .=
@@ -235,22 +237,22 @@ class Login extends CI_Controller
                 </div>";
             }
         }
-      
-      
+
+
         $find = array("{{student_block}}","{{parentName}}","{{parent_email}}","{{parent_password}}");
         $replace = array($st_data,$userName,$userEmail,$userPassword);
-      
-      
+
+
             // if($user_type == 2){
         // $find = array("{{upper_student_name}}","{{upper_student_email}}","{{upper_student_password}}");
         // $replace = array($Name,$email,$Password);
       // }
-      
+
       // if($user_type == 3){
         // $find = array("{{tutorName}}","{{tutor_email}}","{{tutor_password}}","{{tutor_sct_link}}");
         // $replace = array($tutorName,$tutorEmail,$tutorPassword,$SCT_link);
       // }
-      
+
       // if($user_type == 4){
         // $find = array("{{teacher_number}}","{{teacher_block}}","{{schoolName}}","{{school_email}}","{{school_password}}");
         // $replace = array($child_number,$st_data,$userName,$userEmail,$userPassword);
@@ -259,20 +261,20 @@ class Login extends CI_Controller
         // $find = array("{{teacher_number}}","{{teacher_block}}","{{corporateName}}","{{corporate_email}}","{{corporate_password}}");
         // $replace = array($child_number,$st_data,$userName,$userEmail,$userPassword);
       // }
-      
+
             $message = str_replace($find, $replace, $template_message);
-      
+
             $mail_data['to'] = $userEmail;
             $mail_data['subject'] = $template[0]['email_template_subject'];
-            
+
             $mail_data['message'] = $message;
             $this->sendEmail($mail_data);
         }
-    
+
         return true;
     }
-  
-  
+
+
   public function sendEmail($mail_data)
     {
         $mailTo        =  $mail_data['to'];
@@ -281,7 +283,7 @@ class Login extends CI_Controller
 
         $this->load->library('email');
         $this->email->set_mailtype('html');
-    
+
         /*$config['protocol'] ='sendmail';
         $config['mailpath'] ='/usr/sbin/sendmail';
         $config['charset'] = 'iso-8859-1';
@@ -297,16 +299,16 @@ class Login extends CI_Controller
         $config['mailtype']    = 'html';
         $config['newline']    = "\r\n";
         $this->email->initialize($config);
-        
-        
+
+
         $this->email->from('contact@q-study.com');
         $this->email->to($mailTo);
         $this->email->subject($mailSubject);
         $this->email->message($message);
-        
-        
+
+
         $this->email->send();
-        
+
         return true;
     }
 
@@ -401,9 +403,9 @@ class Login extends CI_Controller
         $emailExists = $this->login_model->phoneChk($email);
 
         if ($emailExists) {
-            echo 1; 
+            echo 1;
         } else {
-            echo 0; 
+            echo 0;
         }
     }
 
@@ -414,12 +416,12 @@ class Login extends CI_Controller
         $email = $this->input->post('email');
 
         $ck = $this->login_model->passwdChk($email , $phone );
-        
+
         if ($ck) {
-            echo 1; 
+            echo 1;
         } else {
-            echo 0; 
+            echo 0;
         }
     }
-  
+
 }

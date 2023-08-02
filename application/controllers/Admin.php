@@ -74,9 +74,9 @@ class Admin extends CI_Controller
 
     public function all_area(){
         //        $data['all_theme'] = $this->Admin_model->getAllInfo('tbl_course_theme');
-        $data['user_info'] = $this->Admin_model->getInfo('tbl_useraccount', 'id', $this->session->userdata('user_id'));
-        $data['page_title'] = '.:: Q-Study :: Tutor yourself...';
-        $data['page'] = '';
+        $data['user_info']    = $this->Admin_model->getInfo('tbl_useraccount', 'id', $this->session->userdata('user_id'));
+        $data['page_title']   = '.:: Q-Study :: Tutor yourself...';
+        $data['page']         = '';
         $data['page_section'] = '';
 
         $data['headerlink'] = $this->load->view('dashboard_template/headerlink', $data, true);
@@ -544,24 +544,26 @@ class Admin extends CI_Controller
         }
     }
 
-    public function edit_user($user_id)
-    {
+    public function edit_user($user_id){
+        // echo $user_id;die;
         $post = $this->input->post();
+
         $clean = $this->security->xss_clean($post);
+        // print_r($clean);
+        // die();
         if (!$clean) {
             $data['userId'] = $user_id;
 
             $data['student_prize_list'] = $this->Admin_model->getInfoPrizeWinerUserByID($user_id, $limit, $offset);
 
-
-            $tbl_setting = $this->db->where('setting_key', 'days')->get('tbl_setting')->row();
-            $duration = $tbl_setting->setting_value;
-            $date = date('Y-m-d');
-            $d1  = date('Y-m-d', strtotime('-' . $duration . ' days', strtotime($date)));
-            $trialEndDate = strtotime($d1);
+            $tbl_setting            = $this->db->where('setting_key', 'days')->get('tbl_setting')->row();
+            $duration               = $tbl_setting->setting_value;
+            $date                   = date('Y-m-d');
+            $d1                     = date('Y-m-d', strtotime('-' . $duration . ' days', strtotime($date)));
+            $trialEndDate           = strtotime($d1);
             $data['activeTrilUser'] = $this->Admin_model->getInfoTrialActiveUserAdmin('tbl_useraccount', 'subscription_type', 'trial', $user_id, $trialEndDate);
 
-            //echo "<pre>";print_r($activeTrilUser);die;
+            // echo "<pre>";print_r($activeTrilUser);die;
             $data['user_type'] = $this->Admin_model->getAllInfo('tbl_usertype');
 
             $data['all_country'] = $this->Admin_model->getAllInfo('tbl_country');
@@ -836,7 +838,7 @@ class Admin extends CI_Controller
 
 
                     //if course requested, map as registered course with student id
-                    if (count($clean['course'])) {
+                    if (isset($clean['course']) && count($clean['course'])) {
                         $courseUserMap = [];
                         $registerCourseStatus = 0;
                         foreach ($clean['course'] as $course) {

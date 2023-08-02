@@ -267,15 +267,17 @@ class RegisterController extends CI_Controller
             }
             //}
             $checkDepositDetails = $this->db->where('country_id',$countryIdd)->get('direct_deposit_admin_setting')->row();
+
             if(isset($checkDepositDetails)){
                 $data['direct_deposit_by_contry'] = $checkDepositDetails->active_status;
             }
+
             // $data['back_url'] = base_url().'select_country';
-            $data['country_id'] = $countryIdd;
-            $data['refferalUser'] = $this->db->where('user_id',$user_id)->where('status',0)->get('tbl_referral_users')->row();
-            $data['header']=$this->load->view('common/header', '', true);
-            $data['header_sign_up']=$this->load->view('common/header_sign_up', $data, true);
-            $data['footer']=$this->load->view('common/footer', '', true);
+            $data['country_id']     = $countryIdd;
+            $data['refferalUser']   = $this->db->where('user_id',$user_id)->where('status',0)->get('tbl_referral_users')->row();
+            $data['header']         = $this->load->view('common/header', '', true);
+            $data['header_sign_up'] = $this->load->view('common/header_sign_up', $data, true);
+            $data['footer']         = $this->load->view('common/footer', '', true);
 
             // echo $this->session->userdata('userType');die();
             if ($this->session->userdata('userType')==1) {
@@ -448,11 +450,11 @@ class RegisterController extends CI_Controller
                     }
                 }
                 if ($children) {
-                    $data['country_db']=$this->RegisterModel->getSpecificCountry($this->session->userdata('countryId'));
-                    $data['chil_number']=$children;
-                    $data['header']=$this->load->view('common/header', '', true);
-                    $data['header_sign_up']=$this->load->view('common/header_sign_up', $data, true);
-                    $data['footer']=$this->load->view('common/footer', '', true);
+                    $data['country_db']     = $this->RegisterModel->getSpecificCountry($this->session->userdata('countryId'));
+                    $data['chil_number']    = $children;
+                    $data['header']         = $this->load->view('common/header', '', true);
+                    $data['header_sign_up'] = $this->load->view('common/header_sign_up', $data, true);
+                    $data['footer']         = $this->load->view('common/footer', '', true);
                     $this->load->view('registration/signup-student_form', $data);
                 }
             } else {

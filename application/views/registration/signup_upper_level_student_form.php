@@ -1,11 +1,12 @@
 <?php echo $header; ?>
-<?php echo $header_sign_up; ?>   
+<?php echo $header_sign_up; ?>
+<?php echo 12;die;?>
 <div class="container ss_reg_form">
 
   <div class="row">
-  
+
     <h3 class="g_heading" style="text-align: center;">All fields are mandatory</h3>
-    
+
     <div class="col-sm-6 col-sm-offset-3">
       <?php if ($this->session->userdata('token_error')) {
       echo $this->session->userdata('token_error');
@@ -49,7 +50,7 @@
           <div class="form-group">
             <label>Country: </label>
             <input class="form-control" type="text" id="country" value="<?php echo $country_db[0]['countryName'];?>" name="" readonly />
-            <input type="hidden" id="country_code" />                   
+            <input type="hidden" id="country_code" />
           </div>
 
           <div class="form-group">
@@ -91,7 +92,7 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn_blue" data-dismiss="modal">Cancel</button>             
+          <button type="button" class="btn btn_blue" data-dismiss="modal">Cancel</button>
           <button class="btn btn_blue" type="button" id="upper_student_otp_check">
             Submit
           </button>
@@ -104,7 +105,7 @@
 <script>
   var iti='';
   $(window).ready(function() {
- 
+
     <?php if ($country_db[0]['countryCode'] != 'any') { ?>
       var input = document.querySelector("#mobile");
 
@@ -143,8 +144,8 @@
   });
 
 
-  $('#btnSave').click(function(e){  
-  $("#full_number").val(iti.getNumber());  
+  $('#btnSave').click(function(e){
+  $("#full_number").val(iti.getNumber());
     var upper_student_name=$('#upper_student_name').val();
     var k=0;
     if(upper_student_name == ''){
@@ -168,7 +169,7 @@
     }
     var m=0;
     var password=$('#password').val();
-    var cnfpassword=$('#cnfpassword').val();    
+    var cnfpassword=$('#cnfpassword').val();
     if(password.length < 6){
       m=1;
       $('#error_pass').html('Password requires minimum 6 character');
@@ -184,7 +185,7 @@
       n=1;
       $('#error_cnfpass').html('Password and confirm password must be same');
       e.preventDefault();
-    }else{      
+    }else{
       n=0;
       $('#error_cnfpass').html('');
     }
@@ -198,7 +199,7 @@
       o=0;
       $('#error_mobile').html('');
     }
-    if(k==0 && l==0 && m==0 && n==0 && o==0){   
+    if(k==0 && l==0 && m==0 && n==0 && o==0){
       var data=$('#student_form').serialize();
       $.ajax({
         type: 'ajax',
@@ -214,16 +215,16 @@
           }else{
             $('#error_mobile').html('');
           }
-          if(msg=='success'){     
+          if(msg=='success'){
             $('#token_error').html('');
             $('#ss_confirm_mobile').modal('show');
             e.preventDefault();
           }else{
             $('#form_error').html(msg);
-            e.preventDefault();                                 
-          }   
+            e.preventDefault();
+          }
         }
-      });     
+      });
       e.preventDefault();
     }
   });
@@ -239,7 +240,7 @@
       data:data_up_modal,
       success: function(msg){
 
-    
+
         if(msg==3){
             window.location.href = pathname+"signup_upper_direct_deposit";
         }else if(msg==1 || msg==2){
