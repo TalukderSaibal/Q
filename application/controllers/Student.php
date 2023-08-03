@@ -4091,11 +4091,11 @@ class Student extends CI_Controller
         //If not match with today date
         //$this->delete_st_error_ans(date('Y-m-d'));
 
-        // echo '<pre>';
-        // print_r($data['tutorInfo']);
-        // die();
+        // echo '<pre>';print_r($data['moduleType']);die();
 
         $data['user_info'] = $this->Student_model->userInfo($this->loggedUserId);
+
+
         if ($module_type == 2 && $data['tutorInfo'][0]['user_type'] == 7) {
             $get_all_course                    = $this->Student_model->studentCourses($this->loggedUserId);
             $course_match_with_subject_key_val = array();
@@ -4197,7 +4197,9 @@ class Student extends CI_Controller
             //$data['studentSubjects'] = array_values(array_column($students_all_subject, null, 'subject_id'));
         }
 
+
         if ($tutor_id == 2) {
+
             $data['registered_courses'] = $this->Student_model->registeredCourse($this->session->userdata('user_id'));
             //echo $data['registered_courses'][0]['id'].'/////'."<pre>";print_r($data['registered_courses']);die();
             $first_course_subjects = array();
@@ -4482,7 +4484,6 @@ class Student extends CI_Controller
         // echo $moduleType;die;
 
         if ($moduleType == 2) {
-            //  echo 44; die();
             foreach ($sct_info as $idx => $module) {
                 $get_student_ans_by_module = $this->Student_model->student_module_ans_info($this->session->userdata('user_id'), $module['id']);
 
@@ -4492,7 +4493,9 @@ class Student extends CI_Controller
 
                     $repition_days = json_decode($module['repetition_days']);
 
-                    $b = array_map(array($this, 'get_repitition_days'), $repition_days); //array_map("fix1", $repition_days);
+                    // echo '<pre>'; print_r($repition_days); die();
+
+                    $b = array_map(array($this, 'get_repitition_days'), $repition_days);
 
                     date_default_timezone_set($this->site_user_data['zone_name']);
                     $today = date('Y-m-d');
@@ -4517,7 +4520,7 @@ class Student extends CI_Controller
                         } else { // If wrong ans is available
 
                             $this->insert_error_question('', $st_ans);
-                            //echo "<pre>";print_r($st_ans);die();
+                            // echo "<pre>";print_r($st_ans);die();
                             $sct_info[$idx]['is_repeated'] = 1;
                         }
 

@@ -107,6 +107,8 @@
 
 
 <?php $qstudyEveryday = ($tutorInfo[0]['user_type'] == 7 && $moduleType == 2) ? 1 : 0 ?>
+
+
 <div class="container">
   <div class="row">
     <div class="col-sm-1"></div>
@@ -614,7 +616,6 @@
     var subjectId = $(this).attr('subjectId');
     var tutorId = <?php echo $tutorInfo[0]['id']; ?>;
     var moduleType = <?php echo $moduleType; ?>;
-
     $.ajax({
       url: 'Student/studentsModuleByQStudyNew',
       method: 'POST',
@@ -677,12 +678,11 @@
       var tutorId = <?php echo $tutorInfo[0]['id']; ?>;
       var moduleType = <?php echo $moduleType; ?>;
 
-
       $.ajax({
         url: 'Student/studentsModuleByQStudyNew',
         method: 'POST',
         data: {
-          //chapterId:chapterId,
+          // chapterId:chapterId,
           subjectId: subjectId,
           tutorId: tutorId,
           moduleType: moduleType,
