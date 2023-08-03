@@ -65,7 +65,7 @@ class ModuleModel extends CI_Model
         $query = $this->db->get();
         return $query->result_array();
     }
-	
+
 	public function insertNewQus($table, $colName, $colValue, $studentGrade,$subject,$chapter)
     {
         $this->db->select('*');
@@ -106,7 +106,7 @@ class ModuleModel extends CI_Model
         //echo '<pre>';print_r($query_new->result_array());die();
         return $query_new->result_array();
     }
-	
+
     public function getRow($table, $colName, $colValue)
     {
         $this->db->select('*');
@@ -162,7 +162,7 @@ class ModuleModel extends CI_Model
 
     }//end allModuleType()
 
-    
+
     /**
      * search from any table using conditions
      *
@@ -176,10 +176,10 @@ class ModuleModel extends CI_Model
             ->where($params)
             ->get($tableName)
             ->result_array();
-    
+
         return $res;
     }
-    
+
 
     /**
      * Insert batch operation will record multiple data at a time.
@@ -259,8 +259,7 @@ class ModuleModel extends CI_Model
      *
      * @return array           module info
      */
-    public function moduleInfo($moduleId)
-    {
+    public function moduleInfo($moduleId){
         $res = $this->db
             ->where('id', $moduleId)
             ->get('tbl_module')
@@ -285,7 +284,7 @@ class ModuleModel extends CI_Model
 
         return $res;
     }
-    
+
     public function moduleQuestionOrder($moduleId)
     {
         $res = $this->db
@@ -320,7 +319,7 @@ class ModuleModel extends CI_Model
           } else {
               $this->db->where('user_id', $loggedUserId);
           }
-  
+
           if ($country_id !='') {
             if ($country_id == 1) {
               $this->db->where('tbl_module.country', $country_id);
@@ -328,17 +327,17 @@ class ModuleModel extends CI_Model
                 $this->db->where_in('tbl_module.country', [$country_id,'1']);
             }
           }
-          
+
           if (isset($conditions['moduleType'])) {
               if ($conditions['moduleType'] == 3 || $conditions['moduleType'] == 4) {
                   $sub_q = $this->db->query("SELECT module_id FROM tbl_student_answer")->result_array();
-                 
+
                   if (!empty($sub_q)) {
                       $this->db->where_not_in('tbl_module.id', array_column($sub_q, 'module_id'));
                   }
               }
           }
-          
+
         // $this->db->order_by('tbl_subject.order', 'ASC');
         // $this->db->order_by('tbl_module.ordering', 'ASC');
 
@@ -347,23 +346,23 @@ class ModuleModel extends CI_Model
         $this->db->order_by('tbl_module.studentGrade','asc');
         $this->db->order_by('LENGTH(tbl_module.moduleName)');
         $this->db->order_by('tbl_module.moduleName','asc');
-        
+
 
         // $this->db->order_by('tbl_module.id', 'ASC');
-          
+
           $res = $this->db->get('tbl_module') ->result_array();
           //  echo $this->db->last_query();
           //  echo '<pre>';print_r($res);die;
           return $res;
       } // end allModule()
-    
+
     public function getStudentByGradeCountry($student_grade, $country_id, $user_id)
     {
         $this->db->select('tbl_useraccount.*,tbl_enrollment.sct_id,sct_type,st_id');
         $this->db->from('tbl_useraccount');
-        
+
         $this->db->join('tbl_enrollment', 'tbl_useraccount.id = tbl_enrollment.st_id', 'LEFT');
-        
+
         $this->db->where('tbl_useraccount.student_grade', $student_grade);
         $this->db->where('tbl_useraccount.country_id', $country_id);
         $this->db->where('tbl_enrollment.sct_id', $user_id);
@@ -372,7 +371,7 @@ class ModuleModel extends CI_Model
                // echo $this->db->last_query();
         return $query->result_array();
     }
-    
+
     public function getIndividualStudent($student_grade, $tutor_type, $country_id, $subject_name, $user_id, $course_id)
     {
         /*echo 'two';
@@ -380,7 +379,7 @@ class ModuleModel extends CI_Model
         die;*/
         $this->db->select('tbl_useraccount.*');
         $this->db->from('tbl_useraccount');
-        
+
         if ($tutor_type == 3) {
             $this->db->join('tbl_enrollment', 'tbl_useraccount.id = tbl_enrollment.st_id', 'LEFT');
             $this->db->where('tbl_enrollment.sct_id', $user_id);
@@ -392,12 +391,12 @@ class ModuleModel extends CI_Model
             // $this->db->where('tbl_course.courseName', strip_tags(trim(html_entity_decode($subject_name, ENT_QUOTES))));
             $this->db->where('tbl_course.id', $course_id);
         }
-        
+
         $this->db->where('tbl_useraccount.student_grade', $student_grade);
         if ($country_id != '') {
             $this->db->where('tbl_useraccount.country_id', $country_id);
         }
-        
+
         $query = $this->db->get();
         //echo $this->db->last_query();
         return $query->result_array();
@@ -406,11 +405,11 @@ class ModuleModel extends CI_Model
 
       $this->db->select('*');
       $this->db->from('for_tutorial_tbl_question');
-      $this->db->where('tbl_ques_id', $question_id); 
+      $this->db->where('tbl_ques_id', $question_id);
       $this->db->where('orders', $orders);
       $this->db->limit(1);
       $query = $this->db->get()->result();
-        
+
         return $query;
     }
     public function module_instruction_update($moduleId , $data)
@@ -449,11 +448,11 @@ class ModuleModel extends CI_Model
 
     public function allModuleForAssign($id , $tyoe)
     {
-      
+
       $this->db->from('tbl_module');
       $this->db->join('tbl_subject', 'tbl_subject.subject_id = tbl_module.subject');
       $this->db->join('tbl_chapter', 'tbl_module.chapter = tbl_chapter.id');
-      
+
       $this->db->select('tbl_module.id , tbl_module.moduleName , tbl_module.moduleType , tbl_module.trackerName , tbl_module.individualName , tbl_module.exam_date , tbl_subject.subject_name , tbl_module.subject , tbl_chapter.chapterName , tbl_module.moduleName');
 
       if ($tyoe == "course_id") {
@@ -463,7 +462,7 @@ class ModuleModel extends CI_Model
       if ($tyoe == "module_id") {
         $this->db->where('tbl_module.id', $id);
       }
-      
+
       $query = $this->db->get();
       return $query->result_array();
 
@@ -471,14 +470,14 @@ class ModuleModel extends CI_Model
 
     public function studentHomework($id , $module_type)
     {
-      
+
       $this->db->from('student_homeworks');
       $this->db->group_by("assign_subject");
       $this->db->where('tutor_id', $id);
       $this->db->where('student_id', $this->session->userdata('user_id'));
       $this->db->where('module_type', $module_type);
       $this->db->where('status', 1);
-      
+
       $query = $this->db->get();
       return $query->result_array();
 
@@ -486,12 +485,12 @@ class ModuleModel extends CI_Model
 
     public function studentAssignedModule($st_id , $tutor_id)
     {
-      
+
       $this->db->from('student_homeworks');
       $this->db->where('tutor_id', $tutor_id);
       $this->db->where('student_id', $st_id);
       $this->db->where('status', 1);
-      
+
       $query = $this->db->get();
       return $query->result_array();
 
@@ -499,12 +498,12 @@ class ModuleModel extends CI_Model
 
     public function studentAssignedModuleforUpdate($st_id , $tutor_id , $module_id)
     {
-      
+
       $this->db->from('student_homeworks');
       $this->db->where('tutor_id', $tutor_id);
       $this->db->where('student_id', $st_id);
       $this->db->where('assign_module', $module_id);
-      
+
       $query = $this->db->get();
       return $query->result_array();
 
@@ -518,7 +517,7 @@ class ModuleModel extends CI_Model
       $this->db->where('student_id', $student_id);
       $this->db->where('module_type', $module_type);
       $this->db->where('status', 1);
-      
+
       $query = $this->db->get();
       return $query->result_array();
 
@@ -541,9 +540,9 @@ class ModuleModel extends CI_Model
       $query = $this->db->get();
       return $query->result_array();
     }
-	
+
 	 public function AssignModuleSchoolTutuorTutorial($tutorId , $student_id , $moduleType )
-    {	
+    {
       $this->db->where('user_id', $tutorId);
       $this->db->where('moduleType', $moduleType);
       $query = $this->db->get('tbl_module');
@@ -553,7 +552,7 @@ class ModuleModel extends CI_Model
     ///// shukriti
 
     public function get_module_type($tbl,$module_id)
-    {	
+    {
       $this->db->where('id', $module_id);
       $query = $this->db->get($tbl);
       $data = $query->result_array();
@@ -561,14 +560,14 @@ class ModuleModel extends CI_Model
     }
     public function tutorHomework($id , $module_type)
     {
-      
+
       $this->db->from('student_homeworks');
       $this->db->group_by("assign_subject");
       $this->db->where('tutor_id', $id);
       $this->db->where('student_id', 754);
       $this->db->where('module_type', $module_type);
       $this->db->where('status', 1);
-      
+
       $query = $this->db->get();
       return $query->result_array();
 
@@ -646,7 +645,7 @@ class ModuleModel extends CI_Model
         return $result;
     }
     public function getTblNewModule($limit, $start){
-        
+
         $country_id = $this->session->userdata('selCountry');
         $user_id = $this->session->userdata('user_id');
 
@@ -658,7 +657,7 @@ class ModuleModel extends CI_Model
         $this->db->where('tbl_module.country',$country_id);
         $this->db->where('tbl_module.user_id',$user_id);
         $this->db->limit($limit, $start);
-        
+
         $this->db->order_by('moduleType','asc');
         $this->db->order_by('studentGrade','asc');
         $this->db->order_by('course_id','asc');
@@ -675,7 +674,7 @@ class ModuleModel extends CI_Model
         $this->db->from('tbl_module');
         $this->db->where('id', $id);
         $query_new = $this->db->get();
-        $result = $query_new->row_array(); 
+        $result = $query_new->row_array();
         return $result;
     }
 
@@ -710,7 +709,7 @@ class ModuleModel extends CI_Model
         $this->db->where('module_id', $moduleId);
         $query_new = $this->db->get();
         $results = $query_new->result_array();
-        
+
         foreach($results as $result){
            $question_id = $result['question_id'];
 
@@ -735,7 +734,7 @@ class ModuleModel extends CI_Model
             $data2['question_type'] = $data['questionType'];
             $data2['module_id'] = $new_module_id;
             $data2['question_order'] = $max_order['max_size'] + 1;
-            
+
             $this->db->insert('tbl_modulequestion', $data2);
 
         }
@@ -759,7 +758,7 @@ class ModuleModel extends CI_Model
     }
 
     public function getQuestions($question_type,$user_id,$country_id){
-        
+
         $this->db->select('*');
         $this->db->from('tbl_question');
         $this->db->where('questionType', $question_type);
@@ -768,7 +767,7 @@ class ModuleModel extends CI_Model
 
         $query_new = $this->db->get();
         $result = $query_new->result_array();
-        
+
         return $result;
     }
 
@@ -840,9 +839,9 @@ class ModuleModel extends CI_Model
             $this->db->order_by('tbl_edit_module_temp.question_order', 'ASC');
             $query_new = $this->db->get();
             $results = $query_new->result_array();
-            return $results; 
-        } 
-        
+            return $results;
+        }
+
     }
     public function newModuleInfo($moduleId)
     {
@@ -868,7 +867,7 @@ class ModuleModel extends CI_Model
         $this->db->where('id', $question_id);
         $query_new = $this->db->get();
         $result = $query_new->result_array();
-        
+
         $data= $result[0];
         $data['id']= '';
         $this->db->insert('tbl_question', $data);
@@ -889,7 +888,7 @@ class ModuleModel extends CI_Model
         $this->db->where('id', $question_id);
         $query_new = $this->db->get();
         $result = $query_new->result_array();
-        
+
         $data= $result[0];
         $data['id']= '';
         $this->db->insert('tbl_question', $data);
@@ -994,4 +993,4 @@ class ModuleModel extends CI_Model
         return $result;
     }
 
-}//end class 
+}//end class

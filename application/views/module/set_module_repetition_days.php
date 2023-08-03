@@ -7,6 +7,8 @@
   }
 </style>
 
+
+
 <div class="container top100">
   <div class="row">
     <div class="col-md-2"></div>
@@ -18,6 +20,7 @@
       <?php endif; ?>
     </div>
   </div>
+
   <form action="module/repetition/<?php echo $module_info['id'] ?>" method="POST">
     <input type="hidden" name="formInput" value="1">
     <div class="row">
@@ -35,7 +38,7 @@
         </div>
       </div>
     </div>
-    
+
     <div class="row">
       <div class="col-md-12">
       <?php $moduleCreated= date('Y-m-d', $module_info['exam_date']);?>
@@ -50,6 +53,8 @@
       </div>
     </div>
   </form>
+
+
 </div>
 
 <script>
@@ -77,7 +82,7 @@
       m = 1;
       n = 2;
     }
-      
+
     else{
 
       for (var i = 1; i <= 365; i++) {

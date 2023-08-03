@@ -151,6 +151,8 @@
 
 <!-- <div class="container top100"> -->
 <input type="hidden" name="chapter" id="get_chapter_value">
+
+
 <div>
   <div class="row">
     <div class="col-md-12 text-center">
@@ -181,7 +183,7 @@
       <a href="details-module" style="font-size:22px;color:#8e9295;text-decoration:underline;display: inline-block;margin-left:10px;">Module Details</a>
     </div>
   </div>
-   <?php 
+   <?php
    //echo $module_cre_info['module_name'];
    //print_r($module_cre_info);die();
    ?>
@@ -193,7 +195,7 @@
 
     <form action="save_new_module_question" method="post" onkeydown="return event.key != 'Enter';" id="moduleCreate">
 
- 
+
 
       <div class="row"  id="main_css">
 
@@ -208,7 +210,7 @@
               <label for="formInputButton">Show <span><input type="checkbox" name="show_student" id="formInputButton" value="1" <?php if(!empty($module_cre_info['show_student'])){if($module_cre_info['show_student']==1){echo "checked";}}?>></span> </label>
             </button>
           </div>
-            
+
 
             <div class="form-group" style="float: left;margin-right: 10px">
               <button type="button" class="btn btn-default bluebutton" style="margin-top: 18px;">
@@ -250,12 +252,12 @@
                 <?php foreach($allsubjects as $subject){?>
                   <option class="subject<?=$subject['subject_id']?>" value="<?=$subject['subject_id']?>"<?php if(!empty($module_cre_info['subject_id'])){if($module_cre_info['subject_id']==$subject['subject_id']){echo "selected";}}?>><?=$subject['subject_name']?></option>
                 <?php }?>
-                
+
               </select>
             </div>
-            
+
             <div class="form-group changeWithIcon" style="float: left;margin-right: 20px;max-width: 175px;<?php if(empty($module_cre_info['chapter_id'])){echo "display:none !important;";}?>" id="chapter_show">
-             
+
                 <div class="icon_change_chapter">
                     <a class="ss_q_btn btn pull-left " type="button" id="edit_chapter" style="display: block;">
                     <i class="fa fa-file-o" aria-hidden="true"></i> Rename</a>
@@ -285,7 +287,7 @@
                 <?php foreach ($grades as $grade) { ?>
                   <option value="<?php echo $grade ?>" <?php if(!empty($module_cre_info['grade_id'])){if($module_cre_info['grade_id']==$grade){echo "selected";}}?>>
                     <?php echo $grade; ?>
-                  </option> 
+                  </option>
                 <?php } ?>
               </select>
             </div>
@@ -301,7 +303,11 @@
                   </option>
                 <?php } ?>
               </select>
+
+
             </div>
+
+
 
             <?php if($_SESSION['userType'] != 3){ ?>
               <div class="form-group" style="float: left;margin-right: 10px;max-width: 145px;">
@@ -338,7 +344,7 @@
           <div class="row">
           <?//php if ($_SESSION['userType'] == 3) { ?>
             <div class="col-md-2">
-              
+
             <div class="form-group color_btn top10">
           <label for="exampleInputName2" >Tracker Name</label>
           <input type="text" class="form-control" name="trackerName" id="trackerName" required value="<?php if(!empty($module_cre_info['trackerName'])){echo $module_cre_info['trackerName'];}?>">
@@ -373,7 +379,7 @@
             <input class="form-check-input" type="checkbox" value="1" id="defaultCheck1" name="isSMS"  <?php if(!empty($module_cre_info['isSms'])){if($module_cre_info['isSms']==1){echo "checked";}}?>>
           </div>
 
-          
+
           <?php
             $user_type = $user_info[0]['user_type'];
             $parent_id = $user_info[0]['parent_id'];
@@ -436,7 +442,7 @@
             <?php }else{ ?>
               <div class="form-check  sms_check" style=" padding-top: 20px; ">
                 <label class="form-check-label" for="defaultCheck1" style=" font-size: 13px; ">
-                  Assign for all student 
+                  Assign for all student
 
                 </label>
                 <input class="form-check-input" type="checkbox" value="1" id="isAllStudent" name="isAllStudent" disabled <?php if(!empty($module_cre_info['isAllStudent'])){if($module_cre_info['isAllStudent']==1){echo "checked";}}?>>
@@ -536,12 +542,12 @@
           </div>
 
         </div>
-        
+
             </div>
             <div class="col-md-10">
             <?//php  }else{ ?>
               <!-- <div class="col-md-12"> -->
-            <?//php  } ?>  
+            <?//php  } ?>
             <div class="row panel-box1 question_drag">
             <?php $i = $question_list[0]['count'];
             $j = 1;
@@ -581,7 +587,7 @@
         </div>
 
       </div>
-   
+
 
   </div>
 
@@ -596,9 +602,9 @@
               <div class="h_m_r">
               <label style="padding: 3px 0;color: #1f3366; ">How Many Rows</label>
                 <input class="form-control" type="number" value="1" id="box_qty" onclick="getImageBox(this)">
-              </div>  
+              </div>
 
-            </div>  
+            </div>
           </div>
 
           <div class="col-md-12">
@@ -612,7 +618,7 @@
                     <h4 class="panel-title">
                       <span>Video</span>
                     <!--<span style="float:right;">
-                      <a href="#" style=" color: #fff;" data-toggle="modal" data-target="#exampleModal">Link 
+                      <a href="#" style=" color: #fff;" data-toggle="modal" data-target="#exampleModal">Link
                         <i class="fa fa-film"></i>
                       </a>
                     </span>-->
@@ -645,7 +651,7 @@
               <div class="panel panel-default">
                 <input type="text" name="videoName" id="videoName" style="background-color: none;" value="<?php if(!empty($module_cre_info['videoName'])){echo $module_cre_info['videoName'];}?>">
               </div>
-            </div> 
+            </div>
           </div>
 
           <?php
@@ -663,7 +669,7 @@
                     <h4 class="panel-title">
                       <span>Video</span>
                       <!--<span style="float:right;">
-                        <a href="#" style=" color: #fff;" data-toggle="modal" data-target="#exampleModal">Link 
+                        <a href="#" style=" color: #fff;" data-toggle="modal" data-target="#exampleModal">Link
                           <i class="fa fa-film"></i>
                         </a>
                       </span> -->
@@ -701,14 +707,14 @@
         <h4 class="modal-title" id="exampleModalLabel">Set Time</h4>
       </div>
       <div class="modal-body">
-       
+
           <div class="form-group row" id="time_ranger">
             <label for="recipient-name" class="control-label col-md-3">Time Range:</label>
             <div class="col-md-3">
               <div class="input-group date" id="datetimepicker1">
 
                 <input type="text" class="form-control enterDate" id="timeStart" name="startTime" autocomplete="off" value="<?php if(!empty($module_cre_info['timeStart'])){echo $module_cre_info['timeStart'];}?>">
-                
+
                 <span class="input-group-addon">
                   <span class="fa fa-clock-o"></span>
                 </span>
@@ -740,7 +746,7 @@
             </div>
           </div>
 
-       
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -873,7 +879,7 @@
                   <button type="button" class="btn btn-sm btn-danger" id="showduplicateModSubName" value="new">New</button>
                 </div>
               </div>
-              <div class="form-group row"> 
+              <div class="form-group row">
                 <label for="exampleInputEmail1" class="col-sm-4">Chapter</label>
                 <div class="col-sm-6">
                   <div class="select">
@@ -947,8 +953,8 @@
                     <?php echo $allStudents; ?>
                   </select>
                   <!--                    <select id="indivStIds" class="form-control select2" name="indivStIds[]" multiple="">
-                       <?php //echo $allStudents; 
-                        ?> 
+                       <?php //echo $allStudents;
+                        ?>
                       <option value="">--Student--</option>
                     </select>-->
                 </div>
@@ -985,7 +991,7 @@
       <div class="modal-body row">
         <label>Add Subject</label> <br><br>
         <input type="text" id="subjectName" class="form-control" placeholder="Enter your Subject Name">
-        
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn_blue" onclick="saveSubject()">Submit</button>
@@ -1022,7 +1028,7 @@
       <div class="modal-body row">
         <label>Add Chapter</label> <br><br>
         <input type="text" id="chapterName" class="form-control" placeholder="Enter your Chapter Name">
-        
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn_blue" onclick="saveChapter()">Submit</button>
@@ -1041,7 +1047,7 @@
       <div class="modal-body row">
         <label>Edit Chapter</label> <br><br>
         <input type="text" id="editChapterName" class="form-control" placeholder="Enter your Chapter Name">
-        
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn_blue" data-id="" onclick="editChapter()">Submit</button>
@@ -1226,7 +1232,7 @@
         }else{
           alert('Please select Chapter first !!');
         }
-        
+
     });
 
     $('.bar_module_chapter_paste').click(function(){
@@ -1265,7 +1271,7 @@
 
     $("#question_form").on('submit', function(e){
       e.preventDefault();
-      
+
       $.ajax({
         url: "Module/get_question_data",
         type: "POST",
@@ -1308,15 +1314,15 @@
 
           console.log(response);
           window.location.reload();
-          
+
         }
       });
 
     }
 
 
-      
-      
+
+
     $("#moduleName").keyup(store_module_info);
 
     $("#grade_id").change(store_module_info);
@@ -1328,7 +1334,7 @@
     $("#formInputButton").change(store_module_info);
 
     $("#formInputButton1").change(store_module_info);
-    
+
     $("#trackerName").change(store_module_info);
 
     $("#individualName").change(store_module_info);
@@ -1351,14 +1357,14 @@
 
     $('#optTime').change(store_module_info);
 
-    $('#subject_id').change(store_module_info); 
+    $('#subject_id').change(store_module_info);
 
-    $('#chapter_id').change(store_module_info); 
+    $('#chapter_id').change(store_module_info);
 
     $('.module_subject_icon').click(function(){
-        
+
         $(".icon_change").toggleClass('icon_change_hidden');
-      }); 
+      });
 
       $('.module_chapter_icon').click(function(){
         $(".icon_change_chapter").toggleClass('icon_change_hidden');
@@ -1368,7 +1374,7 @@
         var subject_id = $('#subject_id').val();
         if(subject_id!=''){
           // alert(subject);
-          $.ajax({   
+          $.ajax({
           url: "deleteSubjectByModule",
           method: 'POST',
           data: {
@@ -1385,13 +1391,13 @@
         }else{
           alert('At first you need to select Subject.');
         }
-      }); 
+      });
 
       $('.chapter_delete').click(function(){
         var chapter_id = $('#chapter_id').val();
         if(chapter_id!=''){
           // alert(subject);
-          $.ajax({   
+          $.ajax({
           url: "deleteChapterByModule",
           method: 'POST',
           data: {
@@ -1408,7 +1414,7 @@
         }else{
           alert('At first you need to select Subject.');
         }
-      }); 
+      });
 
       $('#edit_subject').click(function(){
         var subject_id = $('#subject_id').val();
@@ -1423,7 +1429,7 @@
         }else{
           alert('At first you need to select Subject.');
         }
-      }); 
+      });
 
       $('#edit_chapter').click(function(){
         var chapter_id = $('#chapter_id').val();
@@ -1445,7 +1451,7 @@
     //instruct_1 // videoName // video_link_1
     var instraction = $('#instruct_1').val();
     var videolink = $('#video_link_1').val();
-    var videoName = $('#videoName').val();    
+    var videoName = $('#videoName').val();
 
     $('#video_name').val(videoName);
     $('#video_link').val(videolink);
@@ -1458,142 +1464,174 @@
 
   $("#module_type").change(function(){
     var module_type = $(this).val();
+
+    // alert(module_type);
+
     if(module_type == 1){
-        $('#subject_show').css('display','block');
-        $('#subject_show').css('float','left');
-        $('#subject_show').css('margin-right','10px');
-        $('.container-fluid').css('width','99%');
 
-        $('#chapter_show').css('display','block');
-        $('#chapter_show').css('max-width','175px');
-        $('#chapter_show').css('float','left');
-        $('#chapter_show').css('margin-right','10px');
-       }else if(module_type != 1){
-        $('.container-fluid').css('width','90%');
+          $('#subject_show').css('display','block');
+          $('#subject_show').css('float','left');
+          $('#subject_show').css('margin-right','10px');
+          $('.container-fluid').css('width','99%');
 
-        $("#subject_show").prop("style", "display: block !important");
-        $("#subject_show").attr("style", "display: none !important");
+          $('#chapter_show').css('display','block');
+          $('#chapter_show').css('max-width','175px');
+          $('#chapter_show').css('float','left');
+          $('#chapter_show').css('margin-right','10px');
 
-        $("#chapter_show").prop("style", "display: block !important");
-        $("#chapter_show").attr("style", "display: none !important");
-        $("#subject_id option:selected").prop("selected", false);
-        $("#chapter_id option:selected").prop("selected", false);
-       }
+        }else if(module_type != 1){
+
+          $('.container-fluid').css('width','90%');
+
+          $("#subject_show").prop("style", "display: block !important");
+          $("#subject_show").attr("style", "display: none !important");
+
+          $("#chapter_show").prop("style", "display: block !important");
+          $("#chapter_show").attr("style", "display: none !important");
+          $("#subject_id option:selected").prop("selected", false);
+          $("#chapter_id option:selected").prop("selected", false);
+      }
 
 
-       if( module_type == '3'){
+        if( module_type == '3'){
             $("#hide_date").show();
             $("#time").show();
             $("#hide_date").show();
             $("#time_ranger").show();
         }
-        if (module_type == '4')
-        {
+
+        if (module_type == '4'){
             $("#hide_date").show();
             $("#time").hide();
             $("#hide_date").show();
             $("#time_ranger").show();
         }
-        if (module_type == '5' || module_type == '1')
-        {
+
+        if (module_type == '5' || module_type == '1'){
             $("#hide_date").hide();
             $("#time").hide();
             $("#time_ranger").show();
         }
-        if(module_type == '2')
-        {
+
+        if(module_type == '2'){
             $("#hide_date").show();
             $("#time").show();
             $("#time_ranger").hide();
         }
+
   });
 
   function store_module_info(){
-       var module_name = $("#moduleName").val();
-       var grade_id = $("#grade_id").val();
-       var module_type = $("#module_type").val();
-       var course_id = $("#subject_chapter").val();
-       var serial = $("#formInputButton1").val();
-       var trackerName = $("#trackerName").val();
-       var individualName = $("#individualName").val();
-       var enterDate = $("#enterDate").val();
-       var isSms = $("#defaultCheck1").val();
-       var isAllStudent = $("#isAllStudent").val();
-       var video_link_1 = $("#video_link_1").val();
-       var instruct_1 = $("#instruct_1").val();
-       var videoName = $("#videoName").val();
-       var timeStart = $("#timeStart").val();
-       var timeEnd = $("#timeEnd").val();
-       var optTime = $("#optTime").val();
-       var subject_id = $("#subject_id").val();
-       var chapter_id = $("#chapter_id").val();
+      var module_name    = $("#moduleName").val();
+      var grade_id       = $("#grade_id").val();
+      var module_type    = $("#module_type").val();
+      var course_id      = $("#subject_chapter").val();
+      var serial         = $("#formInputButton1").val();
+      var trackerName    = $("#trackerName").val();
+      var individualName = $("#individualName").val();
+      var enterDate      = $("#enterDate").val();
+      var isSms          = $("#defaultCheck1").val();
+      var isAllStudent   = $("#isAllStudent").val();
+      var video_link_1   = $("#video_link_1").val();
+      var instruct_1     = $("#instruct_1").val();
+      var videoName      = $("#videoName").val();
+      var timeStart      = $("#timeStart").val();
+      var timeEnd        = $("#timeEnd").val();
+      var optTime        = $("#optTime").val();
+      var subject_id     = $("#subject_id").val();
+      var chapter_id     = $("#chapter_id").val();
 
-       
-       if($("#formInputButton").is(':checked')){
+
+      if($("#formInputButton").is(':checked')){
         var show_student = $("#formInputButton").val();
-       }else{
+      }else{
         var show_student = null;
-       }
-       if(module_name==''){
-        module_name=null;
-       }
-       if(grade_id==''){
-        grade_id=null;
-       }
-       if(module_type==''){
-        module_type=null;
-       }
-       if(course_id==''){
-        course_id=null;
-       }
-       if(trackerName==''){
-        trackerName=null;
-       }
-       if(individualName==''){
-        individualName=null;
-       }
-       if(enterDate==''){
-        enterDate=null;
-       }
-       if(isSms==''){
-        isSms=null;
-       }
-       if(isAllStudent==''){
-        isAllStudent=null;
-       }
-       if(video_link_1==''){
-        video_link_1=null;
-       }
-       if(instruct_1==''){
-        instruct_1=null;
-       }
-       if(videoName==''){
-        videoName=null;
-       }
-       if(timeStart==''){
-        timeStart=null;
-       }
-       if(timeEnd==''){
-        timeEnd=null;
-       }
-       if(optTime==''){
-        optTime=null;
-       }
-       if(subject_id==''){
-        subject_id=null;
-       }
-       if(chapter_id==''){
-        chapter_id=null;
-       }
+      }
 
-       $.ajax({   
+      if(module_name==''){
+        module_name=null;
+      }
+
+
+      if(grade_id==''){
+        grade_id=null;
+      }
+
+      if(module_type==''){
+        module_type=null;
+      }
+
+
+      if(course_id==''){
+        course_id=null;
+      }
+
+      if(trackerName==''){
+        trackerName=null;
+      }
+
+
+      if(individualName==''){
+        individualName=null;
+      }
+
+
+      if(enterDate==''){
+        enterDate=null;
+      }
+
+
+      if(isSms==''){
+        isSms=null;
+      }
+
+
+      if(isAllStudent==''){
+        isAllStudent=null;
+      }
+
+
+      if(video_link_1==''){
+        video_link_1=null;
+      }
+
+
+      if(instruct_1==''){
+        instruct_1=null;
+      }
+
+      if(videoName==''){
+        videoName=null;
+      }
+
+      if(timeStart==''){
+        timeStart=null;
+      }
+
+      if(timeEnd==''){
+        timeEnd=null;
+      }
+
+      if(optTime==''){
+        optTime=null;
+      }
+
+      if(subject_id==''){
+        subject_id=null;
+      }
+
+      if(chapter_id==''){
+        chapter_id=null;
+      }
+
+      $.ajax({
         url: "save_module_info",
         method: 'POST',
         data: {
           module_name: module_name,grade_id:grade_id,module_type:module_type,course_id:course_id,show_student:show_student,serial:serial,trackerName:trackerName,individualName:individualName,enterDate:enterDate,isSms:isSms,isAllStudent:isAllStudent,video_link_1:video_link_1,instruct_1:instruct_1,videoName:videoName,timeStart:timeStart,timeEnd:timeEnd,optTime:optTime,subject_id:subject_id,chapter_id:chapter_id
         },
         success: function(data) {
-        
+
         }
       });
   }
@@ -1607,13 +1645,13 @@
   });
 
   $(document).on('click', '#save_course', function() {
-     
+
     var course_name = $('#course_name').val();
     var course_cost = $('#course_cost').val();
     var country_id = <?=$this->session->userdata('selCountry') ?>;
     if(course_name !='' && course_cost !=''){
 
-      $.ajax({   
+      $.ajax({
         url: "addCourseByModule",
         method: 'POST',
         data: {
@@ -1641,10 +1679,10 @@
         alert("Please fill out course cost");
       }
     }
-    
+
   });
 
-  
+
 
   $(document).delegate(".removecontentsection", "click", function() {
     $(this).closest('.panel-box').remove();
@@ -1828,7 +1866,7 @@
       var subject = $("#subject :selected").val();
       var country_id = $("#country_id").val();
       var tutor_type = '<?php echo $loggedUserType?>';
-      
+
       <?php if ($loggedUserType == 7) {?>
         var course_id = $("#subject_chapter :selected").val();
       <?php }?>
@@ -1852,8 +1890,8 @@
             $('#individualStudent').html(data);
           }
         });
-    
-      
+
+
     <?php if ($loggedUserType == 7) {?>
         // var html = '';
         // $.ajax({
@@ -1907,7 +1945,7 @@
           filebrowserBrowseUrl: '/assets/uploads?type=Images',
           filebrowserUploadUrl: 'imageUpload_two',
           toolbar: [
-          { name: 'document', items: ['SVideo', 'Youtube'] }, 
+          { name: 'document', items: ['SVideo', 'Youtube'] },
 
           ]
         });
@@ -1921,7 +1959,7 @@
           { name: 'clipboard', groups: [ 'clipboard', 'undo' ], items: [ 'NewPage', 'Preview','Preview', 'Print','Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo' ] },
           { name: 'basicstyles', items: [ 'Bold', 'Italic','Underline','Strike','Subscript', 'Superscript', '-', 'SImage','SPdf','SDoc', 'SVideo' ] },
           '/',
-          { name: 'document', items: [ 'RemoveFormat','Maximize', 'ShowBlocks','TextColor', 'BGColor','-', 'Templates','Link', 'Image', 'addFile'] }, 
+          { name: 'document', items: [ 'RemoveFormat','Maximize', 'ShowBlocks','TextColor', 'BGColor','-', 'Templates','Link', 'Image', 'addFile'] },
           '/',
           { name: 'styles', items: [ 'Styles', 'Format','Font','FontSize'] }
           ]
@@ -1939,7 +1977,7 @@
           filebrowserBrowseUrl: '/assets/uploads?type=Images',
           filebrowserUploadUrl: 'imageUpload_two',
           toolbar: [
-          { name: 'document', items: ['Youtube'] },  
+          { name: 'document', items: ['Youtube'] },
 
           ]
         });
@@ -1953,7 +1991,7 @@
           { name: 'clipboard', groups: [ 'clipboard', 'undo' ], items: [ 'NewPage', 'Preview','Preview', 'Print','Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo' ] },
           { name: 'basicstyles', items: [ 'Bold', 'Italic','Underline','Strike','Subscript', 'Superscript', '-', 'SImage','SPdf','SDoc' ] },
           '/',
-          { name: 'document', items: [ 'RemoveFormat','Maximize', 'ShowBlocks','TextColor', 'BGColor','-', 'Templates','Link', 'Image', 'addFile'] }, 
+          { name: 'document', items: [ 'RemoveFormat','Maximize', 'ShowBlocks','TextColor', 'BGColor','-', 'Templates','Link', 'Image', 'addFile'] },
           '/',
           { name: 'styles', items: [ 'Styles', 'Format','Font','FontSize'] }
           ]
@@ -1961,7 +1999,7 @@
       },
 
     });
-  <?php }?>   
+  <?php }?>
 }
 
   //module duplicate form submit
@@ -2147,7 +2185,7 @@
   });
 
   $("#addNewSubject").click(function(){
-      
+
     $("#addSubjectModal").modal('show');
   });
 
@@ -2163,7 +2201,7 @@
       },
       success: function(data) {
         var subject = JSON.parse(data);
-        
+
         var html = '<option value="'+subject['subject_id']+'">'+subject['subject_name']+'</option>';
         $("#subject_id").append(html);
         $("#addSubjectModal").modal('hide');
@@ -2181,7 +2219,7 @@
   function saveChapter(){
     var chapter_name = $('#chapterName').val();
     var subject_id = $('#subject_id').val();
- 
+
     if(subject_id != ''){
     if(chapter_name != ''){
       $.ajax({
@@ -2192,7 +2230,7 @@
       },
       success: function(data) {
         var chapter = JSON.parse(data);
-        
+
         var html = '<option value="'+chapter['id']+'">'+chapter['chapterName']+'</option>';
         $("#chapter_id").append(html);
         $("#addChapterModal").modal('hide');
@@ -2265,7 +2303,7 @@
               serial.push($(this).val());
               ids.push($(this).attr('data-questionOrder'));
               question_ids.push($(this).attr('data-question'));
-              
+
             });
             // alert (question_ids);
             updateSerial(serial,ids,question_ids);
@@ -2273,7 +2311,7 @@
     });
 
     function updateSerial(serial,ids,question_ids) {
-       
+
       $.ajax({
         url: "<?php echo base_url(); ?>update_serial_module_question_create",
         method: 'POST',
@@ -2287,10 +2325,10 @@
            location.reload();
         }
       });
- 
+
     }
 
-      
-  
+
+
 
 </script>
