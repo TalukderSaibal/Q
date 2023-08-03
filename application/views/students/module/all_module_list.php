@@ -105,6 +105,7 @@
   }
 </style>
 
+
 <?php $qstudyEveryday = ($tutorInfo[0]['user_type'] == 7 && $moduleType == 2) ? 1 : 0 ?>
 <div class="container">
   <div class="row">
@@ -144,7 +145,7 @@
           <?php } else { ?>
             <script>
               $(document).ready(function() {
-                //getTutorials();    
+                //getTutorials();
               })
             </script>
           <?php } ?>
@@ -276,6 +277,9 @@
         </div>
       <?php } ?>
       </div>
+
+
+
       <div class="tab-content">
         <h5 class="text-center" style="color:red;"><?php echo  isset($_SESSION['message_name']) ? $_SESSION['message_name'] : ''; ?></h5>
         <div class="ss_qstudy_list_bottom tab-pane active" id="all_list" role="tabpanel">
@@ -403,12 +407,12 @@
             console.log(results)
             window.location.href = results;
           }
-        } 
+        }
       });
     }
   }
   $(document).on('click', '#subjectName', function() {
- 
+
     var subjectId = $(this).attr('subjectId');
     var tutorId = <?php echo $tutorInfo[0]['id']; ?>;
     var moduleType = <?php echo $moduleType; ?>;
@@ -497,7 +501,7 @@
   });
 
   $(".courseName").click(function() {
-    
+
     var courseId = $(this).attr('courseId');
     var moduleType = <?php echo $moduleType; ?>;
     $('.courseName').removeClass('course_underline');
@@ -509,7 +513,7 @@
     if(courseId==61){
       alert('Creative Writting is associated with "Everyday Study". Please press "Everyday Study" to continue your lesson');
     }else{
- 
+
       $.ajax({
         type: 'POST',
         url: 'Module/assign_subject_by_course_student',
@@ -535,10 +539,10 @@
         }
       });
     }
-    
+
 
   });
-  
+
 
 
   function all_module_first_course() {
@@ -665,12 +669,15 @@
       }
     });
 
+    //moduleTable1 Calling function start from here
     module_course_autoloading();
-    function module_course_autoloading() { 
+    function module_course_autoloading() {
       var courseId = $('.courseName').attr('courseId');
       var subjectId = $('.courseName').attr('subjectId');
       var tutorId = <?php echo $tutorInfo[0]['id']; ?>;
       var moduleType = <?php echo $moduleType; ?>;
+
+
       $.ajax({
         url: 'Student/studentsModuleByQStudyNew',
         method: 'POST',
@@ -681,6 +688,7 @@
           moduleType: moduleType,
           courseId: courseId,
         },
+
         success: function(res) {
           getRepTutorials(courseId);
           var data  = JSON.parse(res);
@@ -705,7 +713,7 @@
           courseId : courseId
         },
         success: function(res) {
-          var data  = JSON.parse(res);  
+          var data  = JSON.parse(res);
 
           $('#moduleTable').html(data.modules);
         }
@@ -778,4 +786,4 @@
       }
     })
   })
-</script> 
+</script>

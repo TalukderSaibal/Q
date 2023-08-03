@@ -347,16 +347,20 @@
 </style>
 
 <?php
-if ($this->session->userdata('user_id')) {
-   $data['user_id'] = $this->session->userdata('user_id');
+   if ($this->session->userdata('user_id')) {
+      $data['user_id'] = $this->session->userdata('user_id');
 
-   $this->db->select('*');
-   $this->db->from('profile');
-   $this->db->where('user_id', $data['user_id']);
-   $queries = $this->db->get();
-   $profile2 = $queries->result_array();
-}
+      $this->db->select('*');
+      $this->db->from('profile');
+      $this->db->where('user_id', $data['user_id']);
+      $queries = $this->db->get();
+      $profile2 = $queries->result_array();
+   }
 ?>
+
+
+
+
 <span id="counter" style="display:none;">5</span>
 <input type="hidden" id="student_page_index" value="1">
 <input type="hidden" id="tutor_page_index" value="1">
@@ -365,93 +369,102 @@ if ($this->session->userdata('user_id')) {
    <div class="row">
       <div class="col-md-12">
          <?php
-         $question_order_array = array_column($total_question, 'question_order');
-         $last_question_order = end($question_order_array);
+            $question_order_array = array_column($total_question, 'question_order');
+            $last_question_order  = end($question_order_array);
 
-         $key = $question_info_s[0]['question_order'];
-         date_default_timezone_set($this->site_user_data['zone_name']);
-         $module_time = time();
+            $key = $question_info_s[0]['question_order'];
+            date_default_timezone_set($this->site_user_data['zone_name']);
+            $module_time = time();
 
-         if ($tutorial_ans_info) {
-            $temp_table_ans_info = json_decode($tutorial_ans_info[0]['st_ans'], true);
-            $desired = $temp_table_ans_info;
-         } else {
-            $desired = $this->session->userdata('data');
-         }
-
-
-
-         // $question_time = explode(':', $question_info_s[0]['questionTime']);
-         $hour = 0;
-         $minute = 0;
-         $second = 0;
-
-         if (is_numeric($idea_info[0]['time_hour'])) {
-            $hour = $idea_info[0]['time_hour'];
-         }
-         if (is_numeric($idea_info[0]['time_min'])) {
-            $minute = $idea_info[0]['time_min'];
-         }
-         if (is_numeric($idea_info[0]['time_sec'])) {
-            $second = $idea_info[0]['time_sec'];
-         }
-         $question_time_in_second = 0;
-         $question_time_in_second = ($hour * 3600) + ($minute * 60) + $second;
-         $moduleOptionalTime = 0;
-         if ($question_info_s[0]['moduleType'] == 2 && $question_info_s[0]['optionalTime'] != 0) {
-            $moduleOptionalTime = $question_info_s[0]['optionalTime'];
-         }
-
-         $passTime = time() - $_SESSION['exam_start'];
-         $setTime = 0;
-         if ($moduleOptionalTime <= 0) {
-            if ($question_time_in_second > 0) {
-               $setTime = $question_time_in_second;
-            }
-         } else {
-            $moduleOptionalTime = $moduleOptionalTime - $passTime;
-            if ($question_time_in_second <= 0) {
-               $setTime = $moduleOptionalTime;
+            if ($tutorial_ans_info) {
+               $temp_table_ans_info = json_decode($tutorial_ans_info[0]['st_ans'], true);
+               $desired = $temp_table_ans_info;
             } else {
-               if ($question_time_in_second > $moduleOptionalTime) {
-                  $setTime = $moduleOptionalTime;
-               } else {
+               $desired = $this->session->userdata('data');
+            }
+
+
+
+            // $question_time = explode(':', $question_info_s[0]['questionTime']);
+            $hour   = 0;
+            $minute = 0;
+            $second = 0;
+
+            if (is_numeric($idea_info[0]['time_hour'])) {
+               $hour = $idea_info[0]['time_hour'];
+            }
+
+            if (is_numeric($idea_info[0]['time_min'])) {
+               $minute = $idea_info[0]['time_min'];
+            }
+
+            if (is_numeric($idea_info[0]['time_sec'])) {
+               $second = $idea_info[0]['time_sec'];
+            }
+
+            $question_time_in_second = 0;
+            $question_time_in_second = ($hour * 3600) + ($minute * 60) + $second;
+            $moduleOptionalTime      = 0;
+
+            if ($question_info_s[0]['moduleType'] == 2 && $question_info_s[0]['optionalTime'] != 0) {
+               $moduleOptionalTime = $question_info_s[0]['optionalTime'];
+            }
+
+            $passTime = time() - $_SESSION['exam_start'];
+            $setTime = 0;
+
+            if ($moduleOptionalTime <= 0) {
+               if ($question_time_in_second > 0) {
                   $setTime = $question_time_in_second;
                }
+            } else {
+               $moduleOptionalTime = $moduleOptionalTime - $passTime;
+               if ($question_time_in_second <= 0) {
+                  $setTime = $moduleOptionalTime;
+               } else {
+                  if ($question_time_in_second > $moduleOptionalTime) {
+                     $setTime = $moduleOptionalTime;
+                  } else {
+                     $setTime = $question_time_in_second;
+                  }
+               }
             }
-         }
 
-         $link_next = "javascript:void(0);";
-         $link = "javascript:void(0);";
+            $link_next = "javascript:void(0);";
+            $link = "javascript:void(0);";
 
-         if (is_array($desired)) {
-            $link_key = $key - 1;
-            if (array_key_exists($link_key, $desired) && !$tutorial_ans_info) {
-               $link = $desired[$link_key]['link'];
+            if (is_array($desired)) {
+               $link_key = $key - 1;
+               if (array_key_exists($link_key, $desired) && !$tutorial_ans_info) {
+                  $link = $desired[$link_key]['link'];
+               }
+
+               $link_key_next = $key;
+
+               if (array_key_exists($link_key_next, $desired) && !$tutorial_ans_info) {
+                  $question_id = $question_info_s[0]['question_order'] + 1;
+                  $link1 = base_url();
+                  $link_next = $link1 . 'get_tutor_tutorial_module/' . $question_info_s[0]['module_id'] . '/' . $question_id;
+               }
             }
-            $link_key_next = $key;
-            if (array_key_exists($link_key_next, $desired) && !$tutorial_ans_info) {
-               $question_id = $question_info_s[0]['question_order'] + 1;
-               $link1 = base_url();
-               $link_next = $link1 . 'get_tutor_tutorial_module/' . $question_info_s[0]['module_id'] . '/' . $question_id;
-            }
-         }
 
-         $module_type = $question_info_s[0]['moduleType'];
+            $module_type = $question_info_s[0]['moduleType'];
 
-         $videoName = strlen($module_info[0]['video_name']) > 1 ? $module_info[0]['video_name'] : 'Subject Video';
+            $videoName = strlen($module_info[0]['video_name']) > 1 ? $module_info[0]['video_name'] : 'Subject Video';
          ?>
+
+
          <?php
 
+            foreach ($total_question as $ind) {
 
-         foreach ($total_question as $ind) {
-
-            if ($ind["question_type"] == 14) {
-               $chk = $ind["question_order"];
+               if ($ind["question_type"] == 14) {
+                  $chk = $ind["question_order"];
+               }
             }
-         }
 
          ?>
+
          <!--         ***** Only For Special Exam *****         -->
          <?php if ($module_type == 3) { ?>
             <input type="hidden" id="exam_end" value="<?php echo strtotime($module_info[0]['exam_end']); ?>" name="exam_end" />
@@ -553,7 +566,7 @@ if ($this->session->userdata('user_id')) {
                                  <?php $k = 1;
                                  foreach ($student_ideas as $student_idea) {
                                     if($student_idea['approval'] == 1){
-                                     ?>
+                                    ?>
                                     <li style="position:relative;<?php if ($k > 2) {
                                                                      echo "display:none";
                                                                   } ?>" class="student_idea_ans student_idea<?= $k ?>">
@@ -835,7 +848,7 @@ if ($this->session->userdata('user_id')) {
                                                       <td>
                                                          <div class="description_video">
                                                             <?php
-                                                            $question_description = isset($ind['questionDescription']) ? $ind['questionDescription'] : ''; 
+                                                            $question_description = isset($ind['questionDescription']) ? $ind['questionDescription'] : '';
                                                             if($ind['question_type'] == 22){
                                                                $myquestion = json_decode($question_description);
                                                                $question = $myquestion->question_setting_description;
@@ -2012,7 +2025,7 @@ if ($this->session->userdata('user_id')) {
 
 
 <!-- <form id="submit_student_ans_remake_info"  method="post" enctype="multipart/form-data">
-      <input type="text" name="question_id" value="<? //php echo $question_id; 
+      <input type="text" name="question_id" value="<? //php echo $question_id;
                                                    ?>">
       <input type="text" id="title_auto_comment_ans" name="title_auto_comment_ans">
       <input type="text" id="title_auto_comment_get_point" name="title_auto_comment_get_point">
@@ -2021,15 +2034,15 @@ if ($this->session->userdata('user_id')) {
       <input type="text" id="student_sentence_index_ans" name="student_sentence_index_ans">
       <input type="text" id="student_sentence_get_point" name="student_sentence_get_point">
       <input type="text" id="student_ans_conclusion_index" name="student_ans_conclusion_index">
-      <input type="text" id="student_ans_conclusion_get_point" name="student_ans_conclusion_get_point"> 
+      <input type="text" id="student_ans_conclusion_get_point" name="student_ans_conclusion_get_point">
       <input type="text" id="student_radio_conclusion_index" name="student_radio_conclusion_index">
-      <input type="text" id="student_radio_conclusion_get_point" name="student_radio_conclusion_get_point"> 
+      <input type="text" id="student_radio_conclusion_get_point" name="student_radio_conclusion_get_point">
       <input type="text" id="student_ans_introduction_index" name="student_ans_introduction_index">
-      <input type="text" id="student_ans_intro_get_point" name="student_ans_intro_get_point"> 
+      <input type="text" id="student_ans_intro_get_point" name="student_ans_intro_get_point">
       <input type="text" id="student_intro_radio_index" name="student_intro_radio_index">
-      <input type="text" id="student_intro_radio_get_point" name="student_intro_radio_get_point"> 
+      <input type="text" id="student_intro_radio_get_point" name="student_intro_radio_get_point">
       <input type="text" id="student_ans_paragraph_index" name="student_ans_paragraph_index">
-      <input type="text" id="student_ans_paragraph_get_point" name="student_ans_paragraph_get_point"> 
+      <input type="text" id="student_ans_paragraph_get_point" name="student_ans_paragraph_get_point">
       <input type="text" id="student_ans_radio_paragraph" name="student_ans_radio_paragraph">
       <input type="text" id="student_ans_radio_paragraph_get_point" name="student_ans_radio_paragraph_get_point">
    </form> -->
@@ -2575,6 +2588,7 @@ if ($this->session->userdata('user_id')) {
    }
 </style>
 
+
 <script type="text/javascript">
    <?php if ($creative_course_status == 0) { ?>
       var myinterval;
@@ -2678,11 +2692,13 @@ if ($this->session->userdata('user_id')) {
    function imgPreview() {
       imgFrame.src = URL.createObjectURL(event.target.files[0]);
    }
+
    $('#answer_matching').hide();
 
    $(function() {
       var ideaInfo = "<?= $idea_info[0]['student_title'] ?>";
       var start_button_status = "<?= $idea_info[0]['add_start_button'] ?>";
+      // alert('hi');
       if (ideaInfo == 0) {
          if (start_button_status == 1) {
             $('#answer_matching').hide();
@@ -3244,10 +3260,10 @@ if ($this->session->userdata('user_id')) {
       var idea_id = $("#idea_id").val();
       var idea_no = $("#tutor_idea_no").val();
       var tutor_id = $("#get_tutor_id").val();
-      // alert(question_id);  
-      // alert(module_id);  
-      // alert(idea_id);  
-      // alert(idea_no);  alert(tutor_id);  
+      // alert(question_id);
+      // alert(module_id);
+      // alert(idea_id);
+      // alert(idea_no);  alert(tutor_id);
       $.ajax({
          url: "Student/add_tutor_like",
          method: "POST",
@@ -3333,6 +3349,7 @@ if ($this->session->userdata('user_id')) {
       });
 
       $('#answer_matching').click(function() {
+         // alert('hi');
          var total_word = $('#total_word').val();
          var limit_word = <?= $idea_info[0]['word_limit']; ?>;
          var percentage_value = (limit_word / 100) * 80;
@@ -3614,7 +3631,7 @@ if ($this->session->userdata('user_id')) {
       $(this).removeAttr('checked');
       $('.' + className).each(function() {
          if ($(this).is(':checked')) {
-            // var name = $( this ).attr('name'); 
+            // var name = $( this ).attr('name');
             // alert(name);
             var pre_point = $(this).val();
             var total_point = $("#my_grade").val();
@@ -4225,7 +4242,7 @@ if ($this->session->userdata('user_id')) {
 
 <!-- Nazmul-->
 <script>
-   //For Word---------------------- 
+   //For Word----------------------
    var every_word_index = new Array();
    $(document).delegate('.grammer_answer', 'click', function() {
       every_word_index.push($(this).attr('data-id'));
@@ -4302,7 +4319,7 @@ if ($this->session->userdata('user_id')) {
 
    });
 
-   //For sentence---------------------- 
+   //For sentence----------------------
    $('.chose_creative_sentense').hide();
    $('.heading_creative_sentense_show').hide();
    $('.creative_sentense_paragraph_show').hide();
@@ -4375,7 +4392,7 @@ if ($this->session->userdata('user_id')) {
             $('.grammer_answer_new ').css("background-color", "");
             if (data.sentence_index.length > 0) {
                for (var i = 0; i < data.sentence_index.length; i++) {
-                  //$('.grammer_answer_new'+data.sentence_index[i]).css("background-color","#b5e61d"); 
+                  //$('.grammer_answer_new'+data.sentence_index[i]).css("background-color","#b5e61d");
                   if (i == 0) {
                      $('.grammer_ans_new' + data.sentence_index[i]).css("background-color", "background-color: rgb(180, 231, 28)");
                      $('.grammer_ans_new' + data.sentence_index[i]).append('<span class="tooltip_one tooltip_rs">Creative Sentence</span>');
@@ -4416,7 +4433,7 @@ if ($this->session->userdata('user_id')) {
          }
       });
    });
-   //Creative sentence part End------------- 
+   //Creative sentence part End-------------
 
 
    //Conclusion part Start-------------
